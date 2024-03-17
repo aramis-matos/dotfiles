@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-global
 -- If LuaRocks is installed, make sure that packages installed through it are
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
@@ -373,7 +374,7 @@ globalkeys = gears.table.join(
 	end, { description = "Turn off aux monitor(s)", group = "apps" }),
 
 	awful.key({ modkey }, "p", function()
-		awful.spawn('rofi -show drun -theme ".config/rofi/launchers/type-3/style-3.rasi" -font "Cousine Nerd Font 24" -show-icons')
+		awful.spawn('rofi -show drun -theme ".config/rofi/launchers/type-2/style-8.rasi" -font "Cousine Nerd Font 24" -show-icons')
 	end, { description = "open rofi", group = "apps" }),
 	awful.key({ modkey }, "F10", function()
 		awful.spawn("pkill picom")
