@@ -27,3 +27,4 @@ vim fonts.rasi
     font: "Cousine Nerd Font 12";
 }
 ```
+3. If you get a syntax error in `.config/rofi/config.rasi`, go to line 54 and delete `run,`
