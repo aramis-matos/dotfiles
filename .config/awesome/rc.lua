@@ -373,7 +373,7 @@ globalkeys = gears.table.join(
 	end, { description = "Turn off aux monitor(s)", group = "apps" }),
 
 	awful.key({ modkey }, "p", function()
-		awful.spawn('rofi -show drun -theme "Arc-Dark" -font "Cousine Nerd Font Propo Bold Italic 16"')
+		awful.spawn('rofi -show drun -theme ".config/rofi/launchers/type-3/style-3.rasi" -font "Cousine Nerd Font 24" -show-icons')
 	end, { description = "open rofi", group = "apps" }),
 	awful.key({ modkey }, "F10", function()
 		awful.spawn("pkill picom")
