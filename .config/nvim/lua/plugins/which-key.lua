@@ -25,6 +25,8 @@ return {
       g = {
         name = "Git",
         g = "LazyGit",
+        h = "View Hunk",
+        b = "Toggle Git Blame"
       },
       f = {
         name = "Find Files",
