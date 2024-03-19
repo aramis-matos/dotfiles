@@ -374,7 +374,7 @@ globalkeys = gears.table.join(
 	end, { description = "Turn off aux monitor(s)", group = "apps" }),
 
 	awful.key({ modkey }, "p", function()
-		awful.spawn('rofi -show drun -theme ".config/rofi/launchers/type-2/style-8.rasi" -font "Cousine Nerd Font 24" -show-icons')
+		awful.spawn('rofi -show drun -theme ".config/rofi/launchers/type-2/style-8.rasi" -font "Cousine Nerd Font 24" -show-icons &')
 	end, { description = "open rofi", group = "apps" }),
 	awful.key({ modkey }, "F10", function()
 		awful.spawn("pkill picom")
@@ -663,7 +663,7 @@ end)
 
 awful.spawn.with_shell("fcitx5 -d &")
 awful.spawn.with_shell("pactl set-default-sink alsa_output.pci-0000_2d_00.4.analog-stereo")
-awful.spawn.with_shell( "xrandr --output DisplayPort-0 --mode 2560x1440 --rate 143.97 --primary --pos 1920x0 --rotate normal --output HDMI-A-0 --off --output DisplayPort-2 --off --output DisplayPort-1 --mode 1920x1080 --pos 0x0 --rotate normal")
+awful.spawn.with_shell( "xrandr --output DisplayPort-0 --mode 2560x1440 --rate 143.97 --primary --pos 1920x0 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --off --output HDMI-A-0 --mode 1920x1080 --pos 0x0 --rotate normal")
 awful.spawn.with_shell("sleep 0.5s && nitrogen --restore &")
 awful.spawn.with_shell("/etc/X11/xorg.conf")
 -- awful.spawn.with_shell("~/./.config/awesome/auto_toggle_comp")
