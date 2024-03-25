@@ -55,7 +55,7 @@ end
 beautiful.init("~/.config/awesome/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "terminator"
+terminal = "alacritty"
 editor = "nvim"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -124,6 +124,8 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 -- {{{ Wibar
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
+-- current_audio = awful.widget.watch("~/.config/awesome/format_sink_names.fish", 0.1)
+-- current_audio = awful.widget.watch('fish -c "~/.config/awesome/format_sink_names.fish"', 0.1)
 current_audio = awful.widget.watch('fish -c "~/.config/awesome/format_sink_names.fish"', 0.1)
 current_volume = awful.widget.watch('fish -c "~/.config/awesome/get_vol.fish"', 0.1)
 battery = awful.widget.watch('fish -c "~/.config/awesome/battery.sh"', 0.1)
@@ -354,18 +356,17 @@ globalkeys = gears.table.join(
 		awful.spawn(editor_cmd)
 	end, { description = "open nvim", group = "apps" }),
 	awful.key({ modkey }, "f", function()
-		awful.spawn("brave-browser")
+		awful.spawn("brave")
 	end, { description = "open brave", group = "apps" }),
 	awful.key({ modkey, "Shift" }, "s", function()
 		awful.spawn.with_shell(
-			"~/./.config/awesome/launch_scrot.sh s `-l style=solid,width=4,color='#',opacity=0,mode=edge`"
-		)
+			'nix-shell ~/.config/awesome/nix-shells/launch_scrot_shell.nix --run "~/.config/awesome/launch_scrot.sh s ' .. "'-l style=solid,width=5,color=#FFFFFF,opacity=255,mode=edge'" .. '"')
 	end, { description = "screenshot area", group = "apps" }),
 	awful.key({ modkey, "Shift" }, "Print", function()
-		awful.spawn.with_shell("~/./.config/awesome/launch_scrot.sh u")
+		awful.spawn.with_shell("nix-shell ~/.config/awesome/nix-shells/launch_scrot_shell.nix --run '~/.config/awesome/launch_scrot.sh u'")
 	end, { description = "screenshot monitor", group = "apps" }),
 	awful.key({ modkey }, "Print", function()
-		awful.spawn.with_shell("~/./.config/awesome/launch_scrot.sh m")
+		awful.spawn.with_shell("nix-shell ~/.config/awesome/nix-shells/launch_scrot_shell.nix --run '~/.config/awesome/launch_scrot.sh m'")
 	end, { description = "screenshot all monitors", group = "apps" }),
 	awful.key({ modkey }, "`", function()
 		awful.spawn.with_shell(
@@ -395,7 +396,7 @@ globalkeys = gears.table.join(
 		awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ -5%")
 	end, { description = "lower volume", group = "system" }),
 	awful.key({ modkey }, "0", function()
-		awful.spawn.with_shell("~/./.config/awesome/playpause.sh")
+		awful.spawn.with_shell("playerctl -a play-pause")
 	end, { description = "play-pause all players", group = "system" }),
 	awful.key({ modkey, "Shift" }, "0", function()
 		awful.spawn.with_shell("~/./.config/awesome/switch_sink.sh")
@@ -663,11 +664,11 @@ end)
 
 awful.spawn.with_shell("fcitx5 -d &")
 awful.spawn.with_shell("pactl set-default-sink alsa_output.pci-0000_2d_00.4.analog-stereo")
-awful.spawn.with_shell( "xrandr --output DisplayPort-0 --mode 2560x1440 --rate 143.97 --primary --pos 1920x0 --rotate normal --output DisplayPort-1 --off --output DisplayPort-2 --off --output HDMI-A-0 --mode 1920x1080 --pos 0x0 --rotate normal")
+awful.spawn.with_shell(" xrandr --output DP-1 --primary --mode 2560x1440 --rate 143.97 --pos 1920x0 --rotate normal --output DP-2 --off --output DP-3 --off --output HDMI-1 --rate 60.00 --mode 1920x1080 --pos 0x0 --rotate normal ")
 awful.spawn.with_shell("sleep 0.5s && nitrogen --restore &")
 awful.spawn.with_shell("/etc/X11/xorg.conf")
 -- awful.spawn.with_shell("~/./.config/awesome/auto_toggle_comp")
 awful.spawn.with_shell("nm-applet &")
 awful.spawn.with_shell("blueberry-tray &")
-awful.spawn.with_shell("picom --experimental-backends --blur-method 'dual_kawase' --blur-strength 7 --backend 'glx' &")
-awful.spawn.with_shell("~/./.config/awesome/color_avg.py")
+awful.spawn.with_shell("picom --blur-method 'dual_kawase' --blur-strength 7 --backend 'glx' &")
+awful.spawn.with_shell("nix-shell ~/.config/awesome/nix-shells/color_avg.nix --run 'python3 ~/.config/awesome/color_avg.py' &")
