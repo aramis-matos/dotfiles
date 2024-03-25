@@ -1,4 +1,3 @@
-#! /usr/bin/python3
 from PIL import Image
 import numpy as np
 from functools import reduce
