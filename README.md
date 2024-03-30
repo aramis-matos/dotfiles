@@ -28,3 +28,8 @@ vim fonts.rasi
 }
 ```
 3. If you get a syntax error in `.config/rofi/config.rasi`, go to line 54 and delete `run,`
+
+4. 
+- If NixOS, run `sudo cp -rf ~/dotfiles/nixos /etc/`
+- To update `sudo nixos-rebuild switch --flake /etc/nixos#default`
+
