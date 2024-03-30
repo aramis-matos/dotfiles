@@ -13,14 +13,14 @@ local theme = {}
 
 theme.font = "Cousine Nerd Font Propo Bold Italic 13"
 
-theme.bg_normal = "#322d33"
-theme.bg_focus = "#8b2e2c"
+theme.bg_normal = "#e3dbdc"
+theme.bg_focus = "#b9bec2"
 theme.bg_urgent = "#ff0000"
 theme.bg_minimize = "#444444"
-theme.bg_systray = "#322d33"
+theme.bg_systray = "#e3dbdc"
 
-theme.fg_normal = "#2e332d"
-theme.fg_focus = "#2c898b"
+theme.fg_normal = "#dbe3e2"
+theme.fg_focus = "#c2bdb9"
 theme.fg_urgent = "#ffffff"
 theme.fg_minimize = "#ffffff"
 

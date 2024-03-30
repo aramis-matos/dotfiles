@@ -1,7 +1,3 @@
-#!/usr/bin/env nix-shell
-#! nix-shell -i bash
-#! nix-shell --packages python3 pulseaudio
-
 sinks=$(pactl list sinks)
 
 curr=$(pactl get-default-sink)
