@@ -96,7 +96,7 @@ with open(theme_lua_path,'r') as f:
     contents = replace_color(bg_normal,secondaryHexCode,contents)   
     contents = replace_color(bg_systray,secondaryHexCode,contents)   
     contents = replace_color(bg_focus,primaryHexCode,contents)   
-    contents = replace_color(fg_normal,secondaryCompliment,contents)   
+    contents = replace_color(fg_normal,primaryHexCode,contents)   
     contents = replace_color(fg_focus,primaryCompliment,contents)
 
 with open(theme_lua_path,'w') as f:

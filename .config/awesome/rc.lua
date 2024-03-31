@@ -223,7 +223,7 @@ awful.screen.connect_for_each_screen(function(s)
 	-- Create a tasklist widget
 
 	-- Create the wibox
-	s.mywibox = awful.wibar({ position = "top", screen = s, bg = beautiful.bg_normal .. "55" })
+	s.mywibox = awful.wibar({ position = "top", screen = s, bg = beautiful.bg_normal .. "bb" })
 
 	-- Add widgets to the wibox
 	s.mywibox:setup({
