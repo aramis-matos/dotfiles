@@ -9,7 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
-
+  
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -20,8 +20,6 @@
   # nix.settings.experimental-features = ["nix-command" "flakes"];
   nix.settings = {
     experimental-features = ["nix-command" "flakes"];
-    substituters = [ "https://ezkea.cachix.org" ];
-    trusted-public-keys = [ "ezkea.cachix.org-1:ioBmUbJTZIKsHmWWXPe1FSFbeVe+afhfgqgTSNd34eI=" ];
   };
 
   # Configure network proxy if necessary
@@ -48,6 +46,14 @@
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
   };
+
+  i18n.inputMethod = {
+    enabled = "fcitx5";
+    fcitx5.addons = with pkgs; [
+        fcitx5-mozc
+        fcitx5-gtk
+    ];
+};
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -108,12 +114,13 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
   services.flatpak.enable = true;
+  # Jellyfin
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.ccyanide = {
     isNormalUser = true;
     description = "ccyanide";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
       firefox
     #  thunderbird
@@ -133,7 +140,6 @@
    xclip
    git
    stow
-   terminator
    arandr
    rofi
    brave
@@ -167,11 +173,24 @@
    ]))
    flatpak
    htop-vim
+   unzip
+   # ddclient
+   jellyfin
+   jellyfin-web
+   jellyfin-ffmpeg
   ];
 
-  fonts.packages = with pkgs; [
-  (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" "Cousine" ]; })
-];
+  fonts.fontDir.enable = true;
+  fonts = {
+    packages = with pkgs; [
+      (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" "Cousine" ]; })
+      noto-fonts
+      noto-fonts-cjk
+      noto-fonts-emoji
+    ];
+
+  };
+
 
   programs.neovim = {
 	enable=true;
@@ -197,6 +216,23 @@ programs.steam = {
   remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
   dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
 };
+
+  virtualisation.docker.enable = true;
+  virtualisation.docker.rootless = {
+    enable = true;
+    setSocketVariable = true;
+  };
+
+  services.jellyfin = {
+    enable = true;
+    openFirewall = true;
+    user="ccyanide";
+  };
+
+  # services.ddclient = {
+  #   enable=true;
+  #   configFile = "/home/ccyanide/ddclient_cloudflare.conf";
+  # };
 
 
 

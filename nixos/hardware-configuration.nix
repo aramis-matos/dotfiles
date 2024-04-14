@@ -14,14 +14,15 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/1c6b3a57-075b-45a2-9a88-935292c2bd2f";
+    { device = "/dev/disk/by-uuid/cd99814c-3322-435f-a3e6-9abda3566e62";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/0327-8EC3";
+    { device = "/dev/disk/by-uuid/88CD-CB42";
       fsType = "vfat";
     };
+
 
   fileSystems."/home/ccyanide/mass_storage" =
     { device = "/dev/disk/by-uuid/54196560-2008-474d-9258-27847487b39c";
