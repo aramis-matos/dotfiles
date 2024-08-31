@@ -13,16 +13,15 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/cd99814c-3322-435f-a3e6-9abda3566e62";
+   fileSystems."/" =
+    { device = "/dev/disk/by-uuid/b30bd83b-4354-4070-b656-5891f84011e6";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/88CD-CB42";
+    { device = "/dev/disk/by-uuid/46D7-ADE5";
       fsType = "vfat";
     };
-
 
   fileSystems."/home/ccyanide/mass_storage" =
     { device = "/dev/disk/by-uuid/54196560-2008-474d-9258-27847487b39c";

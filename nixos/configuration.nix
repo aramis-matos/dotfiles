@@ -2,20 +2,45 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ inputs, lib, config, pkgs, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
+
   
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # boot.loader.systemd-boot.enable = true;
+  # boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    efi = {
+      # canTouchEfiVariables = true;
+      efiSysMountPoint = "/boot/efi";
+    };
+    grub = {
+       enable = true;
+       useOSProber = true;
+       efiSupport = true;
+       efiInstallAsRemovable = true; # in case canTouchEfiVariables doesn't work for your system
+       device = "nodev";
+    };
+  };
+
+  boot.loader.grub.theme = 
+    pkgs.fetchFromGitHub {
+      owner = "SiriusAhu";
+      repo = "Persona_5_Royal_Grub_Themes";
+      rev = "07f4660631d6002aafe9f14dfa77849e979477ac";
+      sha256 = "sha256-/4i5Br3f7FlQcy5GFIRcycGR7gPVemElJc5uyi2LgRc=";
+  } + "/themes/panther";
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.firewall.checkReversePath = "loose";
+  networking.wireguard.enable = true;
+  services.mullvad-vpn.enable = true;
 
   # nix.settings.experimental-features = ["nix-command" "flakes"];
   nix.settings = {
@@ -48,12 +73,14 @@
   };
 
   i18n.inputMethod = {
-    enabled = "fcitx5";
+    enable = true;
+    type = "fcitx5";
     fcitx5.addons = with pkgs; [
         fcitx5-mozc
         fcitx5-gtk
     ];
 };
+i18n.inputMethod.fcitx5.waylandFrontend = true;
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -75,29 +102,66 @@
 	variant = "";
 	layout = "us";
     };
-	 windowManager.awesome = {
-		enable = true;
+	 windowManager = {
+		awesome.enable = true;
 	 };
+  };
+
+  environment.sessionVariables = lib.mkDefault rec {
+    NIXOS_OZONE_WL = "1";
   };
 
   # Enable Bluetooth
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
   services.blueman.enable = true;
-  systemd.user.services.mpris-proxy = {
+#   systemd.user.services.mpris-proxy = {
+#     description = "Mpris proxy";
+#     after = [ "network.target" "sound.target" ];
+#     wantedBy = [ "default.target" ];
+#     serviceConfig.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
+# };
+
+systemd.user.services = {
+  mpris-proxy = {
     description = "Mpris proxy";
     after = [ "network.target" "sound.target" ];
     wantedBy = [ "default.target" ];
     serviceConfig.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
+    };
+  polkit-gnome-authentication-agent-1 = {
+    description = "polkit-gnome-authentication-agent-1";
+    wantedBy = [ "graphical-session.target" ];
+    wants = [ "graphical-session.target" ];
+    after = [ "graphical-session.target" ];
+    serviceConfig = {
+        Type = "simple";
+        ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+        Restart = "on-failure";
+        RestartSec = 1;
+        TimeoutStopSec = 10;
+      };
+  };
 };
+
+
+
+  programs.hyprland = {
+    # Install the packages from nixpkgs
+    enable = true;
+    # Whether to enable XWayland
+    xwayland.enable = true;
+  };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
+  security = {
+    rtkit.enable = true;
+    polkit.enable = true;
+  };
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -133,6 +197,9 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
+
+
+  # environment.sessionVariables.NIXOS_OZONE_WL = "1";
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
    neovim
@@ -143,11 +210,10 @@
    arandr
    rofi
    brave
-   nodejs_21
+   nodejs_22
    glxinfo
    nitrogen
    gcc
-   steam
    playerctl
    alacritty
    pulseaudio
@@ -170,20 +236,44 @@
    (python311.withPackages (p: with p; [
     numpy
     pillow 
+    pyclip
    ]))
    flatpak
    htop-vim
    unzip
-   # ddclient
+   btop
+   genymotion
+   wl-clipboard
+   xwayland
+   kitty
+   wofi
+   wev
+   hyprpaper
+   grimblast
+   waybar
+   home-manager
+   rustup
+   haskell-language-server
+   ghc
+   heroic
+   waifu2x-converter-cpp
+   mpv
+   transmission_4-qt6
+   mullvad-vpn
    jellyfin
    jellyfin-web
    jellyfin-ffmpeg
+   filezilla
+   prismlauncher
+   nixfmt-rfc-style
+   radeontop
+   fuzzel
   ];
 
   fonts.fontDir.enable = true;
   fonts = {
     packages = with pkgs; [
-      (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" "Cousine" ]; })
+      (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" "Cousine" "Hasklig" "IBMPlexMono" ]; })
       noto-fonts
       noto-fonts-cjk
       noto-fonts-emoji
@@ -199,6 +289,16 @@
 
   programs.fish = {
 	enable = true;
+
+    shellAliases = {
+      update = "cd /etc/nixos/ ; sudo nix flake update && sudo nixos-rebuild switch --flake /etc/nixos#default ; cd -";
+      "..." = "cd ../..";
+    };
+
+    shellInit = "
+set fish_greeting
+set -g fish_key_bindings fish_vi_key_bindings
+    ";
   };
 
 programs.bash = {
@@ -223,18 +323,17 @@ programs.steam = {
     setSocketVariable = true;
   };
 
+
+  programs.gamemode.enable = true;
+
+  programs.xwayland.enable = true;
+  programs.waybar.enable = true;
+
   services.jellyfin = {
     enable = true;
     openFirewall = true;
-    user="ccyanide";
+    user = "ccyanide";
   };
-
-  # services.ddclient = {
-  #   enable=true;
-  #   configFile = "/home/ccyanide/ddclient_cloudflare.conf";
-  # };
-
-
 
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -251,8 +350,8 @@ programs.steam = {
   services.openssh.enable = true;
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  # networking.firewall.allowedTCPPorts = [ ];
+  # networking.firewall.allowedUDPPorts = [ ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 

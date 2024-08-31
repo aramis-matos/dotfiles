@@ -1,0 +1,5 @@
+preload = /home/ccyanide/Downloads/pictures/2024/July-Dec/8fd423a924533f309f50fbfaffa794f6.png
+preload = /home/ccyanide/Downloads/pictures/2024/July-Dec/c14e0efe85f2e95d274fef51c274e35b.jpg
+wallpaper = DP-1,/home/ccyanide/Downloads/pictures/2024/July-Dec/8fd423a924533f309f50fbfaffa794f6.png
+wallpaper = DP-2,/home/ccyanide/Downloads/pictures/2024/July-Dec/c14e0efe85f2e95d274fef51c274e35b.jpg
+splash = false
