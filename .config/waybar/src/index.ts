@@ -1,12 +1,22 @@
-import fs from "fs";
-import os from "os";
+import { writeFileSync } from "fs";
+import fs from "fs/promises";
+import os, { homedir } from "os";
 import path from "path";
 import { Image } from "image-js";
 import { exit } from "process";
+import util from "util";
+import { exec as execExport } from "child_process";
+
+const exec = util.promisify(execExport);
 
 type DisplayAndPath = {
   display: string;
   path: string;
+};
+
+type PathsAndContents = {
+  displaysAndWallpapers: DisplayAndPath[];
+  file: string;
 };
 
 type BarColor = DisplayAndPath & {
@@ -14,15 +24,8 @@ type BarColor = DisplayAndPath & {
   textColor: string;
 };
 
-async function getFilePromise(
-  folder: "hypr" | "waybar",
-  file: "hyprpaper.conf" | "colors.css" | "old_wallpapers.txt"
-): Promise<Buffer> {
-  return new Promise((res, rej) => {
-    fs.readFile(path.join(os.homedir(), ".config", folder, file), (err, data) =>
-      err ? rej(err) : res(data)
-    );
-  });
+async function getFilePromise(folder: string[], file: string): Promise<Buffer> {
+  return fs.readFile(path.join(os.homedir(), ".config", ...folder, file));
 }
 
 async function execute({ display, path }: DisplayAndPath): Promise<BarColor> {
@@ -44,28 +47,80 @@ async function execute({ display, path }: DisplayAndPath): Promise<BarColor> {
   };
 }
 
-const [hyprpaperPromise, oldWallpaperPromise] = [
-  getFilePromise("hypr", "hyprpaper.conf"),
-  getFilePromise("waybar", "old_wallpapers.txt"),
-];
-
-
-const hyprpaper = (await hyprpaperPromise).toString()
-const old_wallpaper = (await oldWallpaperPromise).toString()
-
-if (hyprpaper === old_wallpaper) {
-  exit(0)
+async function isMpvpaper(): Promise<Boolean> {
+  return exec("ps aux | grep 'mpvpaper' | grep -v grep").then(() => true).catch(() => false);
 }
 
-const wallpapers = [...hyprpaper.matchAll(/wallpaper.*/g)];
-const displaysAndWallpapers: DisplayAndPath[] = wallpapers.map((elem) => {
-  const displayAndWallpaperStr = elem[0].split("=")[1].trim().split(",");
-  return {
-    display: displayAndWallpaperStr[0],
-    path: displayAndWallpaperStr[1],
-  };
-});
-console.log(displaysAndWallpapers)
+async function getWaypaperWallpapers(): Promise<PathsAndContents> {
+  const [hyprpaperPromise, oldWallpaperPromise] = [
+    getFilePromise(["hypr"], "hyprpaper.conf"),
+    getFilePromise(["waybar"], "old_wallpapers.txt"),
+  ];
+
+  const hyprpaper = (await hyprpaperPromise).toString();
+  const old_wallpaper = (await oldWallpaperPromise).toString();
+
+  if (hyprpaper === old_wallpaper) {
+    exit(0);
+  }
+
+  const wallpapers = [...hyprpaper.matchAll(/wallpaper.*/g)];
+  const displaysAndWallpapers: DisplayAndPath[] = wallpapers.map((elem) => {
+    const displayAndWallpaperStr = elem[0].split("=")[1].trim().split(",");
+    return {
+      display: displayAndWallpaperStr[0].trim(),
+      path: displayAndWallpaperStr[1].trim(),
+    };
+  });
+
+  return { displaysAndWallpapers, file: hyprpaper };
+}
+
+async function getMpvPaperWallpapers(): Promise<PathsAndContents> {
+  const [hyprpaperPromise, oldWallpaperPromise] = [
+    getFilePromise(["hypr", "scripts"], "wallpapers.sh"),
+    getFilePromise(["waybar"], "old_wallpapers.txt"),
+  ];
+
+
+  const mpvpaper = (await hyprpaperPromise).toString();
+  const old_wallpaper = (await oldWallpaperPromise).toString();
+
+  if (mpvpaper === old_wallpaper) {
+    exit(0);
+  }
+
+  const displaysAndWallpapers = [
+    ...mpvpaper.matchAll(/mpvpaper.+--auto-pause/g),
+  ].map((elem) => {
+    const splitItems = elem[0].split(" ");
+    const display = splitItems[1];
+    const path = splitItems.slice(2, splitItems.length - 1).join("");
+    return {
+      display,
+      path,
+    };
+  });
+
+  const tempDisplaysAndWallpapers = await Promise.all(
+    displaysAndWallpapers.map(async (val) => {
+      await exec(
+        `ffmpeg -ss 00:00:01.00 -i ${val.path} -vf 'scale=100:100:force_original_aspect_ratio=decrease' -vframes 1 ${val.path}-temp.jpg -y`
+      );
+      return { ...val, path: `${path.join(os.homedir(),...val.path.split("/").slice(1))}-temp.jpg` };
+    })
+  );
+
+  return { displaysAndWallpapers: tempDisplaysAndWallpapers, file: mpvpaper };
+}
+
+const isMpvPaper = await isMpvpaper();
+
+
+const { displaysAndWallpapers, file }: PathsAndContents = await (isMpvPaper
+  ? getMpvPaperWallpapers()
+  : getWaypaperWallpapers());
+
 
 const barColorsPromises: Promise<BarColor>[] = [];
 for (const x of displaysAndWallpapers) {
@@ -75,7 +130,28 @@ for (const x of displaysAndWallpapers) {
 
 const barColors = await Promise.all(barColorsPromises);
 
-const modifiedColors = barColors.reduce((acc,curr) =>  acc + `@define-color bgColor${curr.display} ${curr.bgColor}\n@define-color color${curr.display} ${curr.textColor}\n`,"")
 
-fs.writeFileSync(path.join(os.homedir(), ".config","waybar","colors.css"),modifiedColors,{flag: "w"})
-fs.writeFileSync(path.join(os.homedir(), ".config","waybar","old_wallpapers.txt"),hyprpaper,{flag: "w"})
+const modifiedColors = barColors.reduce(
+  (acc, curr) =>
+    acc +
+    `@define-color bgColor${curr.display} ${curr.bgColor}\n@define-color color${curr.display} ${curr.textColor}\n`,
+  ""
+);
+
+writeFileSync(
+  path.join(os.homedir(), ".config", "waybar", "colors.css"),
+  modifiedColors,
+  { flag: "w" }
+);
+
+writeFileSync(
+  path.join(os.homedir(), ".config", "waybar", "old_wallpapers.txt"),
+  file,
+  { flag: "w" }
+);
+
+if (isMpvPaper) {
+  await Promise.all(
+    displaysAndWallpapers.map(async (elem) => fs.rm(elem.path))
+  );
+}

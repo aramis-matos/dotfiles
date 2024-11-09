@@ -326,7 +326,7 @@ label:focus {
 }
 
 window.DP-2 {
-  background-color: rgba(61, 18, 23, 0.7);
+  background-color: @bgColorDP-2;
   border-bottom: 2px solid @colorDP-2;
   border-left: 2px solid @colorDP-2;
   border-right: 2px solid @colorDP-2;

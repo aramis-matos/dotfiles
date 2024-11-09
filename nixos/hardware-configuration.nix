@@ -13,14 +13,15 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/b30bd83b-4354-4070-b656-5891f84011e6";
+  fileSystems."/" =
+    { device = "/dev/disk/by-uuid/7a5750d1-dbec-4360-8673-d841ca2d8b42";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/46D7-ADE5";
+    { device = "/dev/disk/by-uuid/3764-8FF3";
       fsType = "vfat";
+      options = [ "fmask=0077" "dmask=0077" ];
     };
 
   fileSystems."/home/ccyanide/mass_storage" =
@@ -28,7 +29,10 @@
       fsType = "ext4";
     };
 
-  swapDevices = [ ];
+
+  swapDevices =
+    [ { device = "/dev/disk/by-uuid/de43614c-f006-4e8c-834a-9c1bd8332574"; }
+    ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
