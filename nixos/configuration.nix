@@ -12,29 +12,9 @@
 
   
   # Bootloader.
-  # boot.loader.systemd-boot.enable = true;
-  # boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader = {
-    efi = {
-      # canTouchEfiVariables = true;
-      efiSysMountPoint = "/boot/efi";
-    };
-    grub = {
-       enable = true;
-       useOSProber = true;
-       efiSupport = true;
-       efiInstallAsRemovable = true; # in case canTouchEfiVariables doesn't work for your system
-       device = "nodev";
-    };
-  };
-
-  boot.loader.grub.theme = 
-    pkgs.fetchFromGitHub {
-      owner = "SiriusAhu";
-      repo = "Persona_5_Royal_Grub_Themes";
-      rev = "07f4660631d6002aafe9f14dfa77849e979477ac";
-      sha256 = "sha256-/4i5Br3f7FlQcy5GFIRcycGR7gPVemElJc5uyi2LgRc=";
-  } + "/themes/panther";
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.timeout = 0;
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -78,6 +58,7 @@
     fcitx5.addons = with pkgs; [
         fcitx5-mozc
         fcitx5-gtk
+        fcitx5-material-color
     ];
 };
 i18n.inputMethod.fcitx5.waylandFrontend = true;
@@ -94,7 +75,7 @@ i18n.inputMethod.fcitx5.waylandFrontend = true;
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  # services.xserver.desktopManager.gnome.enable = true;
 
   # Configure keymap in X11
   services.xserver = {
@@ -199,6 +180,7 @@ systemd.user.services = {
   # $ nix search wget
 
 
+
   # environment.sessionVariables.NIXOS_OZONE_WL = "1";
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
@@ -229,9 +211,7 @@ systemd.user.services = {
    stylua
    leptosfmt
    fastfetch
-   scrot
    lazygit
-   xboxdrv
    vrrtest
    (python311.withPackages (p: with p; [
     numpy
@@ -248,7 +228,7 @@ systemd.user.services = {
    kitty
    wofi
    wev
-   hyprpaper
+   # hyprpaper
    grimblast
    waybar
    home-manager
@@ -260,14 +240,23 @@ systemd.user.services = {
    mpv
    transmission_4-qt6
    mullvad-vpn
-   jellyfin
-   jellyfin-web
-   jellyfin-ffmpeg
    filezilla
    prismlauncher
    nixfmt-rfc-style
    radeontop
    fuzzel
+   efibootmgr
+   fcitx5-configtool
+   discord
+   obs-studio
+   ffmpeg
+   erlang
+   elixir
+   nautilus
+   inotify-tools
+   lzip
+   # waypaper
+   mpvpaper
   ];
 
   fonts.fontDir.enable = true;
@@ -275,7 +264,7 @@ systemd.user.services = {
     packages = with pkgs; [
       (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" "Cousine" "Hasklig" "IBMPlexMono" ]; })
       noto-fonts
-      noto-fonts-cjk
+      noto-fonts-cjk-sans
       noto-fonts-emoji
     ];
 
@@ -317,6 +306,8 @@ programs.steam = {
   dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
 };
 
+
+  virtualisation.waydroid.enable = true;
   virtualisation.docker.enable = true;
   virtualisation.docker.rootless = {
     enable = true;
@@ -328,12 +319,6 @@ programs.steam = {
 
   programs.xwayland.enable = true;
   programs.waybar.enable = true;
-
-  services.jellyfin = {
-    enable = true;
-    openFirewall = true;
-    user = "ccyanide";
-  };
 
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -362,5 +347,8 @@ programs.steam = {
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11"; # Did you read the comment?
+
+
+# 3.11"; # Did you read the comment?
 
 }
