@@ -91,7 +91,7 @@ async function getMpvPaperWallpapers(): Promise<PathsAndContents> {
   }
 
   const displaysAndWallpapers = [
-    ...mpvpaper.matchAll(/mpvpaper.+--auto-pause/g),
+    ...mpvpaper.matchAll(/mpvpaper.+--fork/g),
   ].map((elem) => {
     const splitItems = elem[0].split(" ");
     const display = splitItems[1];
