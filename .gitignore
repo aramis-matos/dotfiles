@@ -5,3 +5,6 @@
 .config/waybar/dist/index.js.map
 .config/waybar/dist/index.js
 .config/waybar/dist/index.js.map
+.config/waybar/dist/index.d.ts
+.config/waybar/dist/index.js
+.config/waybar/dist/index.js.map
