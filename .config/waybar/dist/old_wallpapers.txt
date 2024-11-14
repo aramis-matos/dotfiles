@@ -1,4 +1,0 @@
-@define-color bgColorDP-1 rgba(217,197,37,0.7);
-@define-color colorDP-1 rgba(38,58,218,1);
-@define-color bgColorHDMI-A-1 rgba(56,45,133,0.7);
-@define-color colorHDMI-A-1 rgba(199,210,122,1);
