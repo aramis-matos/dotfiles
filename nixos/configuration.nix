@@ -4,13 +4,13 @@
 
 { inputs, lib, config, pkgs, ... }:
 
+
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
 
-  
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -54,6 +54,7 @@
 
   i18n.inputMethod = {
     enable = true;
+    # type = "ibus";
     type = "fcitx5";
     fcitx5.addons = with pkgs; [
         fcitx5-mozc
@@ -75,7 +76,9 @@ i18n.inputMethod.fcitx5.waylandFrontend = true;
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
-  # services.xserver.desktopManager.gnome.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
+
+
 
   # Configure keymap in X11
   services.xserver = {
@@ -165,7 +168,7 @@ systemd.user.services = {
   users.users.ccyanide = {
     isNormalUser = true;
     description = "ccyanide";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "libvirtd" ];
     packages = with pkgs; [
       firefox
     #  thunderbird
@@ -218,6 +221,8 @@ systemd.user.services = {
     pillow 
     pyclip
    ]))
+  
+   kdePackages.kdenlive
    flatpak
    htop-vim
    unzip
@@ -255,14 +260,20 @@ systemd.user.services = {
    nautilus
    inotify-tools
    lzip
-   # waypaper
    mpvpaper
+   lutris
+   bun
+   yazi
+   unrar
   ];
 
   fonts.fontDir.enable = true;
   fonts = {
     packages = with pkgs; [
-      (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" "Cousine" "Hasklig" "IBMPlexMono" ]; })
+      nerd-fonts.fira-code 
+      nerd-fonts.droid-sans-mono
+      nerd-fonts.cousine 
+      nerd-fonts.hasklug
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-emoji
@@ -306,7 +317,9 @@ programs.steam = {
   dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
 };
 
-
+  
+  # Enable USB redirection (optional)
+  virtualisation.spiceUSBRedirection.enable = true;
   virtualisation.waydroid.enable = true;
   virtualisation.docker.enable = true;
   virtualisation.docker.rootless = {
@@ -318,7 +331,7 @@ programs.steam = {
   programs.gamemode.enable = true;
 
   programs.xwayland.enable = true;
-  programs.waybar.enable = true;
+
 
 
   # Some programs need SUID wrappers, can be configured further or are
