@@ -7,7 +7,8 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
 
@@ -24,7 +25,7 @@
 
   # nix.settings.experimental-features = ["nix-command" "flakes"];
   nix.settings = {
-    experimental-features = ["nix-command" "flakes"];
+    experimental-features = [ "nix-command" "flakes" ];
   };
 
   # Configure network proxy if necessary
@@ -57,21 +58,21 @@
     # type = "ibus";
     type = "fcitx5";
     fcitx5.addons = with pkgs; [
-        fcitx5-mozc
-        fcitx5-gtk
-        fcitx5-material-color
+      fcitx5-mozc
+      fcitx5-gtk
+      fcitx5-material-color
     ];
-};
-i18n.inputMethod.fcitx5.waylandFrontend = true;
+  };
+  i18n.inputMethod.fcitx5.waylandFrontend = true;
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.videoDrivers = [ "amdgpu" ];
   services.xserver.deviceSection = ''
-  Option "TearFree" "true"
-  Option "VariableRefresh" "true"
-  Option "AsyncFlipSecondaries" "true"
-'';
+    Option "TearFree" "true"
+    Option "VariableRefresh" "true"
+    Option "AsyncFlipSecondaries" "true"
+  '';
   services.xserver.exportConfiguration = true;
 
   # Enable the GNOME Desktop Environment.
@@ -83,12 +84,12 @@ i18n.inputMethod.fcitx5.waylandFrontend = true;
   # Configure keymap in X11
   services.xserver = {
     xkb = {
-	variant = "";
-	layout = "us";
+      variant = "";
+      layout = "us";
     };
-	 windowManager = {
-		awesome.enable = true;
-	 };
+    windowManager = {
+      awesome.enable = true;
+    };
   };
 
   environment.sessionVariables = lib.mkDefault rec {
@@ -99,34 +100,34 @@ i18n.inputMethod.fcitx5.waylandFrontend = true;
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
   services.blueman.enable = true;
-#   systemd.user.services.mpris-proxy = {
-#     description = "Mpris proxy";
-#     after = [ "network.target" "sound.target" ];
-#     wantedBy = [ "default.target" ];
-#     serviceConfig.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
-# };
+  #   systemd.user.services.mpris-proxy = {
+  #     description = "Mpris proxy";
+  #     after = [ "network.target" "sound.target" ];
+  #     wantedBy = [ "default.target" ];
+  #     serviceConfig.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
+  # };
 
-systemd.user.services = {
-  mpris-proxy = {
-    description = "Mpris proxy";
-    after = [ "network.target" "sound.target" ];
-    wantedBy = [ "default.target" ];
-    serviceConfig.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
+  systemd.user.services = {
+    mpris-proxy = {
+      description = "Mpris proxy";
+      after = [ "network.target" "sound.target" ];
+      wantedBy = [ "default.target" ];
+      serviceConfig.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
     };
-  polkit-gnome-authentication-agent-1 = {
-    description = "polkit-gnome-authentication-agent-1";
-    wantedBy = [ "graphical-session.target" ];
-    wants = [ "graphical-session.target" ];
-    after = [ "graphical-session.target" ];
-    serviceConfig = {
+    polkit-gnome-authentication-agent-1 = {
+      description = "polkit-gnome-authentication-agent-1";
+      wantedBy = [ "graphical-session.target" ];
+      wants = [ "graphical-session.target" ];
+      after = [ "graphical-session.target" ];
+      serviceConfig = {
         Type = "simple";
         ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
         Restart = "on-failure";
         RestartSec = 1;
         TimeoutStopSec = 10;
       };
+    };
   };
-};
 
 
 
@@ -171,7 +172,7 @@ systemd.user.services = {
     extraGroups = [ "networkmanager" "wheel" "docker" "libvirtd" ];
     packages = with pkgs; [
       firefox
-    #  thunderbird
+      #  thunderbird
     ];
   };
 
@@ -186,93 +187,94 @@ systemd.user.services = {
 
   # environment.sessionVariables.NIXOS_OZONE_WL = "1";
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-   neovim
-   wget
-   xclip
-   git
-   stow
-   arandr
-   rofi
-   brave
-   nodejs_22
-   glxinfo
-   nitrogen
-   gcc
-   playerctl
-   alacritty
-   pulseaudio
-   pulsemixer
-   picom
-   gamemode
-   mangohud
-   bat
-   rustc
-   cargo
-   prettierd
-   vscode
-   stylua
-   leptosfmt
-   fastfetch
-   lazygit
-   vrrtest
-   (python311.withPackages (p: with p; [
-    numpy
-    pillow 
-    pyclip
-   ]))
-  
-   kdePackages.kdenlive
-   flatpak
-   htop-vim
-   unzip
-   btop
-   genymotion
-   wl-clipboard
-   xwayland
-   kitty
-   wofi
-   wev
-   # hyprpaper
-   grimblast
-   waybar
-   home-manager
-   rustup
-   haskell-language-server
-   ghc
-   heroic
-   waifu2x-converter-cpp
-   mpv
-   transmission_4-qt6
-   mullvad-vpn
-   filezilla
-   prismlauncher
-   nixfmt-rfc-style
-   radeontop
-   fuzzel
-   efibootmgr
-   fcitx5-configtool
-   discord
-   obs-studio
-   ffmpeg
-   erlang
-   elixir
-   nautilus
-   inotify-tools
-   lzip
-   mpvpaper
-   lutris
-   bun
-   yazi
-   unrar
+    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    neovim
+    wget
+    xclip
+    git
+    stow
+    arandr
+    rofi
+    brave
+    nodejs_22
+    glxinfo
+    nitrogen
+    gcc
+    playerctl
+    alacritty
+    pulseaudio
+    pulsemixer
+    picom
+    gamemode
+    mangohud
+    bat
+    rustc
+    cargo
+    prettierd
+    vscode
+    stylua
+    leptosfmt
+    fastfetch
+    lazygit
+    vrrtest
+    (python311.withPackages (p: with p; [
+      numpy
+      pillow
+      pyclip
+    ]))
+
+    kdePackages.kdenlive
+    flatpak
+    htop-vim
+    unzip
+    btop
+    genymotion
+    wl-clipboard
+    xwayland
+    kitty
+    wofi
+    wev
+    # hyprpaper
+    grimblast
+    waybar
+    home-manager
+    rustup
+    haskell-language-server
+    ghc
+    heroic
+    waifu2x-converter-cpp
+    mpv
+    transmission_4-qt6
+    mullvad-vpn
+    filezilla
+    prismlauncher
+    nixfmt-rfc-style
+    radeontop
+    fuzzel
+    efibootmgr
+    fcitx5-configtool
+    discord
+    obs-studio
+    ffmpeg
+    erlang
+    elixir
+    nautilus
+    inotify-tools
+    lzip
+    mpvpaper
+    lutris
+    bun
+    yazi
+    unrar
+    nixpkgs-fmt
   ];
 
   fonts.fontDir.enable = true;
   fonts = {
     packages = with pkgs; [
-      nerd-fonts.fira-code 
+      nerd-fonts.fira-code
       nerd-fonts.droid-sans-mono
-      nerd-fonts.cousine 
+      nerd-fonts.cousine
       nerd-fonts.hasklug
       noto-fonts
       noto-fonts-cjk-sans
@@ -283,12 +285,12 @@ systemd.user.services = {
 
 
   programs.neovim = {
-	enable=true;
-	defaultEditor=true;
-};
+    enable = true;
+    defaultEditor = true;
+  };
 
   programs.fish = {
-	enable = true;
+    enable = true;
 
     shellAliases = {
       update = "cd /etc/nixos/ ; sudo nix flake update && sudo nixos-rebuild switch --flake /etc/nixos#default ; cd -";
@@ -301,23 +303,23 @@ set -g fish_key_bindings fish_vi_key_bindings
     ";
   };
 
-programs.bash = {
-  interactiveShellInit = ''
-    if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
-    then
-      shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
-      exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
-    fi
-  '';
-};
+  programs.bash = {
+    interactiveShellInit = ''
+      if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
+      then
+        shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
+        exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
+      fi
+    '';
+  };
 
-programs.steam = {
-  enable = true;
-  remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-  dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-};
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+  };
 
-  
+
   # Enable USB redirection (optional)
   virtualisation.spiceUSBRedirection.enable = true;
   virtualisation.waydroid.enable = true;
@@ -362,6 +364,6 @@ programs.steam = {
   system.stateVersion = "23.11"; # Did you read the comment?
 
 
-# 3.11"; # Did you read the comment?
+  # 3.11"; # Did you read the comment?
 
 }
