@@ -1,10 +1,12 @@
+let username = "ccyanide"; in
 { config, pkgs, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = "ccyanide";
+  home.username = username;
   home.homeDirectory = "/home/ccyanide";
+
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -81,6 +83,29 @@
     settings = {
       background_opacity = 0.75;
       confirm_os_window_close = 0;
+    };
+  };
+
+  programs.git = {
+    enable = true;
+    userName = "aramis-matos";
+    userEmail = "aramis.matos1@gmail.com";
+  };
+
+  programs.fuzzel = {
+    enable = true;  
+    settings = {
+      colors.background="1e1e2edd";
+      colors.text="cdd6f4ff";
+      colors.prompt="bac2deff";
+      colors.placeholder="7f849cff";
+      colors.input="cdd6f4ff";
+      colors.match="74c7ecff";
+      colors.selection="585b70ff";
+      colors.selection-text="cdd6f4ff";
+      colors.selection-match="74c7ecff";
+      colors.counter="7f849cff";
+      colors.border="74c7ecff";
     };
   };
 
