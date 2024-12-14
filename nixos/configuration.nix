@@ -10,6 +10,7 @@
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      inputs.home-manager.nixosModules.home-manager
     ];
 
   # Bootloader.
@@ -232,7 +233,6 @@
     wl-clipboard
     xwayland
     kitty
-    wofi
     wev
     # hyprpaper
     grimblast
@@ -267,6 +267,7 @@
     yazi
     unrar
     nixpkgs-fmt
+    fuzzel
   ];
 
   fonts.fontDir.enable = true;
@@ -283,6 +284,12 @@
 
   };
 
+  home-manager = {
+    extraSpecialArgs = { inherit inputs; };
+    users = {
+      ccyanide = import ./home.nix;
+    };
+  };
 
   programs.neovim = {
     enable = true;
@@ -293,7 +300,7 @@
     enable = true;
 
     shellAliases = {
-      update = "cd /etc/nixos/ ; sudo nix flake update && sudo nixos-rebuild switch --flake /etc/nixos#default ; cd -";
+      update = "cd /etc/nixos/ ; sudo nix flake update && sudo nixos-rebuild switch --flake /etc/nixos#default ; home-manager switch; cd -";
       "..." = "cd ../..";
     };
 
