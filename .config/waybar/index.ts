@@ -12,10 +12,6 @@ const { curr: wallpapers, fileText, old, program } = await loadWallpapers();
 
 const displaysAndWallpapers = await loaderMatcher[program](wallpapers);
 
-// const displaysAndWallpapers = (
-//   await Promise.all(getWallpapers.map((fn) => fn(wallpapers)))
-// ).flat();
-
 if (fileText === old) {
   exit(0);
 }
@@ -47,6 +43,8 @@ Bun.write(
 
 if (program === Programs.MPVPAPER) {
   await Promise.all(
-    wallpapers.filter(({path}) => isImage.exec(path) === null).map(async (elem) => fs.rm(`${elem.path}-temp.jpg`))
+    wallpapers
+      .filter(({ path }) => isImage.exec(path) === null)
+      .map((elem) => fs.rm(`${elem.path}-temp.jpg`))
   );
 }
