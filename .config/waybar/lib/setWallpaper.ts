@@ -33,7 +33,7 @@ export async function loadHyprpaperWallpapers(wallpapers: DisplayAndPath[]) {
 const mpvpaperUnloadCommand = "pkill mpvpaper";
 
 function mpvpaperLoadCommand({ display, path }: DisplayAndPath) {
-  return `mpvpaper '${display}' '${path}' --fork -o 'no audio loop'`;
+  return `mpvpaper '${display}' '${path}' --fork -o 'no-audio loop'`;
 }
 
 export async function loadMpvpaperWallpapers(wallpapers: DisplayAndPath[]) {

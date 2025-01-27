@@ -4,7 +4,7 @@ let username = "ccyanide"; in
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = username;
+  home. username = username;
   home.homeDirectory = "/home/ccyanide";
 
 
@@ -19,7 +19,9 @@ let username = "ccyanide"; in
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = [
+  home.packages = with pkgs; [
+    texlive.combined.scheme-full
+    jdk
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
@@ -40,7 +42,7 @@ let username = "ccyanide"; in
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
-  home.file = {
+  home. file = {
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
@@ -69,11 +71,11 @@ let username = "ccyanide"; in
   #
   #  /etc/profiles/per-user/ccyanide/etc/profile.d/hm-session-vars.sh
   #
-  home.sessionVariables = {
+  home. sessionVariables = {
     # EDITOR = "emacs";
   };
 
-  programs.kitty = {
+  programs. kitty = {
     enable = true;
     font = {
       name = "Hasklug Nerd Font";
@@ -93,21 +95,22 @@ let username = "ccyanide"; in
   };
 
   programs.fuzzel = {
-    enable = true;  
+    enable = true;
     settings = {
-      colors.background="1e1e2edd";
-      colors.text="cdd6f4ff";
-      colors.prompt="bac2deff";
-      colors.placeholder="7f849cff";
-      colors.input="cdd6f4ff";
-      colors.match="74c7ecff";
-      colors.selection="585b70ff";
-      colors.selection-text="cdd6f4ff";
-      colors.selection-match="74c7ecff";
-      colors.counter="7f849cff";
-      colors.border="74c7ecff";
+      colors.background = "1e1e2edd";
+      colors.text = "cdd6f4ff";
+      colors.prompt = "bac2deff";
+      colors.placeholder = "7f849cff";
+      colors.input = "cdd6f4ff";
+      colors.match = "74c7ecff";
+      colors.selection = "585b70ff";
+      colors.selection-text = "cdd6f4ff";
+      colors.selection-match = "74c7ecff";
+      colors.counter = "7f849cff";
+      colors.border = "74c7ecff";
     };
   };
+
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
