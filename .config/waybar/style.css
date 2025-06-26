@@ -325,22 +325,13 @@ label:focus {
   background-color: #0069d4;
 }
 
-window.DP-2 {
-  background-color: @bgColorDP-2;
-  border-bottom: 2px solid @colorDP-2;
-  border-left: 2px solid @colorDP-2;
-  border-right: 2px solid @colorDP-2;
-}
+
 
 window.DP-1 {
-  background-color: @bgColorDP-1;
+  background-color: @bgcolorDP-1;
   border-bottom: 2px solid @colorDP-1;
   border-left: 2px solid @colorDP-1;
   border-right: 2px solid @colorDP-1;
-}
-
-window.DP-2 * {
-  color: @colorDP-2;
 }
 
 window.DP-1 * {
@@ -353,6 +344,25 @@ window.DP-1 #pulseaudio {
 
 window.DP-1 #clock {
   border-right: 2px solid @colorDP-1;
+} 
+
+window.DP-1 #pulseaudio {
+  border-right: 2px solid @colorDP-1;
+}
+
+window.DP-1 #clock {
+  border-right: 2px solid @colorDP-1;
+}
+
+window.DP-2 {
+  background-color: @bgcolorDP-2;
+  border-bottom: 2px solid @colorDP-2;
+  border-left: 2px solid @colorDP-2;
+  border-right: 2px solid @colorDP-2;
+}
+
+window.DP-2 * {
+  color: @colorDP-2;
 }
 
 window.DP-2 #pulseaudio {
@@ -362,10 +372,6 @@ window.DP-2 #pulseaudio {
 window.DP-2 #clock {
   border-right: 2px solid @colorDP-2;
 } 
-
-window.DP-1 #clock {
-  border-right: 2px solid @colorDP-1;
-}
 
 window.DP-2 #pulseaudio {
   border-right: 2px solid @colorDP-2;
