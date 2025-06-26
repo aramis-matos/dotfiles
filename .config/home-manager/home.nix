@@ -1,12 +1,13 @@
-let username = "ccyanide"; in
+let
+  username = "ccyanide";
+in
 { config, pkgs, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home. username = username;
+  home.username = username;
   home.homeDirectory = "/home/ccyanide";
-
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -42,7 +43,7 @@ let username = "ccyanide"; in
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
-  home. file = {
+  home.file = {
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
@@ -71,11 +72,11 @@ let username = "ccyanide"; in
   #
   #  /etc/profiles/per-user/ccyanide/etc/profile.d/hm-session-vars.sh
   #
-  home. sessionVariables = {
+  home.sessionVariables = {
     # EDITOR = "emacs";
   };
 
-  programs. kitty = {
+  programs.kitty = {
     enable = true;
     font = {
       name = "Hasklug Nerd Font";
@@ -119,31 +120,28 @@ let username = "ccyanide"; in
     focusEvents = true;
     mouse = true;
     plugins = with pkgs; [
-    {
-      plugin = tmuxPlugins.tokyo-night-tmux;
-      extraConfig = "set -g @theme-variation 'night'";
-    }
+      {
+        plugin = tmuxPlugins.tokyo-night-tmux;
+        extraConfig = "set -g @theme-variation 'night'";
+      }
     ];
     extraConfig = ''
-      '''
       bind-key r source-file ~/.config/tmux/tmux.conf \; display-message "tmux.conf reloaded."
-      
+
       bind -n M-h select-pane -L
       bind -n M-j select-pane -D
       bind -n M-k select-pane -U
       bind -n M-l select-pane -R
-      
+
       bind-key \\ split-window -v -c "#{pane_current_path}"
       bind-key | split-window -h -c "#{pane_current_path}"
-      
+
       bind -n S-Left previous-window
       bind -n S-Right next-window
-      
+
       bind-key y set-window-option synchronize-panes\; display-message "synchronize mode toggled."
-      '''
     '';
   };
-
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

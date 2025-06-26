@@ -2,16 +2,20 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ inputs, lib, config, pkgs, ... }:
-
+{
+  inputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      inputs.home-manager.nixosModules.home-manager
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    inputs.home-manager.nixosModules.home-manager
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -23,10 +27,18 @@
   networking.firewall.checkReversePath = "loose";
   networking.wireguard.enable = true;
   services.mullvad-vpn.enable = true;
+  networking.interfaces.eno1.wakeOnLan.enable = true;
+
+  networking.extraHosts = ''
+    127.0.0.1 server test.localhost.com
+  '';
 
   # nix.settings.experimental-features = ["nix-command" "flakes"];
   nix.settings = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
   };
 
   # Configure network proxy if necessary
@@ -77,19 +89,22 @@
   services.xserver.exportConfiguration = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-
-
+  services.displayManager.gdm.enable = true;
+  services.displayManager.gdm.wayland = true;
+  services.desktopManager.gnome.enable = false;
+  services.displayManager = {
+    autoLogin = {
+      enable = true;
+      user = "ccyanide";
+    };
+    defaultSession = "hyprland";
+  };
 
   # Configure keymap in X11
   services.xserver = {
     xkb = {
       variant = "";
       layout = "us";
-    };
-    windowManager = {
-      awesome.enable = true;
     };
   };
 
@@ -111,10 +126,14 @@
   systemd.user.services = {
     mpris-proxy = {
       description = "Mpris proxy";
-      after = [ "network.target" "sound.target" ];
+      after = [
+        "network.target"
+        "sound.target"
+      ];
       wantedBy = [ "default.target" ];
       serviceConfig.ExecStart = "${pkgs.bluez}/bin/mpris-proxy";
     };
+
     polkit-gnome-authentication-agent-1 = {
       description = "polkit-gnome-authentication-agent-1";
       wantedBy = [ "graphical-session.target" ];
@@ -130,12 +149,26 @@
     };
   };
 
+  systemd.tmpfiles.rules = [
+      "f /dev/shm/looking-glass 0660 ccyanide qemu-libvirtd -"
+  ];
 
+  services.ddclient = {
+    enable = true;
+    ssl = true;
+    usev6 = "webv6, webv6=https://cloudflare.com/cdn-cgi/trace";
+    protocol = "cloudflare";
+    zone = "aramismatos1.com";
+    passwordFile = "/home/ccyanide/ddclient_password";
+    domains = [
+      "aramismatos1.com"
+      "*.aramismatos1.com"
+    ];
+  };
 
   programs.hyprland = {
     # Install the packages from nixpkgs
-    enable = true;
-    # Whether to enable XWayland
+    enable = true; # Whether to enable XWayland
     xwayland.enable = true;
   };
 
@@ -143,11 +176,12 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security = {
     rtkit.enable = true;
     polkit.enable = true;
   };
+
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -170,21 +204,27 @@
   users.users.ccyanide = {
     isNormalUser = true;
     description = "ccyanide";
-    extraGroups = [ "networkmanager" "wheel" "docker" "libvirtd" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "docker"
+      "libvirtd"
+      "libvirt"
+      "input"
+      "kvm"
+      "acme"
+    ];
     packages = with pkgs; [
-      firefox
+      librewolf
       #  thunderbird
     ];
   };
-
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-
-
 
   # environment.sessionVariables.NIXOS_OZONE_WL = "1";
   environment.systemPackages = with pkgs; [
@@ -199,7 +239,6 @@
     brave
     nodejs_22
     glxinfo
-    nitrogen
     gcc
     playerctl
     alacritty
@@ -212,29 +251,19 @@
     rustc
     cargo
     prettierd
-    vscode
-    stylua
-    leptosfmt
+    vscode.fhs
     fastfetch
     lazygit
     vrrtest
-    (python311.withPackages (p: with p; [
-      numpy
-      pillow
-      pyclip
-    ]))
-
     kdePackages.kdenlive
     flatpak
-    htop-vim
     unzip
     btop
-    genymotion
     wl-clipboard
     xwayland
     kitty
     wev
-    # hyprpaper
+    hyprpaper
     grimblast
     waybar
     home-manager
@@ -245,7 +274,7 @@
     waifu2x-converter-cpp
     mpv
     transmission_4-qt6
-    mullvad-vpn
+    # mullvad-vpn
     filezilla
     prismlauncher
     nixfmt-rfc-style
@@ -253,7 +282,7 @@
     fuzzel
     efibootmgr
     fcitx5-configtool
-    discord
+    # discord
     obs-studio
     ffmpeg
     erlang
@@ -268,7 +297,29 @@
     unrar
     nixpkgs-fmt
     fuzzel
+    hyprland-qtutils
+    waytrogen
+    dconf-editor
+    pcsx2
+    speedcrunch
+    tmux
+    bottles
+    mgba
+    openssl
+    sshfs
+    protonup-qt
+    ethtool
+    xxd
+    protontricks
+    gimp-with-plugins
+    ncdu
+    waytrogen
+    pciutils
+    looking-glass-client
+    ripgrep
   ];
+
+  #programs.dconf.settings.enable = true;
 
   fonts.fontDir.enable = true;
   fonts = {
@@ -300,8 +351,9 @@
     enable = true;
 
     shellAliases = {
-      update = "cd /etc/nixos/ ; sudo nix flake update && sudo nixos-rebuild switch --flake /etc/nixos#default ; home-manager switch; cd -";
+      update = "cd ~/dotfiles/nixos && sudo nix flake update && sudo nixos-rebuild switch --flake ./#default && home-manager switch; cd -";
       "..." = "cd ../..";
+      "code" = "code --ozone-platform=wayland --enable-features=WaylandWindowDecorations";
     };
 
     shellInit = "
@@ -318,30 +370,55 @@ set -g fish_key_bindings fish_vi_key_bindings
         exec ${pkgs.fish}/bin/fish $LOGIN_OPTION
       fi
     '';
+
+    shellAliases = {
+      "code" = "code --ozone-platform=wayland --enable-features=WaylandWindowDecorations";
+    };
   };
 
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
     dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+    extraCompatPackages = with pkgs; [ proton-ge-bin ];
   };
 
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
 
   # Enable USB redirection (optional)
   virtualisation.spiceUSBRedirection.enable = true;
-  virtualisation.waydroid.enable = true;
+  # virtualisation.waydroid.enable = true;
   virtualisation.docker.enable = true;
   virtualisation.docker.rootless = {
     enable = true;
     setSocketVariable = true;
   };
 
+  programs.virt-manager.enable = true;
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu = {
+      package = pkgs.qemu_kvm;
+      runAsRoot = true;
+      swtpm.enable = true;
+      ovmf = {
+        enable = true;
+        packages = [
+          (pkgs.OVMF.override {
+            secureBoot = true;
+            tpmSupport = true;
+          }).fd
+        ];
+      };
+    };
+  };
 
   programs.gamemode.enable = true;
 
   programs.xwayland.enable = true;
-
-
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -356,11 +433,38 @@ set -g fish_key_bindings fish_vi_key_bindings
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
+  services.sunshine = {
+    enable = true;
+    autoStart = false;
+    capSysAdmin = true;
+    openFirewall = true;
+  };
+
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ];
-  # networking.firewall.allowedUDPPorts = [ ];
+  networking.firewall.allowedTCPPorts = [
+    4443
+    8880
+    47984
+    47989
+    47990
+    48010
+  ];
+  networking.firewall.allowedUDPPorts = [
+    4443
+    8880
+  ];
+  networking.firewall.allowedUDPPortRanges = [
+    {
+      from = 47998;
+      to = 48000;
+    }
+    {
+      from = 8000;
+      to = 8010;
+    }
+  ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -369,7 +473,6 @@ set -g fish_key_bindings fish_vi_key_bindings
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11"; # Did you read the comment?
-
 
   # 3.11"; # Did you read the comment?
 
