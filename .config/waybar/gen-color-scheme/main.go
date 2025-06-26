@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	filltemplates "gen-color-scheme/fill_templates"
 	gen_color_scheme "gen-color-scheme/get_colors"
 	"os"
@@ -43,7 +42,7 @@ func main() {
 
 	styleSheet := strings.Join(filledComponents, "\n\n")
 
-	path := fmt.Sprintf(`/home/%v/.config/waybar/`, os.Getenv("USER"))
+	path := filltemplates.GetWaybarPath()
 
 	err = os.WriteFile(path+"colors.css", []byte(defines), 0644)
 
