@@ -20,7 +20,7 @@ func (wallColors *WallpaperColors) GetColorStr() string {
 }
 
 func (wallColors *WallpaperColors) FillInTemplate() string {
-	file, err := os.ReadFile("templates/monitor_template.css")
+	file, err := os.ReadFile(GetWaybarPath() + "gen-color-scheme/templates/monitor_template.css")
 
 	if err != nil {
 		panic("could not find monitor template")
@@ -31,3 +31,5 @@ func (wallColors *WallpaperColors) FillInTemplate() string {
 	return string(re.ReplaceAll(file, []byte(wallColors.WallpaperAndMonitor.Monitor)))
 
 }
+
+func GetWaybarPath() string { return fmt.Sprintf(`/home/%v/.config/waybar/`, os.Getenv("USER")) }
