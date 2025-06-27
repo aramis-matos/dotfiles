@@ -29,10 +29,6 @@
   services.mullvad-vpn.enable = true;
   networking.interfaces.eno1.wakeOnLan.enable = true;
 
-  networking.extraHosts = ''
-    127.0.0.1 server test.localhost.com
-  '';
-
   # nix.settings.experimental-features = ["nix-command" "flakes"];
   nix.settings = {
     experimental-features = [
@@ -150,7 +146,7 @@
   };
 
   systemd.tmpfiles.rules = [
-      "f /dev/shm/looking-glass 0660 ccyanide qemu-libvirtd -"
+    "f /dev/shm/looking-glass 0660 ccyanide qemu-libvirtd -"
   ];
 
   services.ddclient = {
