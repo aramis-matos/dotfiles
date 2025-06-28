@@ -180,7 +180,7 @@
         "$mainMod, C, exec, code --ozone-platform=wayland --enable-features=WaylandWindowDecorations"
         "$mainMod SHIFT, o, exec, shutdown now"
         "$mainMod SHIFT, p, exec, reboot"
-        "$mainMod SHIFT, BackSpace, exec, ~/.config/hypr/scripts/switch-source"
+        "$mainMod SHIFT, BackSpace, exec, switch-sink"
         "$mainMod, BackSpace, exec, playerctl play-pause -a"
         "$mainMod SHIFT, S, exec, grimblast copy area"
         "ALT, Print, exec, grimblast copy screen"

@@ -18,6 +18,11 @@
       url = "github:aramis-matos/gen-color-scheme";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    switch-sinks = {
+      url = "github:aramis-matos/switch-sinks";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs,  ... }@inputs: {

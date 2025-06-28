@@ -21,6 +21,8 @@
       speedcrunch
       ripgrep
       nautilus
+      tree
+      pulseaudio
     ];
   };
 }

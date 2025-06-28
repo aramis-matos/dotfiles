@@ -69,6 +69,10 @@ in
 
   #programs.dconf.settings.enable = true;
 
+  environment.systemPackages = with pkgs; [
+    fcitx5-configtool
+  ];
+
   fonts.fontDir.enable = true;
   fonts = {
     packages = with pkgs; [
