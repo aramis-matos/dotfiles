@@ -44,19 +44,16 @@
 
   # boot.blacklistedKernelModules = ["amdgpu"];
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/81e8c407-5bc7-4349-a07c-273e678333f6";
-    fsType = "ext4";
-  };
+  fileSystems."/" =
+    { device = "/dev/disk/by-uuid/dd7b4f7a-0287-451a-8cfd-ee6ad4dffe6d";
+      fsType = "ext4";
+    };
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/D39D-B47E";
-    fsType = "vfat";
-    options = [
-      "fmask=0077"
-      "dmask=0077"
-    ];
-  };
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/7658-4A0C";
+      fsType = "vfat";
+      options = [ "fmask=0077" "dmask=0077" ];
+    };
 
   fileSystems."/home/ccyanide/mass_storage" = {
     device = "/dev/disk/by-uuid/54196560-2008-474d-9258-27847487b39c";

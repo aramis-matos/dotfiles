@@ -1,11 +1,9 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
-
 {
   inputs,
   lib,
-  config,
   pkgs,
   ...
 }:
@@ -16,6 +14,13 @@
     ./hardware-configuration.nix
     inputs.home-manager.nixosModules.home-manager
   ];
+
+  home-manager = {
+    extraSpecialArgs = { inherit inputs; };
+    users = {
+      ccyanide = import ./home.nix;
+    };
+  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -85,15 +90,19 @@
   services.xserver.exportConfiguration = true;
 
   # Enable the GNOME Desktop Environment.
-  services.displayManager.gdm.enable = true;
-  services.displayManager.gdm.wayland = true;
-  services.desktopManager.gnome.enable = false;
+  # services.displayManager.gdm.enable = true;
+  # services.displayManager.gdm.wayland = true;
+  # services.desktopManager.gnome.enable = false;
+  services.xserver.displayManager.lightdm = {
+    enable = true;
+  };
+
   services.displayManager = {
     autoLogin = {
       enable = true;
       user = "ccyanide";
     };
-    defaultSession = "hyprland";
+    # defaultSession = "hyprland";
   };
 
   # Configure keymap in X11
@@ -193,7 +202,7 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
-  services.flatpak.enable = true;
+  # services.flatpak.enable = true;
   # Jellyfin
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -262,7 +271,6 @@
     hyprpaper
     grimblast
     waybar
-    home-manager
     rustup
     haskell-language-server
     ghc
@@ -313,6 +321,7 @@
     pciutils
     looking-glass-client
     ripgrep
+    inputs.gen-color-scheme.packages.x86_64-linux.default
   ];
 
   #programs.dconf.settings.enable = true;
@@ -331,13 +340,6 @@
 
   };
 
-  home-manager = {
-    extraSpecialArgs = { inherit inputs; };
-    users = {
-      ccyanide = import ./home.nix;
-    };
-  };
-
   programs.neovim = {
     enable = true;
     defaultEditor = true;
@@ -347,15 +349,15 @@
     enable = true;
 
     shellAliases = {
-      update = "cd ~/dotfiles/nixos && sudo nix flake update && sudo nixos-rebuild switch --flake ./#default && home-manager switch; cd -";
+      update = "cd ~/dotfiles/nixos && sudo nix flake update && sudo nixos-rebuild switch --flake ./#default";
       "..." = "cd ../..";
       "code" = "code --ozone-platform=wayland --enable-features=WaylandWindowDecorations";
     };
 
-    shellInit = "
-set fish_greeting
-set -g fish_key_bindings fish_vi_key_bindings
-    ";
+    shellInit = ''
+      set fish_greeting
+      set -g fish_key_bindings fish_vi_key_bindings
+    '';
   };
 
   programs.bash = {

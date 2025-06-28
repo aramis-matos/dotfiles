@@ -9,6 +9,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    minimal-tmux = {
+      url = "github:niksingh710/minimal-tmux-status";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    gen-color-scheme = {
+      url = "github:aramis-matos/gen-color-scheme";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs,  ... }@inputs: {
