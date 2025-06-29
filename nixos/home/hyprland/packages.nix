@@ -12,7 +12,6 @@
     home.packages = with pkgs; [
       kitty
       wl-clipboard
-      waybar
       mpv
       mpvpaper
       waytrogen

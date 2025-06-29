@@ -3,7 +3,11 @@ let
   username = import ../users/name.nix;
 in
 {
-  services.displayManager.gdm = {
+  # services.displayManager.gdm = {
+  #   enable = true;
+  # };
+
+  services.xserver.displayManager.lightdm = {
     enable = true;
   };
 
