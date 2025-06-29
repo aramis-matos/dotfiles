@@ -15,6 +15,7 @@ in
   imports = [
     ./home/shells/direnv.nix
     ./home/shells/sh.nix
+    ./home/shells/prompt-theme/oh-my-posh.nix
     ./home/hyprland/hypr.nix
     ./home/hyprland/packages.nix
     ./home/terminals/kitty/kitty.nix
