@@ -1,6 +1,6 @@
 {pkgs,...}:
 let
-  username = "ccyanide";
+  username = import ./name.nix;
 in
 {
   users.users.${username} = {

@@ -1,9 +1,8 @@
 let
-  username = "ccyanide";
+  username = import ./system/users/name.nix;
 in
 {
   config,
-  # pkgs,
   ...
 }:
 
@@ -20,7 +19,6 @@ in
     ./home/hyprland/packages.nix
     ./home/terminals/kitty/kitty.nix
     ./home/terminals/alacritty/alacritty.nix
-    ./home/tmux/tmux.nix
     ./home/fuzzel/fuzzel.nix
     ./home/keyboard/fcitx5.nix
     ./home/packages/dev-tools/haskell.nix
@@ -37,6 +35,8 @@ in
     ./home/packages/networking/packages.nix
     ./home/packages/utils/packages.nix
     ./home/packages/vm/packages.nix
+    ./home/programs/nvim/nvim.nix
+    ./home/programs/tmux/tmux.nix
   ];
 
   # This value determines the Home Manager release that your configuration is

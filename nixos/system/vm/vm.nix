@@ -1,6 +1,6 @@
 {pkgs,...}:
 let
-  username = "ccyanide";
+  username = import ../users/name.nix;
 in
 {
   virtualisation.spiceUSBRedirection.enable = true;
