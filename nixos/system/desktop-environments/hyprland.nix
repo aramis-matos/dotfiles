@@ -3,6 +3,7 @@
   programs.hyprland = {
     # Install the packages from nixpkgs
     enable = true; # Whether to enable XWayland
+    withUWSM = true;
     xwayland.enable = true;
   };
   programs.xwayland.enable = true;

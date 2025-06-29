@@ -3,6 +3,7 @@
 {
   wayland.windowManager.hyprland = {
     enable = true;
+    systemd.enable = false;
     settings = {
       "$mainMod" = "SUPER";
       monitor = [
@@ -199,10 +200,8 @@
       "windowrulev2" = "suppressevent maximize, class:.*"; # You'll probably like this.
 
       "exec-once" = [
-        "waybar & "
         "waytrogen -r"
         "fcitx5 -d &"
-        "sunshine &"
       ];
 
       "exec" = [
