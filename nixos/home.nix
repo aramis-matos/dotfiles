@@ -37,6 +37,7 @@ in
     ./home/packages/vm/packages.nix
     ./home/programs/nvim/nvim.nix
     ./home/programs/tmux/tmux.nix
+    ./home/programs/waybar/waybar.nix
   ];
 
   # This value determines the Home Manager release that your configuration is
