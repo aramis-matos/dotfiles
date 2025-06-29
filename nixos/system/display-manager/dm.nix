@@ -1,9 +1,6 @@
-{ ... }:
-let
-  username = "ccyanide";
-in
+{ username, ... }:
 {
-  services.xserver.displayManager.lightdm = {
+  services.displayManager.gdm = {
     enable = true;
   };
 
