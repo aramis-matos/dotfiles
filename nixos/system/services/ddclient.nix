@@ -9,7 +9,7 @@ in
     usev6 = "webv6, webv6=https://cloudflare.com/cdn-cgi/trace";
     protocol = "cloudflare";
     zone = "aramismatos1.com";
-    passwordFile = "/home/${username}/ddclient_password";
+    passwordFile = "/home/ccyanide/ddclient_password";
     domains = [
       "aramismatos1.com"
       "*.aramismatos1.com"
