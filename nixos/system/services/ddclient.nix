@@ -1,6 +1,6 @@
 { ... }:
 let
-  username = "ccyanide";
+  username = import ../users/name.nix;
 in
 {
   services.ddclient = {

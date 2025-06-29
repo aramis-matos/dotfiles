@@ -7,7 +7,7 @@
   ...
 }:
 let
-  username = "ccyanide";
+  username = import ./system/users/name.nix;
 in
 {
   imports = [

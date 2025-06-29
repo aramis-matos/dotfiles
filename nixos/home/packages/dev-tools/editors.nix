@@ -9,7 +9,6 @@
 
   config = lib.mkIf config.dev-tools.editors.enable {
     home.packages = with pkgs; [
-      neovim
       prettierd
       vscode.fhs
       tmux
