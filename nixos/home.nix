@@ -32,6 +32,7 @@ in
     ./home/packages/dev-tools/javascript.nix
     ./home/packages/dev-tools/elixir.nix
     ./home/packages/dev-tools/latex.nix
+    ./home/packages/dev-tools/python.nix
     ./home/packages/dev-tools/editors.nix
     ./home/packages/sys-monitoring/monitoring.nix
     ./home/packages/games/games.nix
@@ -62,6 +63,7 @@ in
     nix.enable = true;
     elixir.enable = false;
     latex.enable = false;
+    python.enable = false;
     editors.enable = true;
   };
 
