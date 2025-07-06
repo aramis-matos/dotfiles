@@ -4,7 +4,7 @@ let
 in
 {
   virtualisation.spiceUSBRedirection.enable = true;
-  # virtualisation.waydroid.enable = true;
+  virtualisation.waydroid.enable = false;
   virtualisation.docker.enable = true;
   virtualisation.docker.rootless = {
     enable = true;

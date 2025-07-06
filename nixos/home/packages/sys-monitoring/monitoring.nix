@@ -9,7 +9,7 @@
 
   config = lib.mkIf config.system.monitoring.enable {
     home.packages = with pkgs; [
-      radeontop
+      amdgpu_top
       btop
       pulsemixer
       ncdu
