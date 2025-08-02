@@ -9,7 +9,7 @@
 
   config = lib.mkIf config.video.editing.enable {
     home.packages = with pkgs; [
-      gimp-with-plugins
+      # gimp-with-plugins
       obs-studio
       waifu2x-converter-cpp
       kdePackages.kdenlive

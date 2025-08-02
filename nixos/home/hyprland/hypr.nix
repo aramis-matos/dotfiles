@@ -200,8 +200,8 @@
       "windowrulev2" = "suppressevent maximize, class:.*"; # You'll probably like this.
 
       "exec-once" = [
-        "waytrogen -r"
         "fcitx5 -d &"
+        "waytrogen -r -s 500"
       ];
 
       "exec" = [

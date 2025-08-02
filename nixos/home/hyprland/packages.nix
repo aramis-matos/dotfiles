@@ -14,6 +14,7 @@
       wl-clipboard
       mpv
       mpvpaper
+      swww
       waytrogen
       playerctl
       picom
