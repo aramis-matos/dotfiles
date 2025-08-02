@@ -13,7 +13,7 @@
       gamemode
       mangohud
       heroic
-      prismlauncher
+      # prismlauncher
       lutris
       pcsx2
       mgba
