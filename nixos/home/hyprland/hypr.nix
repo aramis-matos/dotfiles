@@ -1,4 +1,4 @@
-{...}: 
+{config,...}: 
 
 {
   wayland.windowManager.hyprland = {
@@ -202,6 +202,7 @@
       "exec-once" = [
         "fcitx5 -d &"
         "waytrogen -r -s 500"
+        "emacs --daemon -q -l ${config.home.file.emacs.source}"
       ];
 
       "exec" = [

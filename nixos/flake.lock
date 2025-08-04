@@ -45,11 +45,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1752941923,
-        "narHash": "sha256-zNfz0ljLSkVSDlg9onIvlAsGar3gGJ3t+azxgML8WmY=",
+        "lastModified": 1754128579,
+        "narHash": "sha256-jfE1zixnEsFOaPN1vTFSJ3x6e8g1CPpGGjIeWtCJXIA=",
         "owner": "aramis-matos",
         "repo": "gen-color-scheme",
-        "rev": "146af23b20b24431af45e4390e20844db2591177",
+        "rev": "668dc32227495eb12b3527ac32b3d6da3caa600b",
         "type": "github"
       },
       "original": {
@@ -70,11 +70,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1750314194,
-        "narHash": "sha256-SjpXWEeB+UIMzuCAF94PuyAXpJdnBLF45JvI6o4wKIU=",
+        "lastModified": 1754078208,
+        "narHash": "sha256-YVoIFDCDpYuU3riaDEJ3xiGdPOtsx4sR5eTzHTytPV8=",
         "owner": "nix-community",
         "repo": "gomod2nix",
-        "rev": "a5f75f563748599d448a4a076816041d7b0fc07e",
+        "rev": "7f963246a71626c7fc70b431a315c4388a0c95cf",
         "type": "github"
       },
       "original": {
@@ -95,11 +95,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1745875161,
-        "narHash": "sha256-0YkWCS13jpoo3+sX/3kcgdxBNt1VZTmvF+FhZb4rFKI=",
+        "lastModified": 1754078208,
+        "narHash": "sha256-YVoIFDCDpYuU3riaDEJ3xiGdPOtsx4sR5eTzHTytPV8=",
         "owner": "nix-community",
         "repo": "gomod2nix",
-        "rev": "2cbd7fdd6eeab65c494cc426e18f4e4d2a5e35c0",
+        "rev": "7f963246a71626c7fc70b431a315c4388a0c95cf",
         "type": "github"
       },
       "original": {
@@ -115,11 +115,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1754085240,
-        "narHash": "sha256-kVHCrTWEe8B1thAhFag1bk4QPY0ZP45V9vPbrwPHoNo=",
+        "lastModified": 1754225444,
+        "narHash": "sha256-mv01SQtqlhBMavc1dgNjgqJw4WfZxy+w3xBgwJU3YmU=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "e102920c1becb114645c6f92fe14edc0b05cc229",
+        "rev": "0de18bd5c6681280d7ae017fa34ffd91bdcf0557",
         "type": "github"
       },
       "original": {
@@ -182,11 +182,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1751142636,
-        "narHash": "sha256-9K+kUUVvIxCeoSZnU7I0fjqgKhjG4m8+Y57nnoBeUGs=",
+        "lastModified": 1754128378,
+        "narHash": "sha256-d10kU+aZ6chDgIPxHvlwq69eDEHSCERSjcaRaSPuOj8=",
         "owner": "aramis-matos",
         "repo": "switch-sinks",
-        "rev": "b2f5db3951facf83c355d36d56575085572f9767",
+        "rev": "d969be149ab020e9c4bcdba15055d8d6d7d56cc4",
         "type": "github"
       },
       "original": {
