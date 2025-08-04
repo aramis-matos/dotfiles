@@ -43,6 +43,7 @@ in
     ./home/programs/nvim/nvim.nix
     ./home/programs/tmux/tmux.nix
     ./home/programs/waybar/waybar.nix
+    ./home/programs/emacs/emacs.nix
   ];
 
   # This value determines the Home Manager release that your configuration is
@@ -107,6 +108,7 @@ in
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
+
 
     Downloads.source = config.lib.file.mkOutOfStoreSymlink (
       config.home.homeDirectory + "/mass_storage/Downloads"
