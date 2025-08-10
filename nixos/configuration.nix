@@ -4,6 +4,7 @@
 {
   inputs,
   pkgs,
+  lib,
   ...
 }:
 let
@@ -14,9 +15,11 @@ in
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     inputs.home-manager.nixosModules.home-manager
+    inputs.lanzaboote.nixosModules.lanzaboote
     ./system/services/ddclient.nix
     ./system/services/bluetooth.nix
     ./system/services/audio.nix
+    ./system/services/keyd.nix
     ./system/users/users.nix
     ./system/vm/vm.nix
     ./system/networking/networking.nix
@@ -39,9 +42,14 @@ in
   };
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
+  # boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 0;
+  boot.loader.systemd-boot.enable = lib.mkForce false;
+  boot.lanzaboote = {
+    enable = true;
+    pkiBundle = "/var/lib/sbctl";
+  };
 
   # nix.settings.experimental-features = ["nix-command" "flakes"];
   nix.settings = {
@@ -71,6 +79,7 @@ in
 
   environment.systemPackages = with pkgs; [
     fcitx5-configtool
+    sbctl
   ];
 
   fonts.fontDir.enable = true;
