@@ -17,6 +17,7 @@
 
 (require 'package)
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
+			 ("melpa-stable" . "https://stable.melpa.org/packages/")
 			 ("org" . "https://orgmode.org/elpa")
 			 ("elpa" . "https://elpa.gnu.org/packages/")))
 
@@ -156,10 +157,28 @@
 (use-package hydra)
 
 (defhydra hydra-text-scale (:timeout 4)
-	  "scale text"
-	  ("j" text-scale-increase "in")
-	  ("k" text-scale-decrease "out")
-	  ("f" nil finished :exit t))
+  ("j" text-scale-increase "in")
+  ("k" text-scale-decrease "out")
+  ("f" nil "finished" :exit t))
 
 (rune/leader-keys
- "ts" '(hydra-text-scale/body : which-key "scale-text"))
+  "ts" '(hydra-text-scale/body :which-key "scale-text"))
+
+(use-package projectile
+  :diminish projectile-mode
+  :config (projectile-mode)
+  :custom
+  ((projectile-completion-system 'ivy))
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  :init
+  (when (file-directory-p "~/dotfiles")
+    (setq projectile-project-search-path '("~/dotfiles")))
+  (setq projectile-switch-project-action #'projectile-dired))
+
+(use-package counsel-projectile
+  :config (counsel-projectile-mode))
+
+(use-package magit
+  :custom
+  (magit-display-buffer-function #'magit-display-buffer-same-window-except-diff-v1))

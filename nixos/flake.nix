@@ -23,6 +23,8 @@
       url = "github:aramis-matos/switch-sinks";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    lanzaboote.url = "github:nix-community/lanzaboote/v0.4.2";
   };
 
   outputs = { self, nixpkgs,  ... }@inputs: {
