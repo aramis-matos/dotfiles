@@ -24,6 +24,7 @@
       tree
       pulseaudio
       linuxKernel.packages.linux_zen.xpadneo
+      podman-compose
     ];
   };
 }
