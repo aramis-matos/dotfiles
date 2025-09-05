@@ -16,12 +16,10 @@
 
     gen-color-scheme = {
       url = "github:aramis-matos/gen-color-scheme";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     switch-sinks = {
       url = "github:aramis-matos/switch-sinks";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     lanzaboote.url = "github:nix-community/lanzaboote/v0.4.2";

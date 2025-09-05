@@ -20,6 +20,7 @@ in
     ./home/shells/xdg.nix
     ./home/shells/prompt-theme/oh-my-posh.nix
     ./home/hyprland/hypr.nix
+    ./home/hyprland/swaync.nix
     ./home/hyprland/packages.nix
     ./home/terminals/kitty/kitty.nix
     ./home/terminals/alacritty/alacritty.nix

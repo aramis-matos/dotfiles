@@ -9,12 +9,13 @@ in
     extraGroups = [
       "networkmanager"
       "wheel"
-      "docker"
+      # "docker"
       "libvirtd"
       "libvirt"
       "input"
       "kvm"
       "acme"
+      "podman"
     ];
     packages = with pkgs; [
       librewolf
