@@ -9,6 +9,7 @@
   networking.networkmanager.enable = true;
 
   networking.firewall.allowedTCPPorts = [
+    6443
     4443
     8880
     47984

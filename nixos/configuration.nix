@@ -22,6 +22,7 @@ in
     ./system/services/keyd.nix
     ./system/users/users.nix
     ./system/vm/vm.nix
+    ./system/vm/k3s.nix
     ./system/networking/networking.nix
     ./system/display-manager/dm.nix
     ./system/locales/locales.nix
