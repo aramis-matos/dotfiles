@@ -10,6 +10,8 @@
 
   networking.firewall.allowedTCPPorts = [
     6443
+    2379
+    2380
     4443
     8880
     47984
@@ -18,6 +20,7 @@
     48010
   ];
   networking.firewall.allowedUDPPorts = [
+    8472
     4443
     8880
   ];

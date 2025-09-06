@@ -11,6 +11,8 @@
     home.packages = with pkgs; [
       pciutils
       looking-glass-client
+      minikube
+      docker-machine-kvm2
     ];
   };
 }

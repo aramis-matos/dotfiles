@@ -9,3 +9,4 @@
 .config/waybar/dist/index.js
 .config/waybar/dist/index.js.map
 .config/nvim/lazy-lock.json
+k8s/certs/issuer-secret
