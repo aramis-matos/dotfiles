@@ -1,0 +1,11 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: nginx-ingress-certificate
+spec:
+  secretName: nginx-certificate-secret
+  issuerRef:
+    name: cloudflare-cluster-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - "*.aramismatos1.com"
