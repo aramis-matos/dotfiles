@@ -5,17 +5,14 @@ in
 {
   virtualisation.spiceUSBRedirection.enable = true;
   virtualisation.waydroid.enable = false;
-  virtualisation.docker.enable = false;
-  virtualisation.docker.rootless = {
-    enable = true;
-    setSocketVariable = true;
-  };
-  virtualisation.containers.enable = true;
-  virtualisation = {
-    podman = {
+
+
+  virtualisation.docker = {
+    enable = true; 
+    liveRestore = false;
+    rootless = {
       enable = true;
-      dockerCompat = false;
-      defaultNetwork.settings.dns_enabled = true;
+      setSocketVariable = true;
     };
   };
 
