@@ -6,23 +6,41 @@ spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - minikube.lab.home
-    - "*.aramismatos1.com"
-    secretName: nginx-ingress-certificate
+    - "jellyfin.minikube.lab.home"
+    - "test.minikube.lab.home"
+    secretName: lab-nginx-certificate
+  - hosts:
+    - "test.aramismatos1.com"
+    - "jellyfin.aramismatos1.com"
+    secretName: nginx-certificate-secret
   rules:
-  - http:
+  - host: "jellyfin.minikube.lab.home"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: jellyfin-service
+            port:
+              number: 8096
+  - host: "jellyfin.aramismatos1.com"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: jellyfin-service
+            port:
+              number: 8096
+  - host: "test.aramismatos1.com"
+    http:
       paths:
       - pathType: Prefix
-        path: "/test"
+        path: "/"
         backend:
           service:
             name: test-service
             port: 
               number: 8080
-      - pathType: Prefix
-        path: "/jellyfin"
-        backend:
-          service:
-            name: jellyfin-service
-            port: 
-              number: 8096

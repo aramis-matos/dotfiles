@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: default-nginx-ingress-certificate
+spec:
+  secretName: default-nginx-certificate
+  issuerRef:
+    name: lab-ca-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - "*.minikube.lab.home"
+  commonName: "Nginx Default Controller"
