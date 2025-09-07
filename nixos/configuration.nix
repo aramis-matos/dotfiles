@@ -109,6 +109,10 @@ in
   #   enableSSHSupport = true;
   # };
 
+  security.pki.certificates = [
+    (builtins.readFile ./home-ca/home-ca.crt)
+  ];
+
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
