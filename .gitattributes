@@ -1,0 +1,2 @@
+nixos/home-ca/** filter=git-crypt diff=git-crypt
+nixos/home-ca filter=git-crypt diff=git-crypt
