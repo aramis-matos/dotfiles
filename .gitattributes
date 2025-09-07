@@ -1,3 +1,4 @@
 nixos/home-ca/** filter=git-crypt diff=git-crypt
 nixos/home-ca filter=git-crypt diff=git-crypt
 k8s/certs/issuer-secret.yml filter=git-crypt diff=git-crypt
+k8s/lab-certs/lab-ca-secret.yml filter=git-crypt diff=git-crypt
