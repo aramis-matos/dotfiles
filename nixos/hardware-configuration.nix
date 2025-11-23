@@ -60,6 +60,12 @@
     fsType = "ext4";
   };
 
+  # fileSystems."/home/ccyanide/ntfs_mount" = {
+  #   device = "/dev/disk/by-uuid/123c65da-05aa-4ca1-9d37-6d0566996d6";
+  #   fsType = "ntfs-3g";
+  # };
+
+
   swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking

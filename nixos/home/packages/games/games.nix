@@ -16,7 +16,6 @@
       # prismlauncher
       lutris
       pcsx2
-      mgba
       protonup-qt
       protontricks
       bottles

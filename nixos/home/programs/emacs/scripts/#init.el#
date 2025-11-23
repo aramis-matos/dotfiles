@@ -191,5 +191,4 @@
   (lsp-enable-which-key-integration t))
 
 (use-package elixir-ts-mode
-  :mode "\\.ex|.heex\\"
-  :hook (elixir-ts-mode . lsp-deferred))
+    :ensure t)

@@ -190,6 +190,8 @@
   :config
   (lsp-enable-which-key-integration t))
 
-(use-package elixir-ts-mode
-  :mode "\\.ex|.heex\\"
-  :hook (elixir-ts-mode . lsp-deferred))
+;; (use-package typescript-mode
+;;   :mode "\\.tsx?\\"
+;;   :hook (typescript-mode . lsp-deffered)
+;;   :config
+;;   (setq typescript-indent-level 2))

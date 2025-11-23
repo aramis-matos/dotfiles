@@ -23,6 +23,8 @@
     };
 
     lanzaboote.url = "github:nix-community/lanzaboote/v0.4.2";
+
+    emacs-overlay.url = "github:nix-community/emacs-overlay";
   };
 
   outputs = { self, nixpkgs,  ... }@inputs: {

@@ -11,6 +11,7 @@
     home.packages = with pkgs; [
       erlang
       elixir
+      beam27Packages.elixir-ls
     ];
   };
 }

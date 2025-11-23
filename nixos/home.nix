@@ -63,7 +63,7 @@ in
     version-control.enable = true;
     rust.enable = false;
     nix.enable = true;
-    elixir.enable = false;
+    elixir.enable = true;
     latex.enable = false;
     python.enable = false;
     editors.enable = true;
@@ -139,8 +139,12 @@ in
 
   programs.git = {
     enable = true;
-    userName = "aramis-matos";
-    userEmail = "aramis.matos1@gmail.com";
+    settings = {
+      user = {
+        name = "aramis-matos";
+	email = "aramis.matos1@gmail.com";
+      };
+    };
   };
 
   # Let Home Manager install and manage itself.

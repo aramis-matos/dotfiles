@@ -79,7 +79,7 @@ in
   #programs.dconf.settings.enable = true;
 
   environment.systemPackages = with pkgs; [
-    fcitx5-configtool
+    qt6Packages.fcitx5-configtool
     sbctl
   ];
 
@@ -92,7 +92,7 @@ in
       nerd-fonts.hasklug
       noto-fonts
       noto-fonts-cjk-sans
-      noto-fonts-emoji
+      noto-fonts-color-emoji
     ];
   };
 
