@@ -177,7 +177,7 @@
 
         # Personal Binds
         "$mainMod SHIFT, F, fullscreen"
-        "$mainMod, F, exec, librewolf"
+        "$mainMod, F, exec, zen"
         "$mainMod, C, exec, code --ozone-platform=wayland --enable-features=WaylandWindowDecorations"
         "$mainMod SHIFT, o, exec, systemctl poweroff"
         "$mainMod SHIFT, p, exec, systemctl reboot"
@@ -201,7 +201,7 @@
 
       "exec-once" = [
         "fcitx5 -d &"
-        "waytrogen -r -s 500"
+        "waytrogen -r -s 1000"
         "emacs --daemon -q -l ${config.home.file.emacs.source}"
       ];
 

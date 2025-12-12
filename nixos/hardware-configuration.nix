@@ -9,51 +9,62 @@
   ...
 }:
 
-{ imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
-  ];
+{ 
+# imports = [
+#     (modulesPath + "/installer/scan/not-detected.nix")
+#   ];
+#
+#   boot.initrd.availableKernelModules = [
+#     "nvme"
+#     "xhci_pci"
+#     "ahci"
+#     "usb_storage"
+#     "usbhid"
+#     "sd_mod"
+#   ];
+#   boot.initrd.kernelModules = [ ];
+#   boot.kernelModules = [
+#     "kvm-amd"
+#     "vfio_pci"
+#     "vfio"
+#     "vfio_iommu_type1"
+#     "vfio_virqfd"
+#
+#     "nvidia"
+#     "nvidia_modeset"
+#     "nvidia_uvm"
+#     "nvidia_drm"
+#   ];
+#   boot.kernelParams = [
+#     "amd_iommu=on"
+#     "vfio-pci.ids=10de:2d04,10de:22eb"
+#     # "vfio-pci.ids=1002:744c,1002:ab30"
+#   ];
+#   boot.extraModulePackages = [
+#   ];
+#
+#   # boot.blacklistedKernelModules = ["amdgpu"];
 
-  boot.initrd.availableKernelModules = [
-    "nvme"
-    "xhci_pci"
-    "ahci"
-    "usb_storage"
-    "usbhid"
-    "sd_mod"
-  ];
+  imports =
+    [ (modulesPath + "/profiles/qemu-guest.nix")
+    ];
+
+  boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "sr_mod" "virtio_blk" ];
+
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [
-    "kvm-amd"
-    "vfio_pci"
-    "vfio"
-    "vfio_iommu_type1"
-    "vfio_virqfd"
-
-    "nvidia"
-    "nvidia_modeset"
-    "nvidia_uvm"
-    "nvidia_drm"
-  ];
-  boot.kernelParams = [
-    "amd_iommu=on"
-    "vfio-pci.ids=10de:2d04,10de:22eb"
-    # "vfio-pci.ids=1002:744c,1002:ab30"
-  ];
-  boot.extraModulePackages = [
-  ];
-
-  # boot.blacklistedKernelModules = ["amdgpu"];
+  boot.kernelModules = [ "kvm-amd" ];
+  boot.extraModulePackages = [ ];
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/dd7b4f7a-0287-451a-8cfd-ee6ad4dffe6d";
       fsType = "ext4";
     };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/7658-4A0C";
-      fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
-    };
+  # fileSystems."/boot" =
+  #   { device = "/dev/disk/by-uuid/7658-4A0C";
+  #     fsType = "vfat";
+  #     options = [ "fmask=0077" "dmask=0077" ];
+  #   };
 
   fileSystems."/home/ccyanide/mass_storage" = {
     device = "/dev/disk/by-uuid/54196560-2008-474d-9258-27847487b39c";
@@ -65,14 +76,17 @@
   #   fsType = "ntfs-3g";
   # };
 
-
   swapDevices = [ ];
+
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+
+  # swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
-  networking.useDHCP = lib.mkDefault true;
+  # networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.eno1.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp11s0.useDHCP = lib.mkDefault true;
 

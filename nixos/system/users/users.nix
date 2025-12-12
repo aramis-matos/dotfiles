@@ -17,7 +17,7 @@ in
       "acme"
     ];
     packages = with pkgs; [
-      librewolf
+      # librewolf-bin
       #  thunderbird
     ];
     shell = pkgs.fish;

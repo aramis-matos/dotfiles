@@ -24,7 +24,11 @@
 
     lanzaboote.url = "github:nix-community/lanzaboote/v0.4.2";
 
-    emacs-overlay.url = "github:nix-community/emacs-overlay";
+    zen-browser = {
+      url = "github:0xc000022070/zen-browser-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs = { self, nixpkgs,  ... }@inputs: {

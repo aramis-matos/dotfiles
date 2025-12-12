@@ -134,7 +134,6 @@ in
   #
   home.sessionVariables = {
     # EDITOR = "emacs";
-    BROWSER = "${lib.getExe pkgs.librewolf}";
   };
 
   programs.git = {
