@@ -1,7 +1,7 @@
 { ... }:
 let
   shell_aliases = {
-    update = "sudo nix flake update --flake /home/ccyanide/nixos/ && sudo nixos-rebuild switch --flake /home/ccyanide/nixos/#default";
+    update = "sudo nix flake update --flake /home/$USER/dotfiles/nixos/ && sudo nixos-rebuild switch --flake /home/$USER/dotfiles/nixos/#default";
     "..." = "cd ../..";
     code = "code --ozone-platform=wayland --enable-features=WaylandWindowDecorations";
     # kubectl = "minikube kubectl -- ";
