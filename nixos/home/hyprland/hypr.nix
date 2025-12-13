@@ -201,7 +201,7 @@
 
       "exec-once" = [
         "fcitx5 -d &"
-        "waytrogen -r -s 1000"
+        "waytrogen -r"
         "emacs --daemon -q -l ${config.home.file.emacs.source}"
       ];
 

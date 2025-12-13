@@ -10,6 +10,7 @@
 
   networking.firewall.allowedTCPPorts = [
     6443
+    8080
     2379
     2380
     4443
@@ -36,4 +37,9 @@
   ];
   # Or disable the firewall altogether.
   networking.firewall.enable = true;
+
+  networking.extraHosts = 
+    ''
+      127.0.0.1 jellyfin.minikube.lab.home
+    '';
 }

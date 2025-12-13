@@ -7,6 +7,7 @@ let
     # kubectl = "minikube kubectl -- ";
     vim = "nvim";
     vi = "nvim";
+    kc = "sudo k3s kubectl";
   };
 in
 {

@@ -8,6 +8,8 @@ spec:
   ports:
   - port: 8096
     targetPort: 8096
+    name: jellyfin-http
   - port: 8920
-    targetPort: 8096
+    targetPort: 8920
+    name: jellyfin-https
 
