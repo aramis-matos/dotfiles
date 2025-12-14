@@ -3,8 +3,6 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {
   inputs,
-  pkgs,
-  lib,
   ...
 }:
 let
@@ -32,6 +30,9 @@ in
       ./system/games/sunshine.nix
       ./system/desktop-environments/hyprland.nix
       ./system/programs/fish/fish.nix
+      ./system/programs/gnupg/gnupg.nix
+      ./system/fonts/fonts.nix
+      ./system/bootloader/bootloader.nix
     ];
 
   home-manager = {
@@ -42,19 +43,6 @@ in
     };
   };
 
-  # Bootloader.
-  boot.loader.grub.enable = false;
-  boot.loader.grub.device = "/dev/vda";
-  boot.loader.grub.useOSProber = true;
-
-  boot.loader.systemd-boot.enable = lib.mkForce false;
-  boot.lanzaboote = {
-    enable = true;
-    pkiBundle = "/var/lib/sbctl";
-  };
-
-  # Use latest kernel.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   nix.settings = {
     experimental-features = [
@@ -68,35 +56,6 @@ in
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    qt6Packages.fcitx5-configtool
-    sbctl
-  ];
-
-
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-
-  fonts.fontDir.enable = true;
-  fonts = {
-    packages = with pkgs; [
-      nerd-fonts.fira-code
-      nerd-fonts.droid-sans-mono
-      nerd-fonts.cousine
-      nerd-fonts.hasklug
-      noto-fonts
-      noto-fonts-cjk-sans
-      noto-fonts-color-emoji
-    ];
-  };
-
-  security.pki.certificates = [
-    (builtins.readFile ./home-ca/home-ca.crt)
-  ];
-
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

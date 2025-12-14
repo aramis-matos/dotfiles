@@ -13,19 +13,13 @@
       arandr
       brave
       fastfetch
-      vrrtest
-      flatpak
       unzip
-      efibootmgr
       unrar
       speedcrunch
       ripgrep
       nautilus
       tree
-      pulseaudio
       linuxKernel.packages.linux_zen.xpadneo
-      podman-compose
-      git-crypt
       ntfs3g
     ];
   };

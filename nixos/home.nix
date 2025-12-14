@@ -35,6 +35,7 @@ in
     ./home/packages/dev-tools/latex.nix
     ./home/packages/dev-tools/python.nix
     ./home/packages/dev-tools/editors.nix
+    ./home/packages/dev-tools/git.nix
     ./home/packages/sys-monitoring/monitoring.nix
     ./home/packages/games/games.nix
     ./home/packages/video-editing/editing.nix
@@ -45,6 +46,7 @@ in
     ./home/programs/tmux/tmux.nix
     ./home/programs/waybar/waybar.nix
     ./home/programs/emacs/emacs.nix
+    ./home/programs/gpg/gpg.nix
   ];
 
   # This value determines the Home Manager release that your configuration is
@@ -136,15 +138,6 @@ in
     # EDITOR = "emacs";
   };
 
-  programs.git = {
-    enable = true;
-    settings = {
-      user = {
-        name = "aramis-matos";
-	email = "aramis.matos1@gmail.com";
-      };
-    };
-  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
