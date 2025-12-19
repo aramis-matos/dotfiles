@@ -1,6 +1,6 @@
 {...}:
 {
-  security.pki.certificates = [
-    (builtins.readFile ../../home-ca/home-ca.crt)
+  security.pki.certificateFiles = [
+    ../../home-ca/home-ca.crt
   ];
 }

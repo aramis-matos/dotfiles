@@ -28,7 +28,6 @@
       xwayland
       inputs.gen-color-scheme.packages.x86_64-linux.default
       inputs.switch-sinks.packages.x86_64-linux.default
-      inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
   };
 }
