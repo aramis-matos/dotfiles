@@ -3,7 +3,7 @@
   networking.hostName = "panda"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   networking.firewall.checkReversePath = "loose";
-  networking.wireguard.enable = true;
+  networking.wireguard.enable = false;
   services.mullvad-vpn.enable = true;
   networking.interfaces.eno1.wakeOnLan.enable = true;
   networking.networkmanager.enable = true;
@@ -24,6 +24,7 @@
     8472
     4443
     8880
+    51820
   ];
   networking.firewall.allowedUDPPortRanges = [
     {

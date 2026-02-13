@@ -1,11 +1,8 @@
 {config,...}: 
-let
-  username = ../../system/users/name.nix;
-in
 {
   wayland.windowManager.hyprland = {
     enable = true;
-    systemd.enable = false;
+    systemd.enable = true;
     settings = {
       "$mainMod" = "SUPER";
       monitor = [
@@ -183,7 +180,7 @@ in
         "$mainMod, C, exec, code --ozone-platform=wayland --enable-features=WaylandWindowDecorations"
         "$mainMod SHIFT, o, exec, systemctl poweroff"
         "$mainMod SHIFT, p, exec, systemctl reboot"
-        "$mainMod SHIFT, BackSpace, exec, switch-sink"
+        "$mainMod SHIFT, BackSpace, exec, switch-sink 'USB Audio Front Headphones'"
         "$mainMod, BackSpace, exec, playerctl play-pause -a"
         "$mainMod SHIFT, S, exec, grimblast copy area"
         "ALT, Print, exec, grimblast copy screen"
@@ -197,9 +194,11 @@ in
       binde = [
         "$mainMod, equal, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+"
         "$mainMod, minus, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%-"
+        "$mainMod SHIFT, equal, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 1%+"
+        "$mainMod SHIFT, minus, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 1%-"
       ];
 
-      "windowrulev2" = "suppressevent maximize, class:.*"; # You'll probably like this.
+      "windowrule" = "suppress_event maximize, match:class .*"; # You'll probably like this.
 
       "exec-once" = [
         "fcitx5 -d &"

@@ -16,7 +16,7 @@ in
   home.homeDirectory = "/home/" + username;
 
   imports = [
-    inputs.zen-browser.homeModules.beta
+    inputs.zen-browser.homeModules.twilight
     ./home/shells/direnv.nix
     ./home/shells/sh.nix
     ./home/shells/xdg.nix

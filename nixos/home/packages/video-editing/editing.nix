@@ -12,7 +12,7 @@
       # gimp-with-plugins
       obs-studio
       waifu2x-converter-cpp
-      kdePackages.kdenlive
+      # kdePackages.kdenlive
     ];
   };
 }

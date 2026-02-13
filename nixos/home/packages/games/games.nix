@@ -20,6 +20,7 @@
       protonup-qt
       protontricks
       bottles
+      protonplus
     ];
   };
 }

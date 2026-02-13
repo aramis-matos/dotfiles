@@ -9,8 +9,7 @@
 
   config = lib.mkIf config.dev-tools.nix.enable {
     home.packages = with pkgs; [
-      nixpkgs-fmt
-      nixfmt-rfc-style
+      nixfmt
       nil
     ];
   };

@@ -11,7 +11,6 @@
     home.packages = with pkgs; [
       pciutils
       looking-glass-client
-      docker-machine-kvm2
       kubernetes-helm
     ];
   };
