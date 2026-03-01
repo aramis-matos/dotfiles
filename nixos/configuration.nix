@@ -18,6 +18,7 @@ in
       ./system/services/bluetooth.nix
       ./system/services/audio.nix
       ./system/services/keyd.nix
+      ./system/services/ssh.nix
       ./system/users/users.nix
       ./system/vm/vm.nix
       ./system/vm/k3s.nix

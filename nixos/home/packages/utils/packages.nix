@@ -11,7 +11,7 @@
     home.packages = with pkgs; [
       stow
       arandr
-      brave
+      librewolf
       fastfetch
       unzip
       unrar
