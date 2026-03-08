@@ -9,32 +9,32 @@ let
   username = import ./system/users/name.nix;
 in
 {
-  imports = [
-    # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-    inputs.home-manager.nixosModules.home-manager
-    inputs.lanzaboote.nixosModules.lanzaboote
-    ./system/services/ddclient.nix
-    ./system/services/bluetooth.nix
-    ./system/services/audio.nix
-    ./system/services/keyd.nix
-    ./system/services/ssh.nix
-    ./system/users/users.nix
-    ./system/vm/vm.nix
-    ./system/vm/k3s.nix
-    ./system/networking/networking.nix
-    ./system/display-manager/dm.nix
-    ./system/locales/locales.nix
-    ./system/keyboard/keyboard.nix
-    ./system/gpu/nvidia.nix
-    ./system/games/steam.nix
-    ./system/games/sunshine.nix
-    ./system/desktop-environments/hyprland.nix
-    ./system/programs/fish/fish.nix
-    ./system/programs/gnupg/gnupg.nix
-    ./system/fonts/fonts.nix
-    ./system/bootloader/bootloader.nix
-  ];
+  imports =
+    [ # Include the results of the hardware scan.
+      ./hardware-configuration.nix
+      inputs.home-manager.nixosModules.home-manager
+      inputs.lanzaboote.nixosModules.lanzaboote
+      ./system/services/ddclient.nix
+      ./system/services/bluetooth.nix
+      ./system/services/audio.nix
+      ./system/services/keyd.nix
+      ./system/services/ssh.nix
+      ./system/users/users.nix
+      ./system/vm/vm.nix
+      ./system/vm/k3s.nix
+      ./system/networking/networking.nix
+      ./system/display-manager/dm.nix
+      ./system/locales/locales.nix
+      ./system/keyboard/keyboard.nix
+      ./system/gpu/nvidia.nix
+      ./system/games/steam.nix
+      ./system/games/sunshine.nix
+      ./system/desktop-environments/hyprland.nix
+      ./system/programs/fish/fish.nix
+      ./system/programs/gnupg/gnupg.nix
+      ./system/fonts/fonts.nix
+      ./system/bootloader/bootloader.nix
+    ];
 
   home-manager = {
     useGlobalPkgs = true;
@@ -44,13 +44,14 @@ in
     };
   };
 
+
   nix.settings = {
     experimental-features = [
       "nix-command"
       "flakes"
     ];
   };
-
+  
   # Set your time zone.
   time.timeZone = "America/New_York";
 

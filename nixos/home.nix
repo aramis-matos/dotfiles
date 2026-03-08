@@ -3,9 +3,6 @@ let
 in
 {
   config,
-  lib,
-  pkgs,
-  inputs,
   ...
 }:
 
@@ -38,6 +35,7 @@ in
     ./home/packages/dev-tools/python.nix
     ./home/packages/dev-tools/editors.nix
     ./home/packages/dev-tools/git.nix
+    ./home/packages/dev-tools/lua.nix
     ./home/packages/sys-monitoring/monitoring.nix
     ./home/packages/games/games.nix
     ./home/packages/video-editing/editing.nix
@@ -68,9 +66,10 @@ in
     version-control.enable = true;
     rust.enable = false;
     nix.enable = true;
-    elixir.enable = true;
+    elixir.enable = false;
     latex.enable = false;
     python.enable = false;
+    lua.enable = true; # Required for neovim
     editors.enable = true;
   };
 
@@ -115,7 +114,6 @@ in
     #   org.gradle.daemon.idletimeout=3600000
     # '';
 
-
     Downloads.source = config.lib.file.mkOutOfStoreSymlink (
       config.home.homeDirectory + "/mass_storage/Downloads"
     );
@@ -142,8 +140,6 @@ in
     MOZ_LEGACY_PROFILES = 1;
   };
 
-
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-
 }

@@ -1,4 +1,4 @@
-{...}:
+{ ... }:
 
 {
 
@@ -8,12 +8,13 @@
 
   programs.tmux = {
     enable = true;
-    prefix = "C-Space";
+    # prefix = "C-Space";
     baseIndex = 1;
     sensibleOnTop = true;
     focusEvents = true;
     mouse = true;
     extraConfig = ''
+      set -sg escape-time 5
       bind-key r source-file ~/.config/tmux/tmux.conf \; display-message "tmux.conf reloaded."
 
       bind -n M-h select-pane -L
