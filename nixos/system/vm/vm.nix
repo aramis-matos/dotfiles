@@ -18,7 +18,7 @@ in
 
   programs.virt-manager.enable = true;
   virtualisation.libvirtd = {
-    enable = true;
+    enable = false;
     qemu = {
       package = pkgs.qemu_kvm;
       runAsRoot = true;
