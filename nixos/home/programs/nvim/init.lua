@@ -29,6 +29,16 @@ vim.cmd("colorscheme melange")
 
 vim.lsp.enable({ "lua_ls", "nil_ls", "ts_ls", "rust_analyzer", "gopls" })
 
+vim.lsp.config['lua_ls'] = {
+  settings = {
+    Lua = {
+      workspace = {
+        library = vim.api.nvim_get_runtime_file("", true)
+      }
+    }
+  }
+}
+
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('my.lsp', {}),
   callback = function(args)
