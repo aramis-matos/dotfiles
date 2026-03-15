@@ -129,7 +129,7 @@ wk.add({
   },
 })
 
--- Telescope keymap\
+-- Telescope config
 local builtin = require("telescope.builtin")
 wk.add({
   {
