@@ -8,7 +8,7 @@
 
   programs.tmux = {
     enable = true;
-    # prefix = "C-Space";
+    prefix = "M-m";
     baseIndex = 1;
     sensibleOnTop = true;
     focusEvents = true;

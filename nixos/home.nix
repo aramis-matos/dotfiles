@@ -13,7 +13,6 @@ in
   home.homeDirectory = "/home/" + username;
 
   imports = [
-    # inputs.zen-browser.homeModules.twilight
     ./home/shells/direnv.nix
     ./home/shells/sh.nix
     ./home/shells/xdg.nix
@@ -47,7 +46,7 @@ in
     ./home/programs/waybar/waybar.nix
     ./home/programs/emacs/emacs.nix
     ./home/programs/gpg/gpg.nix
-    # ./home/programs/zen/zen.nix
+    ./home/programs/zen/zen.nix
   ];
 
   # This value determines the Home Manager release that your configuration is

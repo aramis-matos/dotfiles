@@ -1,4 +1,4 @@
-{config,...}: 
+{ ... }:
 {
   wayland.windowManager.hyprland = {
     enable = true;
@@ -176,8 +176,8 @@
 
         # Personal Binds
         "$mainMod SHIFT, F, fullscreen"
-        # "$mainMod, F, exec, zen -p default"
-        "$mainMod, F, exec, librewolf"
+        "$mainMod, F, exec, zen"
+        # "$mainMod, F, exec, librewolf"
         "$mainMod, C, exec, code --ozone-platform=wayland --enable-features=WaylandWindowDecorations"
         "$mainMod SHIFT, o, exec, systemctl poweroff"
         "$mainMod SHIFT, p, exec, systemctl reboot"
