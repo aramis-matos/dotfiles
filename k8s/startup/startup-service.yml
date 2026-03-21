@@ -1,0 +1,15 @@
+# https://kubernetes.io/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: startup-service
+spec:
+  selector:
+    app: startup-app
+  type: ClusterIP
+  ports:
+  - name: startup-http
+    port: 3001
+    targetPort: 3001
+---
+

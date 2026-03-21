@@ -8,6 +8,7 @@ spec:
   - hosts:
     - "jellyfin.minikube.home.lab"
     - "test.minikube.home.lab"
+    - "startup.minikube.home.lab"
     secretName: lab-nginx-certificate
   - hosts:
     - "test.aramismatos1.com"
@@ -24,6 +25,16 @@ spec:
             name: jellyfin-service
             port:
               number: 8096
+  - host: "startup.minikube.home.lab"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: startup-service
+            port:
+              number: 3001
   - host: "jellyfin.aramismatos1.com"
     http:
       paths:
