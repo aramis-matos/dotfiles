@@ -1,7 +1,10 @@
-{ ... }:
+{ config, ... }:
+let
+  username = import ../users/name.nix;
+in
 {
   services.k3s = {
-    enable = false;
+    enable = true;
     role = "server";
     extraFlags = toString [
       "--debug"
@@ -25,6 +28,29 @@
           };
         };
       };
+      longhorn = {
+        repo = "https://charts.longhorn.io";
+        name = "longhorn";
+        version = "1.11.1";
+        hash = "sha256-qT9gBS5ebjCNB+k/s+zA5NM2u9MjtyXwaJ3y5NaVJFs=";
+        targetNamespace = "longhorn-system";
+        createNamespace = true;
+        values = {
+          defaultSettings = {
+            defaultDataPath = "/home/${username}/mass_storage/longhorn";
+            defaultReplicaCount = 1;
+            defaultClassReplicaCount = 1;
+          };
+        };
+      };
     };
+  };
+  services.openiscsi = {
+    enable = true;
+    name = "${config.networking.hostName}-initiatorhost";
+  };
+  systemd.services.iscsid.serviceConfig = {
+    PrivateMounts = "yes";
+    BindPaths = "/run/current-system/sw/bin:/bin";
   };
 }

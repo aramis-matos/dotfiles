@@ -16,3 +16,12 @@ spec:
         image: ghcr.io/linuxserver/jellyfin
         ports:
         - containerPort: 8096
+        volumeMounts:
+          - mountPath: /dev/dri/renderD128
+            name: gpu
+        securityContext:
+          privileged: true
+      volumes:
+        - name: gpu
+          hostPath:
+            path: /dev/dri/renderD128

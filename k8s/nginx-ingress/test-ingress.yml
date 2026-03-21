@@ -6,15 +6,15 @@ spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - "jellyfin.minikube.lab.home"
-    - "test.minikube.lab.home"
+    - "jellyfin.minikube.home.lab"
+    - "test.minikube.home.lab"
     secretName: lab-nginx-certificate
   - hosts:
     - "test.aramismatos1.com"
     - "jellyfin.aramismatos1.com"
     secretName: nginx-certificate-secret
   rules:
-  - host: "jellyfin.minikube.lab.home"
+  - host: "jellyfin.minikube.home.lab"
     http:
       paths:
       - path: /

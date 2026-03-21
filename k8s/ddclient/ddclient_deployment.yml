@@ -1,0 +1,52 @@
+# https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ddclient-deployment
+spec:
+  selector:
+    matchLabels:
+      app: ddclient-app
+  template:
+    metadata:
+      labels:
+        app: ddclient-app
+    spec:
+      volumes:
+        - name: ddclient-volume
+          persistentVolumeClaim:
+            claimName: ddclient-pvc
+        - name: ddclient-config
+          secret:
+            secretName: ddclient-config
+      # securityContext:
+      #   runAsNonRoot: false
+      #   runAsUser: 0
+      #   runAsGroup: 0
+      #   fsGroup: 0
+      #   fsGroupChangePolicy: "Always"
+      initContainers:
+      - name: copy-config
+        image: busybox:1.28
+        command: ['sh', '-c', 'cp /tmp/ddclient/* /tmp/config/ ; chmod -R 644 /tmp/config/ ; chown -R 1000:1000 /tmp/config/']
+        volumeMounts:
+          - name: ddclient-volume
+            mountPath: "/tmp/config"
+          - name: ddclient-config
+            mountPath: "/tmp/ddclient"
+      containers:
+      - name: ddclient-app
+        image: lscr.io/linuxserver/ddclient:latest
+        env:
+          - name: TZ
+            value: America/New_York
+          - name: PUID
+            value: "1000"
+          - name: PGID
+            value: "1000"
+        volumeMounts:
+          - name: ddclient-volume
+            mountPath: "/config/"
+      restartPolicy: Always
+---
+

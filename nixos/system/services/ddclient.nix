@@ -4,7 +4,7 @@ let
 in
 {
   services.ddclient = {
-    enable = true;
+    enable = false;
     ssl = true;
     usev4 = "webv4, webv4=https://cloudflare.com/cdn-cgi/trace";
     protocol = "cloudflare";

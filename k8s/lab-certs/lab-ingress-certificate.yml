@@ -8,5 +8,5 @@ spec:
     name: lab-ca-issuer
     kind: ClusterIssuer
   dnsNames:
-    - "*.lab.home"
-    - "*.minikube.lab.home"
+    - "*.home.lab"
+    - "*.minikube.home.lab"
