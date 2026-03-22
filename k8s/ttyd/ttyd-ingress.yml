@@ -8,13 +8,16 @@ metadata:
       ssl_verify_client on;
       ssl_client_certificate /etc/nginx/secrets/default-lab-ca-secret;
       ssl_verify_depth 1;
+    nginx.org/ssl-services: "sunshine-service"
 spec:
   ingressClassName: nginx
   tls:
   - hosts:
+    - "moonlight.minikube.home.lab"
     - "ttyd.minikube.home.lab"
     secretName: lab-nginx-certificate
   - hosts:
+    - "moonlight.aramismatos1.com"
     - "ttyd.aramismatos1.com"
     secretName: nginx-certificate-secret
   - secretName: lab-ca-secret
@@ -39,3 +42,23 @@ spec:
             name: ttyd-service
             port:
               number: 7681
+  - host: "moonlight.minikube.home.lab"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: sunshine-service
+            port:
+              number: 47990
+  - host: "moonlight.aramismatos1.com"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: sunshine-service
+            port:
+              number: 47990

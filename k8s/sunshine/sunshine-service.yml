@@ -1,0 +1,13 @@
+# https://kubernetes.io/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: sunshine-service
+spec:
+  ports:
+    - port: 47990
+      targetPort: 47990
+      protocol: TCP
+      name: sunshine-web-ui
+---
+
