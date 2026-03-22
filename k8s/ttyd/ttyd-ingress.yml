@@ -1,0 +1,41 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ttyd-ingress
+  annotations:
+    nginx.org/websocket-services: "ttyd-service"
+    nginx.org/server-snippets: |
+      ssl_verify_client on;
+      ssl_client_certificate /etc/nginx/secrets/default-lab-ca-secret;
+      ssl_verify_depth 1;
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - "ttyd.minikube.home.lab"
+    secretName: lab-nginx-certificate
+  - hosts:
+    - "ttyd.aramismatos1.com"
+    secretName: nginx-certificate-secret
+  - secretName: lab-ca-secret
+  rules:
+  - host: "ttyd.minikube.home.lab"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ttyd-service
+            port:
+              number: 7681
+  - host: "ttyd.aramismatos1.com"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ttyd-service
+            port:
+              number: 7681

@@ -13,8 +13,21 @@ in
     autoDeployCharts = {
       nginx = {
         repo = "oci://ghcr.io/nginx/charts/nginx-ingress";
-        version = "2.4.0";
-        hash = "sha256-H8bsaxPV6l57DP3zkkJlZ59JGjhgu1l7tDerYxl5dcg";
+        version = "2.5.0";
+        hash = "sha256-H8bsaxPV6l57DP3zkkJlZ59JGjhgu1l7tDerYxl5dcg=";
+        values = {
+          controller = {
+            enableSnippets = true;
+            service = {
+              httpsPort = {
+                port = "4443";
+              };
+              httpPort = {
+                port = "8880";
+              };
+            };
+          };
+        };
       };
       cert-manager = {
         repo = "oci://quay.io/jetstack/charts/cert-manager";

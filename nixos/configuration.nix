@@ -34,6 +34,7 @@ in
     ./system/programs/gnupg/gnupg.nix
     ./system/fonts/fonts.nix
     ./system/bootloader/bootloader.nix
+    ./system/certs/certs.nix
   ];
 
   home-manager = {

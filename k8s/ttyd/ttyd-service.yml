@@ -1,0 +1,14 @@
+# https://kubernetes.io/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: ttyd-service
+spec:
+  selector:
+    app: ttyd-app
+  type: ClusterIP
+  ports:
+  - name: ttyd-service
+    port: 7681
+    targetPort: 7681
+---
