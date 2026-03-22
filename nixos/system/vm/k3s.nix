@@ -14,7 +14,7 @@ in
       nginx = {
         repo = "oci://ghcr.io/nginx/charts/nginx-ingress";
         version = "2.5.0";
-        hash = "sha256-H8bsaxPV6l57DP3zkkJlZ59JGjhgu1l7tDerYxl5dcg=";
+        hash = "sha256-uLNv9t8mOqniY/3UT4SeQYwu1EGrl++rES8hIBZEJ1A=";
         values = {
           controller = {
             enableSnippets = true;

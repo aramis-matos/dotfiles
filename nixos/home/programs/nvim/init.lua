@@ -153,3 +153,12 @@ wk.add({
     desc = 'Telescope help tags'
   }
 })
+
+-- LazyGit config
+wk.add({
+  {
+    '<leader>gg',
+    '<cmd>LazyGit<cr>',
+    desc = 'Open LazyGit'
+  }
+})

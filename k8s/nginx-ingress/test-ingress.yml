@@ -11,6 +11,7 @@ spec:
     - "startup.minikube.home.lab"
     secretName: lab-nginx-certificate
   - hosts:
+    - "startup.aramismatos1.com"
     - "test.aramismatos1.com"
     - "jellyfin.aramismatos1.com"
     secretName: nginx-certificate-secret

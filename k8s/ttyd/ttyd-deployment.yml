@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: ttyd-app
-        image: tsl0922/ttyd:latest
+        image: tsl0922/ttyd:alpine
         command: ["ttyd","-W","bash"]
         ports:
         - containerPort: 7681
