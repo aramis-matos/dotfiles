@@ -14,26 +14,15 @@ spec:
       labels:
         app: startup-app
     spec:
-      volumes:
-        - name: startup-secret
-          secret:
-            secretName: startup-secret
       containers:
       - name: startup-app
         image: aramismatos/wake-on-lan:latest
         envFrom:
           - configMapRef:
               name: startup-config
-        env:
-          - name: PASSWORD_LOCATION
-            value: "/etc/authKey/authKey"
         ports:
         - containerPort: 3001
           name: startup-app
-        volumeMounts:
-          - name: startup-secret
-            readOnly: true
-            mountPath: "/etc/authKey"
       restartPolicy: Always
 ---
 
