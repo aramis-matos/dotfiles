@@ -15,10 +15,12 @@ spec:
   - hosts:
     - "moonlight.minikube.home.lab"
     - "ttyd.minikube.home.lab"
+    - "startup.minikube.home.lab"
     secretName: lab-nginx-certificate
   - hosts:
     - "moonlight.aramismatos1.com"
     - "ttyd.aramismatos1.com"
+    - "startup.aramismatos1.com"
     secretName: nginx-certificate-secret
   - secretName: lab-ca-secret
   rules:
@@ -62,3 +64,23 @@ spec:
             name: sunshine-service
             port:
               number: 47990
+  - host: "startup.minikube.home.lab"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: startup-service
+            port:
+              number: 3001
+  - host: "startup.aramismatos1.com"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: startup-service
+            port:
+              number: 3001

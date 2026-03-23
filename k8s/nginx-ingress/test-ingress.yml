@@ -8,10 +8,10 @@ spec:
   - hosts:
     - "jellyfin.minikube.home.lab"
     - "test.minikube.home.lab"
-    - "startup.minikube.home.lab"
+    # - "startup.minikube.home.lab"
     secretName: lab-nginx-certificate
   - hosts:
-    - "startup.aramismatos1.com"
+    # - "startup.aramismatos1.com"
     - "test.aramismatos1.com"
     - "jellyfin.aramismatos1.com"
     secretName: nginx-certificate-secret
@@ -36,26 +36,26 @@ spec:
             name: jellyfin-service
             port:
               number: 8096
-  - host: "startup.minikube.home.lab"
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: startup-service
-            port:
-              number: 3001
-  - host: "startup.aramismatos1.com"
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: startup-service
-            port:
-              number: 3001
+  # - host: "startup.minikube.home.lab"
+  #   http:
+  #     paths:
+  #     - path: /
+  #       pathType: Prefix
+  #       backend:
+  #         service:
+  #           name: startup-service
+  #           port:
+  #             number: 3001
+  # - host: "startup.aramismatos1.com"
+  #   http:
+  #     paths:
+  #     - path: /
+  #       pathType: Prefix
+  #       backend:
+  #         service:
+  #           name: startup-service
+  #           port:
+  #             number: 3001
   - host: "test.aramismatos1.com"
     http:
       paths:
