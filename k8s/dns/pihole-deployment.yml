@@ -1,0 +1,38 @@
+# https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pihole-deployment
+  namespace: dns
+spec:
+  selector:
+    matchLabels:
+      app: pihole-app
+  template:
+    metadata:
+      labels:
+        app: pihole-app
+    spec:
+      volumes:
+        - name: pihole-volume
+          persistentVolumeClaim:
+            claimName: pihole-pvc
+      containers:
+      - name: pihole-app
+        image: pihole/pihole:latest
+        ports:
+        - containerPort: 53
+          name: pihole-dns-udp
+          protocol: UDP
+        - containerPort: 53
+          name: pihole-dns-tcp
+          protocol: TCP
+        - containerPort: 80
+          name: pihole-frontend
+          protocol: TCP
+        volumeMounts:
+        - name: pihole-volume
+          mountPath: "/etc/pihole"
+      restartPolicy: Always
+---
+

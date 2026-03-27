@@ -1,4 +1,4 @@
-{...}:
+{ ... }:
 {
   programs.git = {
     enable = true;
@@ -11,6 +11,7 @@
     signing = {
       signByDefault = true;
       key = "0x3EF66A171C122736";
+      format = "openpgp";
     };
   };
 }

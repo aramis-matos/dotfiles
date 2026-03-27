@@ -6,7 +6,7 @@ metadata:
     nginx.org/websocket-services: "ttyd-service"
     nginx.org/server-snippets: |
       ssl_verify_client on;
-      ssl_client_certificate /etc/nginx/secrets/default-lab-ca-secret;
+      ssl_client_certificate /etc/nginx/secrets/default-home-ca-key-pair;
       ssl_verify_depth 1;
     nginx.org/ssl-services: "sunshine-service"
 spec:
@@ -22,7 +22,7 @@ spec:
     - "ttyd.aramismatos1.com"
     - "startup.aramismatos1.com"
     secretName: nginx-certificate-secret
-  - secretName: lab-ca-secret
+  - secretName: home-ca-key-pair
   rules:
   - host: "ttyd.minikube.home.lab"
     http:

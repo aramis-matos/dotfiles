@@ -203,7 +203,7 @@
 
       "exec-once" = [
         "fcitx5 -d &"
-        "waytrogen -r"
+        "waytrogen -r -s 500"
       ];
 
       "exec" = [

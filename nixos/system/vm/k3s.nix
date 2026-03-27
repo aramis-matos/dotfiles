@@ -56,6 +56,11 @@ in
           };
         };
       };
+      reflector = {
+        repo = "oci://ghcr.io/emberstack/helm-charts/reflector";
+        version = "10.0.24";
+        hash = "sha256-Aq2/DLyHzEy3Sqp9bYhOgAqYXehRzKSHxQf9mkZaJDw=";
+      };
     };
   };
   services.openiscsi = {
