@@ -37,6 +37,11 @@
     };
 
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+
+    waytrogen = {
+      url = "github:nikolaizombie1/waytrogen?ref=dev";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

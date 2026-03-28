@@ -1,0 +1,40 @@
+# https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bind9-deployment
+  namespace: dns
+spec:
+  selector:
+    matchLabels:
+      app: bind9-app
+  template:
+    metadata:
+      labels:
+        app: bind9-app
+    spec:
+      containers:
+      - name: bind9-app
+        image: ubuntu/bind9:latest
+        env:
+        - name: TZ
+          value: 'America/New_York' 
+        - name: BIND9_USER
+          value: 'root'
+        ports:
+        - containerPort: 53
+          name: bind9-udp
+          protocol: UDP
+        - containerPort: 53
+          name: bind9-tcp
+          protocol: TCP
+        volumeMounts:
+        - name: bind9-config-volume
+          mountPath: /etc/bind
+      volumes:
+        - name: bind9-config-volume
+          secret:
+            secretName: bind9-secret
+      restartPolicy: Always
+---
+

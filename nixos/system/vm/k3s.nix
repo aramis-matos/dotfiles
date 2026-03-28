@@ -20,10 +20,10 @@ in
             enableSnippets = true;
             service = {
               httpsPort = {
-                port = "4443";
+                port = 4443;
               };
               httpPort = {
-                port = "8880";
+                port = 8880;
               };
             };
           };
@@ -52,8 +52,11 @@ in
           defaultSettings = {
             defaultDataPath = "/home/${username}/mass_storage/longhorn";
             defaultReplicaCount = 1;
+          };
+          persistence = {
             defaultClassReplicaCount = 1;
           };
+
         };
       };
       reflector = {

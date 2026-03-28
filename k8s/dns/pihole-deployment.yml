@@ -17,6 +17,7 @@ spec:
         - name: pihole-volume
           persistentVolumeClaim:
             claimName: pihole-pvc
+      hostnameOverride: pihole
       containers:
       - name: pihole-app
         image: pihole/pihole:latest
@@ -30,6 +31,19 @@ spec:
         - containerPort: 80
           name: pihole-frontend
           protocol: TCP
+        env:
+          - name: TZ
+            value: 'America/New_York'
+          - name: FTLCONF_webserver_api_password
+            valueFrom:
+              secretKeyRef:
+                name: pihole-secret
+                key: password
+          - name: FTLCONF_dns_listening_mode
+            value: 'all'
+          - name: FTLCONF_dns_upstreams
+            value: |-
+                    bind9-service.dns.svc.cluster.local
         volumeMounts:
         - name: pihole-volume
           mountPath: "/etc/pihole"

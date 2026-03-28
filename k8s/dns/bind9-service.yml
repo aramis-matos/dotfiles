@@ -1,0 +1,20 @@
+# https://kubernetes.io/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: bind9-service
+  namespace: dns
+spec:
+  selector:
+    app: bind9-app
+  ports:
+  - name: bind9-udp
+    protocol: UDP
+    port: 53
+    targetPort: 53
+  - name: bind9-tcp
+    protocol: TCP
+    port: 53
+    targetPort: 53
+---
+

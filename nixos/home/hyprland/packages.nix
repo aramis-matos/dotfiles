@@ -15,7 +15,8 @@
       mpv
       mpvpaper
       swww
-      waytrogen
+      inputs.waytrogen.packages.x86_64-linux.default
+      # waytrogen
       playerctl
       picom
       grimblast
