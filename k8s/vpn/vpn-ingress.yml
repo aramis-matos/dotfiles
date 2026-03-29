@@ -1,41 +1,41 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: dns-ingress
-  namespace: dns
+  name: vpn-ingress
+  namespace: vpn
   annotations:
     nginx.org/server-snippets: |
       ssl_verify_client on;
-      ssl_client_certificate /etc/nginx/secrets/dns-home-ca-key-pair;
+      ssl_client_certificate /etc/nginx/secrets/vpn-home-ca-key-pair;
       ssl_verify_depth 1;
 spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - "pihole.minikube.home.lab"
+    - "transmission.minikube.home.lab"
     secretName: lab-nginx-certificate
   - hosts:
-    - "pihole.aramismatos1.com"
+    - "transmission.aramismatos1.com"
     secretName: nginx-certificate-secret
   - secretName: home-ca-key-pair
   rules:
-  - host: "pihole.minikube.home.lab"
+  - host: "transmission.minikube.home.lab"
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: pihole-frontend-service
+            name: transmission-service
             port:
-              number: 80
-  - host: "pihole.aramismatos1.com"
+              number: 9091
+  - host: "transmission.aramismatos1.com"
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: pihole-frontend-service
+            name: transmission-service
             port:
-              number: 80
+              number: 9091

@@ -1,0 +1,91 @@
+# https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vpn-deployment
+  namespace: vpn
+spec:
+  selector:
+    matchLabels:
+      app: vpn-app
+  template:
+    metadata:
+      labels:
+        app: vpn-app
+    spec:
+      containers:
+      - name: gluetun-app
+        image: qmcgaw/gluetun:latest
+        env:
+        - name: VPN_SERVICE_PROVIDER
+          value: mullvad
+        - name: VPN_TYPE
+          value: wireguard
+        - name: WIREGUARD_PRIVATE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: vpn-secret
+              key: wireguard-private-key
+        - name: WIREGUARD_ADDRESSES
+          valueFrom:
+            secretKeyRef:
+              name: vpn-secret
+              key: wireguard-addresses
+        - name: TZ
+          name: America/New_York
+        - name: SERVER_CITIES
+          value: Oslo
+        ports:
+        - name: http-proxy
+          containerPort: 8888
+          protocol: TCP
+        - name: shadowsock-tcp
+          containerPort: 8388
+          protocol: TCP
+        - name: shadowsock-udp
+          containerPort: 8388
+          protocol: UDP
+        volumeMounts:
+        - name: tunnel-device
+          mountPath: /dev/net/tun
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+              - NET_ADMIN
+      - name: transmission-app
+        image: lscr.io/linuxserver/transmission:latest
+        env:
+          - name: PUID
+            value: "1000"
+          - name: PGID
+            value: "1000"
+          - name: TZ
+            value: America/New_York
+        ports:
+          - name: web-ui
+            containerPort: 9091
+          - name: torrent-tcp
+            containerPort: 51413
+            protocol: TCP
+          - name: torrent-udp
+            containerPort: 51413
+            protocol: UDP
+        volumeMounts:
+          - name: transmission-downloads
+            mountPath: /downloads
+          - name: transmission-config
+            mountPath: /config
+      volumes:
+        - name: tunnel-device
+          hostPath:
+            path: /dev/net/tun
+        - name: transmission-downloads
+          persistentVolumeClaim:
+            claimName: transmission-pvc
+        - name: transmission-config
+          persistentVolumeClaim:
+            claimName: transmission-config-pvc
+      restartPolicy: Always
+---
+

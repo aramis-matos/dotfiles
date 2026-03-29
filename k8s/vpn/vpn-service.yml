@@ -1,0 +1,47 @@
+# https://kubernetes.io/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: vpn-service
+  namespace: vpn
+spec:
+  selector:
+    app: vpn-app
+  type: LoadBalancer
+  ports:
+  - name: vpn-http-proxy
+    protocol: TCP
+    port: 8888
+    targetPort: 8888
+  - name: vpn-shadowdock-tcp
+    protocol: TCP
+    port: 8388
+    targetPort: 8388
+  - name: vpn-shadowdock-udp
+    protocol: UDP
+    port: 8388
+    targetPort: 8388
+  - name: transmission-tcp-torrent-port
+    protocol: TCP
+    port: 51413
+    targetPort: 51413
+  - name: transmission-udp-torrent-port
+    protocol: UDP
+    port: 51413
+    targetPort: 51413
+---
+# https://kubernetes.io/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: transmission-service
+  namespace: vpn
+spec:
+  selector:
+    app: vpn-app
+  ports:
+  - name: transmission-web-ui
+    port: 9091
+    targetPort: 9091
+---
+
