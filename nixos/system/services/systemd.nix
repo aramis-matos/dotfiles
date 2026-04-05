@@ -1,0 +1,29 @@
+{ pkgs, ... }:
+{
+  systemd.timers."clean-k8s" = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "daily";
+      Persistent = true;
+    };
+  };
+
+  systemd.services."clean-k8s" = {
+    script = ''
+      namespaces=("default" "kube-system" "cert-manager" "longhorn-system" "dns")
+
+      export KUBECONFIG="/etc/rancher/k3s/k3s.yaml"
+
+      for namespace in ''${namespaces[@]}; do
+          ${pkgs.kubectl}/bin/kubectl -n "$namespace" get po | \
+          grep -vE '(Running|Terminating)' | \
+          awk '{print $1}' | \
+          xargs -I % kubectl -n "$namespace" delete pod % 2&> /dev/null
+      done
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      User = "root";
+    };
+  };
+}

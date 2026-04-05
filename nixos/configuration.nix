@@ -20,6 +20,7 @@ in
     ./system/services/keyd.nix
     ./system/services/ssh.nix
     ./system/services/nfs.nix
+    ./system/services/systemd.nix
     ./system/users/users.nix
     ./system/vm/vm.nix
     ./system/vm/k3s.nix
