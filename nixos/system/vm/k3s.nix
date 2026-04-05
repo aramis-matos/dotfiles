@@ -10,6 +10,10 @@ in
       "--debug"
       "--disable=traefik"
     ];
+    gracefulNodeShutdown = {
+      enable = true;
+      shutdownGracePeriod = "10s";
+    };
     autoDeployCharts = {
       nginx = {
         repo = "oci://ghcr.io/nginx/charts/nginx-ingress";

@@ -11,17 +11,34 @@ spec:
       labels:
         app: jellyfin-app
     spec:
+      hostnameOverride: jellyfin
       containers:
       - name: jellyfin-app
         image: ghcr.io/linuxserver/jellyfin
         ports:
         - containerPort: 8096
         volumeMounts:
-          - mountPath: /dev/dri/renderD128
-            name: gpu
+          - name: gpu
+            mountPath: /dev/dri/renderD128
+          - name: media
+            mountPath: /media
+          - name: config
+            mountPath: /config
+          - name: cache
+            mountPath: /cache
         securityContext:
           privileged: true
       volumes:
         - name: gpu
           hostPath:
             path: /dev/dri/renderD128
+        - name: media
+          nfs:
+            server: weeb.home.lab
+            path: /export/Mass_Storage/
+        - name: config
+          persistentVolumeClaim:
+            claimName: jellyfin-config-pvc
+        - name: cache
+          persistentVolumeClaim:
+            claimName: jellyfin-cache-pvc

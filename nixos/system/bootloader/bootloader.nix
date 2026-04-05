@@ -1,4 +1,4 @@
-{lib,pkgs,...}:
+{ lib, pkgs, ... }:
 {
 
   # Bootloader.
@@ -6,10 +6,10 @@
   boot.loader.grub.device = "/dev/vda";
   boot.loader.grub.useOSProber = true;
 
-  boot.loader.systemd-boot.enable = lib.mkForce false;
+  boot.loader.systemd-boot.enable = lib.mkForce true;
   boot.loader.timeout = 0;
   boot.lanzaboote = {
-    enable = true;
+    enable = false;
     pkiBundle = "/var/lib/sbctl";
   };
 

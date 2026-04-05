@@ -14,7 +14,7 @@
       wl-clipboard
       mpv
       mpvpaper
-      swww
+      awww
       inputs.waytrogen.packages.x86_64-linux.default
       # waytrogen
       playerctl

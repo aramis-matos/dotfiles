@@ -81,8 +81,11 @@ spec:
           hostPath:
             path: /dev/net/tun
         - name: transmission-downloads
-          persistentVolumeClaim:
-            claimName: transmission-pvc
+          # persistentVolumeClaim:
+          #   claimName: transmission-pvc
+          nfs:
+            server: panda.home.lab
+            path: /export/Downloads/
         - name: transmission-config
           persistentVolumeClaim:
             claimName: transmission-config-pvc

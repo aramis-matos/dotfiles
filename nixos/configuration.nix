@@ -19,6 +19,7 @@ in
     ./system/services/audio.nix
     ./system/services/keyd.nix
     ./system/services/ssh.nix
+    ./system/services/nfs.nix
     ./system/users/users.nix
     ./system/vm/vm.nix
     ./system/vm/k3s.nix
@@ -66,4 +67,8 @@ in
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "25.11"; # Did you read the comment?
 
+  programs.appimage = {
+    enable = true;
+    binfmt = true;
+  };
 }

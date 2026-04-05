@@ -1,4 +1,4 @@
-{pkgs,...}:
+{ pkgs, ... }:
 let
   username = import ../users/name.nix;
 in
@@ -6,9 +6,8 @@ in
   virtualisation.spiceUSBRedirection.enable = true;
   virtualisation.waydroid.enable = false;
 
-
   virtualisation.docker = {
-    enable = true; 
+    enable = true;
     liveRestore = false;
     rootless = {
       enable = true;
@@ -18,7 +17,7 @@ in
 
   programs.virt-manager.enable = true;
   virtualisation.libvirtd = {
-    enable = false;
+    enable = true;
     qemu = {
       package = pkgs.qemu_kvm;
       runAsRoot = true;

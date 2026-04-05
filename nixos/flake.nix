@@ -39,7 +39,7 @@
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
 
     waytrogen = {
-      url = "github:nikolaizombie1/waytrogen?ref=dev";
+      url = "github:nikolaizombie1/waytrogen?ref=main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
