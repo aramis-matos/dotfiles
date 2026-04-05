@@ -53,6 +53,15 @@ in
     options = [ "bind" ];
   };
 
+  fileSystems."/mnt/Mass_Storage" = {
+    device = "weeb.home.lab:/export/Mass_Storage";
+    fsType = "nfs";
+    options = [
+      "x-systemd.automount"
+      "noauto"
+    ];
+  };
+
   boot.supportedFilesystems = [ "nfs" ];
 
   swapDevices = [ ];
