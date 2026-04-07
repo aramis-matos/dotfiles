@@ -34,7 +34,7 @@ vim.pack.add({
 vim.cmd("colorscheme melange")
 
 -- LSP
-vim.lsp.enable({ "lua_ls", "nil_ls", "ts_ls", "rust_analyzer", "gopls" })
+vim.lsp.enable({ "lua_ls", "nil_ls", "ts_ls", "rust_analyzer", "gopls", "typos_lsp" })
 
 vim.lsp.config['lua_ls'] = {
   settings = {
