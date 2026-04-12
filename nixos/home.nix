@@ -19,6 +19,7 @@ in
     ./home/shells/prompt-theme/oh-my-posh.nix
     ./home/hyprland/hypr.nix
     ./home/hyprland/swaync.nix
+    ./home/hyprland/cursor.nix
     ./home/hyprland/packages.nix
     ./home/terminals/kitty/kitty.nix
     ./home/terminals/alacritty/alacritty.nix

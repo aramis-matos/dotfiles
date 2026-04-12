@@ -16,7 +16,7 @@
 
       env = [
         "XCURSOR_SIZE,32"
-        "HYPRCURSOR_SIZE,24"
+        # "HYPRCURSOR_SIZE,24"
         "GDK_SCALE,2"
       ];
 

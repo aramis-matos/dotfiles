@@ -84,8 +84,8 @@ spec:
           # persistentVolumeClaim:
           #   claimName: transmission-pvc
           nfs:
-            server: panda.home.lab
-            path: /export/Downloads/
+            server: weeb.home.lab
+            path: /export/Mass_Storage/Downloads
         - name: transmission-config
           persistentVolumeClaim:
             claimName: transmission-config-pvc

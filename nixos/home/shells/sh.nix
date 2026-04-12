@@ -4,9 +4,6 @@ let
     update = "sudo nix flake update --flake /home/$USER/dotfiles/nixos/ && sudo nixos-rebuild switch --flake /home/$USER/dotfiles/nixos/#default";
     "..." = "cd ../..";
     code = "code --ozone-platform=wayland --enable-features=WaylandWindowDecorations";
-    # kubectl = "minikube kubectl -- ";
-    vim = "nvim";
-    vi = "nvim";
     kc = "sudo k3s kubectl";
   };
 in

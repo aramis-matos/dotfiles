@@ -14,9 +14,16 @@ spec:
       labels:
         app: startup-app
     spec:
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       containers:
       - name: startup-app
-        image: aramismatos/wake-on-lan:latest
+        image: aramismatos/wake-on-lan:wol-test
+        securityContext:
+          privileged: true
+          runAsNonRoot: false
+          runAsUser: 0
+          runAsGroup: 0
         envFrom:
           - configMapRef:
               name: startup-config

@@ -15,6 +15,21 @@ in
     };
   };
 
+  # virtualisation.oci-containers = {
+  #   backend = "docker";
+  #   containers = {
+  #     startup = {
+  #       image = "aramismatos/wake-on-lan:wol-test";
+  #       ports = [ "3001:3001" ];
+  #       autoStart = true;
+  #       environment = {
+  #         panda_MAC = "cc:28:aa:0d:23:dc";
+  #       };
+  #       extraOptions = [ "--network=host" ];
+  #     };
+  #   };
+  # };
+
   programs.virt-manager.enable = true;
   virtualisation.libvirtd = {
     enable = true;
@@ -22,15 +37,6 @@ in
       package = pkgs.qemu_kvm;
       runAsRoot = true;
       swtpm.enable = true;
-      # ovmf = {
-      #   enable = true;
-      #   packages = [
-      #     (pkgs.OVMF.override {
-      #       secureBoot = true;
-      #       tpmSupport = true;
-      #     }).fd
-      #   ];
-      # };
     };
   };
 
