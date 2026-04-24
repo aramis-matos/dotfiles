@@ -204,6 +204,7 @@
       "exec-once" = [
         "fcitx5 -d &"
         "waytrogen -r -s 500"
+        "hyprctl dispatch workspace 1"
       ];
 
       "exec" = [

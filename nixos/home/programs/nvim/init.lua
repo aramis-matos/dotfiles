@@ -29,12 +29,22 @@ vim.pack.add({
   { src = "https://github.com/nvim-telescope/telescope.nvim" },
 })
 
-
 -- Theme
 vim.cmd("colorscheme melange")
 
+vim.filetype.add({
+  filename = {
+    ["Chart.yaml"] = "helm",
+    ["values.yaml"] = "yaml.helm-values",
+  },
+  pattern = {
+    [".*/templates/.*%.yaml"] = "helm",
+    [".*/templates/_.*%.tpl"] = "helm"
+  }
+})
+
 -- LSP
-vim.lsp.enable({ "lua_ls", "nil_ls", "ts_ls", "rust_analyzer", "gopls", "typos_lsp" })
+vim.lsp.enable({ "lua_ls", "nil_ls", "ts_ls", "rust_analyzer", "gopls", "typos_lsp", "helm_ls" })
 
 vim.lsp.config['lua_ls'] = {
   settings = {

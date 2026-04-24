@@ -48,10 +48,11 @@ in
     fsType = "ext4";
   };
 
-  fileSystems."/export/Downloads" = {
-    device = "${massStorageLoc}/Downloads/k8s-downloads";
-    options = [ "bind" ];
-  };
+  # fileSystems."/export/Downloads" = {
+  #   device = "${massStorageLoc}/Downloads/k8s-downloads";
+  #   fsType = "";
+  #   options = [ "bind" ];
+  # };
 
   fileSystems."/mnt/Mass_Storage" = {
     device = "weeb.home.lab:/export/Mass_Storage";

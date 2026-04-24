@@ -23,11 +23,11 @@
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
-        "lastModified": 1775707386,
-        "narHash": "sha256-1tNzciseW4+JQTSUxCVz1UhW//LuosLb9f3liFOhrL8=",
+        "lastModified": 1777003388,
+        "narHash": "sha256-IS8oeyaqYS/MPpDp0Z7i86PwcdTqJ2dritgdRtWzkew=",
         "owner": "rycee",
         "repo": "nur-expressions",
-        "rev": "c1db0626fa993fe4e773d4c83df4cbb9684e434f",
+        "rev": "03d4270c1f75494910b7b8039b1a050bc7055c97",
         "type": "gitlab"
       },
       "original": {
@@ -156,11 +156,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1770566311,
-        "narHash": "sha256-psaNpRoEVTpjAIRumPoBSnWIOZXLa1AdHFs5Yu+ELd0=",
+        "lastModified": 1776724383,
+        "narHash": "sha256-1Z4KMjFWjNop8mbtGNJlPIEi8ozGqYPXQ8cqlbzeaJY=",
         "owner": "aramis-matos",
         "repo": "gen-color-scheme",
-        "rev": "444076d4a6e1632e2605d0b02ea487ec34e15b40",
+        "rev": "86de93ed111ce8437eb75eb3d1120c6d3a436706",
         "type": "github"
       },
       "original": {
@@ -223,11 +223,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1775762219,
-        "narHash": "sha256-e7BhggoWhg3Ok7dDI5kY1XZzORBQc0Rclcs3IWzux3w=",
+        "lastModified": 1777004352,
+        "narHash": "sha256-SV+9PgNwZ8jHVCjK6YaCBzaheLSW7cDnm5DpOYrD8Vw=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "c975a66a56306b38eaa3108f54bbc11e213f42f6",
+        "rev": "6012cf1fed3eba66115f3fd117b9be6bd2a15b2f",
         "type": "github"
       },
       "original": {
@@ -287,11 +287,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1775693082,
-        "narHash": "sha256-nnhkpfWsRutQh//KmVoIV7e9Gk90tBezjcoRr775BfU=",
+        "lastModified": 1776989118,
+        "narHash": "sha256-DHL8JA7FVkq71oBs0VPvSaMaycJSsQZEFXA/kV9t1CI=",
         "owner": "nix-community",
         "repo": "neovim-nightly-overlay",
-        "rev": "21b2795e6aeb4a0110bdc7bd81bad59c022c9986",
+        "rev": "2b0e03ef098f75e71d89c77b5c3c654ecbef8e98",
         "type": "github"
       },
       "original": {
@@ -303,11 +303,11 @@
     "neovim-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1775689880,
-        "narHash": "sha256-savZYhFAaBm3BQUdTrPOv7i5K18JFANJvyHv0uuvaWM=",
+        "lastModified": 1776988231,
+        "narHash": "sha256-H19tB92omnzXqkMjadTzVahcLf2BmsGavqQTDw3l2ik=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "eefb50e352a689ec1a0a55d6827abea79960cd3d",
+        "rev": "c0e358f7e8ac92dbaba771a74d17d1754e3c6320",
         "type": "github"
       },
       "original": {
@@ -366,11 +366,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1775639890,
-        "narHash": "sha256-9O9gNidrdzcb7vgKGtff7QiLtr0IsVaCi0pAXm8anhQ=",
+        "lastModified": 1776329215,
+        "narHash": "sha256-a8BYi3mzoJ/AcJP8UldOx8emoPRLeWqALZWu4ZvjPXw=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "456e8a9468b9d46bd8c9524425026c00745bc4d2",
+        "rev": "b86751bc4085f48661017fa226dee99fab6c651b",
         "type": "github"
       },
       "original": {
@@ -382,11 +382,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1775423009,
-        "narHash": "sha256-vPKLpjhIVWdDrfiUM8atW6YkIggCEKdSAlJPzzhkQlw=",
+        "lastModified": 1776548001,
+        "narHash": "sha256-ZSK0NL4a1BwVbbTBoSnWgbJy9HeZFXLYQizjb2DPF24=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "68d8aa3d661f0e6bd5862291b5bb263b2a6595c9",
+        "rev": "b12141ef619e0a9c1c84dc8c684040326f27cdcc",
         "type": "github"
       },
       "original": {
@@ -616,11 +616,11 @@
         "rust-overlay": "rust-overlay_3"
       },
       "locked": {
-        "lastModified": 1775227635,
-        "narHash": "sha256-RnW4MDFkLAnJmr1Pmm2K9xWtzELClnBDrev5mWNycKY=",
+        "lastModified": 1776525445,
+        "narHash": "sha256-+1HiTmJAkhd+zbLAyRRk9tHDbR7qcslkfJ2HyGipZCo=",
         "owner": "nikolaizombie1",
         "repo": "waytrogen",
-        "rev": "ffc6f64207ae094ca21279778672a1a13a8aca26",
+        "rev": "79ed145581ba7997cb52022621dca6e9a8e3e8cd",
         "type": "github"
       },
       "original": {

@@ -20,6 +20,7 @@
     extraPackages = with pkgs; [
       lazygit
       typos-lsp
+      helm-ls
     ];
   };
 }
