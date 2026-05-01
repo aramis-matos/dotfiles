@@ -11,7 +11,7 @@ in
       "--disable=traefik"
     ];
     gracefulNodeShutdown = {
-      enable = true;
+      enable = false;
       shutdownGracePeriod = "10s";
     };
     autoDeployCharts = {

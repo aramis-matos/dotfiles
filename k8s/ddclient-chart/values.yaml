@@ -1,0 +1,24 @@
+image:
+  repository: lscr.io/linuxserver/ddclient
+  tag: "latest"
+
+environmentVariables:
+  TZ: "America/New_York"
+  PUID: "1000"
+  PGID: "1000"
+
+volumes:
+  pvc:
+    name: ddclient-volume
+    claimName: ddclient-pvc
+
+config:
+  name: ddclient-config
+
+secrets:
+  name: ddclient-secret
+  secret: ""
+
+volumeMounts:
+  pvc:
+    mountPath: "/config/"

@@ -1,0 +1,47 @@
+# https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+{{ $tempPvc := "/tmp/config" }}
+{{ $tempConfig := "/tmp/ddclient" }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "ddclient-chart.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "ddclient-chart.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "ddclient-chart.selectorLabels" . | nindent 8 }}
+    spec:
+      volumes:
+        - name: {{ .Values.volumes.pvc.name }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.volumes.pvc.claimName }}
+        - name: {{ .Values.config.name }}
+          secret:
+            secretName: {{ .Values.secrets.name }}
+      initContainers:
+      - name: copy-config
+        image: busybox:1.28
+        command: ['sh', '-c', 'cp {{ $tempConfig }}/* {{ $tempPvc }} ; chmod -R 644 {{ $tempPvc }} ; chown -R 1000:1000 {{ $tempPvc }}']
+        volumeMounts:
+          - name: {{ .Values.volumes.pvc.name }}
+            mountPath: "{{ $tempPvc }}"
+          - name: {{ .Values.config.name }}
+            mountPath: "{{ $tempConfig }}"
+      containers:
+      - name: ddclient-app
+        image: {{ printf "%v:%v" .Values.image.repository .Values.image.tag }}
+        env:
+        {{- range $key, $_ := (.Values.environmentVariables | default dict) }}
+          - name: {{ $key }}
+            value: "{{ . }}"
+        {{- end }}
+        volumeMounts:
+          - name: {{ .Values.volumes.pvc.name }}
+            mountPath: {{ .Values.volumeMounts.pvc.mountPath }}
+      restartPolicy: Always
+---
+
