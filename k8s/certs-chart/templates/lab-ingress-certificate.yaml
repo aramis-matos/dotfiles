@@ -1,0 +1,17 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: "{{ include "certs-chart.fullname.lab" . }}"
+  namespace: "{{ .Release.Namespace }}"
+spec:
+  secretName: "{{ .Values.lab.secrets.certSecretName }}"
+  issuerRef:
+    name: "{{ include "certs-chart.clusterIssuers.lab" . }}"
+    kind: ClusterIssuer
+  dnsNames:
+    {{- .Values.lab.dnsNames | toYaml | nindent 4 }}
+  secretTemplate:
+    annotations:
+      reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+      reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
+      reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: "{{ include "certs-chart.namespaces" . }}"

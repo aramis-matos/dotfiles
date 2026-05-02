@@ -2,11 +2,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: "{{ include "dns-chart.pihole.service" . }}"
+  name: "{{ include "dns.pihole.service" . }}"
   namespace: "{{ .Release.Namespace }}"
 spec:
   selector:
-    {{- include "dns-chart.pihole.selectorLabels" . | nindent 4 }}
+    {{- include "dns.pihole.selectorLabels" . | nindent 4 }}
   type: LoadBalancer
   ports:
   {{- range $key, $_ := .Values.pihole.ports }}
@@ -22,11 +22,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: "{{ include "dns-chart.pihole.service.frontend" . }}"
+  name: "{{ include "dns.pihole.service.frontend" . }}"
   namespace: "{{ .Release.Namespace }}"
 spec:
   selector:
-    {{- include "dns-chart.pihole.selectorLabels" . | nindent 4 }}
+    {{- include "dns.pihole.selectorLabels" . | nindent 4 }}
   ports:
   {{- range $key, $_ := .Values.pihole.ports }}
   {{- if regexMatch "-frontend$" $key }}

@@ -1,0 +1,17 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: "{{ include "certs-chart.clusterIssuers.cf" . }}"
+  namespace: "{{ .Release.Namespace }}"
+spec:
+  acme:
+    email: "{{ required "Cloudflare email not provided. Please set .Values.cf.secrets.email" .Values.cf.secrets.email }}"
+    server: "https://acme{{ eq .Values.stage "dev" | ternary "-staging" "" }}-v02.api.letsencrypt.org/directory"
+    privateKeySecretRef:
+      name: "{{ include "certs-chart.privateKeyRef.cf" . }}"
+    solvers:
+    - dns01:
+        cloudflare:
+          apiTokenSecretRef:
+            name: {{ include "certs-chart.secretName.cf" . }}
+            key: "{{ .Values.cf.secrets.key }}"

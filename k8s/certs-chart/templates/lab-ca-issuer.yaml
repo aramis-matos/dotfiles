@@ -1,0 +1,8 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: {{ include "certs-chart.clusterIssuers.lab" . }}
+  namespace: "{{ .Release.Namespace }}"
+spec:
+  ca:
+    secretName: "{{ .Values.ingress.mtlsCaName }}"

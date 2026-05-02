@@ -2,16 +2,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "dns-chart.bind9.fullname" . }}
+  name: {{ include "dns.bind9.fullname" . }}
   namespace: {{ .Release.Namespace }}
 spec:
   selector:
     matchLabels:
-      {{- include "dns-chart.bind9.selectorLabels" . | nindent 6 }}
+      {{- include "dns.bind9.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "dns-chart.bind9.selectorLabels" . | nindent 8 }}
+        {{- include "dns.bind9.selectorLabels" . | nindent 8 }}
     spec:
       containers:
       - name: {{ .Values.bind9.selectorLabels.appName }}
@@ -33,7 +33,7 @@ spec:
       volumes:
         - name: {{ .Values.bind9.volumes.name }}
           secret:
-            secretName: "{{ include "dns-chart.bind9.fullname" . }}"
+            secretName: "{{ include "dns.bind9.fullname" . }}"
       restartPolicy: Always
 ---
 

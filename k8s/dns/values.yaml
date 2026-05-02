@@ -63,8 +63,8 @@ ingress:
   mtlsCaName: home-ca-key-pair
   ingressClassName: nginx
   domains:
-    ".minikube.home.lab": lab-nginx-certificate
-    ".aramismatos1.com": nginx-certificate-secret
+    ".minikube.home.lab": lab-certificate
+    ".aramismatos1.com": cf-certificate
   subdomains:
     "pihole":
       service: 

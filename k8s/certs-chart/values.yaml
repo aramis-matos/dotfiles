@@ -1,0 +1,32 @@
+lab:
+  dnsNames:
+    - "*.home.lab"
+    - "*.minikube.home.lab"
+  secrets:
+    ca:
+      cert: ""
+      key: ""
+    certSecretName: lab-certificate
+
+cf:
+  dnsNames:
+    - "*.aramismatos1.com"
+  secrets:
+    key: "apiToken"
+    email: ""
+    apiToken: ""
+    certSecretName: cf-certificate
+
+
+
+namespaces:
+  - "default"
+  - "dns"
+  - "vpn"
+  - "longhorn-system"
+  - "certs"
+
+ingress:
+  mtlsCaName: "home-ca-key-pair"
+
+stage: "dev"

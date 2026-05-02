@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: "{{ include "dns-chart.bind9.fullname" .}}"
+  name: "{{ include "dns.bind9.fullname" .}}"
   namespace: "{{ .Release.Namespace }}"
   annotations:
     nginx.org/server-snippets: |
@@ -29,7 +29,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: "{{ include (printf "%v.%v.service.frontend" (include "dns-chart.name" $) $sub) $ }}"
+            name: "{{ include (printf "%v.%v.service.frontend" (include "dns.name" $) $sub) $ }}"
             port:
               number: {{ .service.portNumber }}
       {{- end }}
