@@ -1,0 +1,39 @@
+# https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "dns-chart.bind9.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "dns-chart.bind9.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "dns-chart.bind9.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: {{ .Values.bind9.selectorLabels.appName }}
+        image: "{{ .Values.bind9.images.repository }}:{{ .Values.bind9.images.tag }}"
+        env:
+        {{- range $key, $_ := .Values.bind9.environmentVariables }}
+          - name: "{{ $key }}"
+            value: "{{ . }}"
+          {{- end }}
+        ports:
+        {{- range $key, $_ := .Values.bind9.ports }}
+          - containerPort: {{ .port }}
+            name: {{ $key }}
+            protocol: {{ .protocol }}
+        {{- end }}
+        volumeMounts:
+        - name: {{ .Values.bind9.volumes.name }}
+          mountPath: {{ .Values.bind9.volumes.mountPath }}
+      volumes:
+        - name: {{ .Values.bind9.volumes.name }}
+          secret:
+            secretName: "{{ include "dns-chart.bind9.fullname" . }}"
+      restartPolicy: Always
+---
+

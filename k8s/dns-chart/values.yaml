@@ -1,0 +1,76 @@
+bind9:
+  images:
+    repository: ubuntu/bind9
+    tag: latest
+
+  selectorLabels:
+    appName: bind9-app
+
+  environmentVariables:
+    TZ: "America/New_York"
+    BIND9_USER: 'root'
+
+  ports:
+    bind9-udp:
+      port: 53
+      protocol: UDP
+    bind9-tcp:
+      port: 53
+      protocol: TCP
+
+  volumes:
+    name: bind9-config-volume
+    mountPath: /etc/bind
+
+  secrets:
+    zoneValue: ""
+    namedConfValue: ""
+
+pihole:
+  images:
+    repository: pihole/pihole
+    tag: latest
+
+  selectorLabels:
+    appName: pihole-app
+
+  environmentVariables:
+    TZ: "America/New_York"
+    FTLCONF_dns_listening_mode: 'all'
+
+  ports:
+    pihole-udp:
+      port: 53
+      protocol: UDP
+    pihole-tcp:
+      port: 53
+      protocol: TCP
+    pihole-frontend:
+      port: 80
+      protocol: TCP
+
+  volumes:
+    name: pihole-volume
+    mountPath: /etc/pihole
+
+  secrets:
+    key: password
+    value: ""
+
+  hostnameOverride: pihole
+
+ingress:
+  mtlsCaName: home-ca-key-pair
+  ingressClassName: nginx
+  domains:
+    ".minikube.home.lab": lab-nginx-certificate
+    ".aramismatos1.com": nginx-certificate-secret
+  subdomains:
+    "pihole":
+      service: 
+        name: pihole-frontend-service
+        portNumber: 80
+      
+
+    
+  

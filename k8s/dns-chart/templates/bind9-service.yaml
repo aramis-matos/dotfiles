@@ -1,0 +1,18 @@
+# https://kubernetes.io/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "dns-chart.bind9.service" . }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    {{- include "dns-chart.bind9.selectorLabels" . | nindent 4 }}
+  ports:
+  {{- range $key, $_ := .Values.bind9.ports }}
+    - name: {{ $key }}
+      protocol: {{ .protocol }}
+      port: {{ .port }}
+      targetPort: {{ .port }}
+  {{- end }}
+---
+

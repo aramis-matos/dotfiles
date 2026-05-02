@@ -1,0 +1,38 @@
+# https://kubernetes.io/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ include "dns-chart.pihole.service" . }}"
+  namespace: "{{ .Release.Namespace }}"
+spec:
+  selector:
+    {{- include "dns-chart.pihole.selectorLabels" . | nindent 4 }}
+  type: LoadBalancer
+  ports:
+  {{- range $key, $_ := .Values.pihole.ports }}
+  {{- if regexMatch "-(tcp|udp)$" $key }}
+    - name: "{{ $key }}"
+      protocol: "{{ .protocol }}"
+      port: {{ .port }}
+      targetPort: {{ .port }}
+  {{- end -}}
+  {{- end }}
+---
+# https://kubernetes.io/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ include "dns-chart.pihole.service.frontend" . }}"
+  namespace: "{{ .Release.Namespace }}"
+spec:
+  selector:
+    {{- include "dns-chart.pihole.selectorLabels" . | nindent 4 }}
+  ports:
+  {{- range $key, $_ := .Values.pihole.ports }}
+  {{- if regexMatch "-frontend$" $key }}
+    - name: "{{ $key }}"
+      protocol: "{{ .protocol }}"
+      port: {{ .port }}
+      targetPort: {{ .port }}
+  {{- end -}}
+  {{- end }}

@@ -1,0 +1,47 @@
+# https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "dns-chart.pihole.fullname" . }}
+  namespace: {{ .Release.Name }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "dns-chart.pihole.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "dns-chart.pihole.selectorLabels" . | nindent 8 }}
+    spec:
+      volumes:
+        - name: "{{ .Values.pihole.volumes.name }}"
+          persistentVolumeClaim:
+            claimName: "{{ include "dns-chart.pihole.pvc" .}}"
+      hostnameOverride: {{ .Values.pihole.hostnameOverride }}
+      containers:
+      - name: "{{ .Values.pihole.selectorLabels.appName }}"
+        image: "{{ printf "%v:%v" .Values.pihole.images.repository .Values.pihole.images.tag }}"
+        ports:
+        {{- range $key, $_ := .Values.pihole.ports }}
+          - containerPort: {{ .port }}
+            name: "{{ $key }}"
+            protocol: "{{ .protocol }}"
+        {{- end }}
+        env:
+          {{- range $key, $_ := .Values.pihole.environmentVariables }}
+          - name: "{{ $key }}"
+            value: "{{ . }}"
+          {{- end }}
+          - name: FTLCONF_dns_upstreams
+            value: |-
+                    {{- .Release.Namespace | printf "%v.%v.svc.cluster.local" (include "dns-chart.bind9.service" .)  | nindent 20 }}
+          - name: FTLCONF_webserver_api_password
+            valueFrom:
+              secretKeyRef:
+                name: "{{ include "dns-chart.pihole.fullname" . }}"
+                key:  "{{ .Values.pihole.secrets.key }}"
+        volumeMounts:
+        - name: "{{ .Values.pihole.volumes.name }}"
+          mountPath:  "{{ .Values.pihole.volumes.mountPath }}"
+      restartPolicy: Always
+

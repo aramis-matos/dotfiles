@@ -1,0 +1,16 @@
+# https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "{{ include "dns-chart.pihole.pvc" . }}"
+  namespace: "{{ .Release.Namespace }}"
+  labels:
+    {{- include "dns-chart.pihole.selectorLabels" . | nindent 4 }}
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+
