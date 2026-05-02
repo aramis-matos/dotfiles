@@ -24,7 +24,6 @@ namespaces:
   - "dns"
   - "vpn"
   - "longhorn-system"
-  - "certs"
 
 ingress:
   mtlsCaName: "home-ca-key-pair"
