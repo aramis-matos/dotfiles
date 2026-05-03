@@ -1,0 +1,10 @@
+ingress:
+  mtlsCaName: home-ca-key-pair
+  ingressClassName: nginx
+  domains:
+    "minikube.home.lab": lab-certificate
+    "aramismatos1.com": cf-certificate
+  subdomains:
+    "longhorn":
+      service: 
+        portNumber: 80

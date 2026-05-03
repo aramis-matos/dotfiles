@@ -1,0 +1,36 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "{{ include "longhorn-ingress.fullname" .}}"
+  namespace: "{{ .Release.Namespace }}"
+  annotations:
+    nginx.org/server-snippets: |
+      ssl_verify_client on;
+      ssl_client_certificate /etc/nginx/secrets/{{ .Release.Namespace }}-{{ .Values.ingress.mtlsCaName }};
+      ssl_verify_depth 1;
+spec:
+  ingressClassName: {{ .Values.ingress.ingressClassName }}
+  tls:
+  {{- range $key, $_ := .Values.ingress.domains }}
+  - hosts:
+      {{- range $sub, $_ := $.Values.ingress.subdomains }}
+    - "{{ $sub }}.{{ $key }}"
+      {{- end }}
+    secretName: "{{ . }}"
+  {{- end }}
+  - secretName: "{{ .Values.ingress.mtlsCaName }}"
+  rules:
+  {{- range $key, $_ := .Values.ingress.domains }}
+      {{- range $sub, $_ := $.Values.ingress.subdomains }}
+  - host: "{{ $sub }}.{{ $key }}"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: "{{ printf "%v-frontend" $sub }}"
+            port:
+              number: {{ .service.portNumber }}
+      {{- end }}
+  {{- end }}
