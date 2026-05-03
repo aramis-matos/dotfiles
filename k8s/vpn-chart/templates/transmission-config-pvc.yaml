@@ -1,0 +1,13 @@
+# https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "{{ include "vpn-chart.pvc" (dict "root" $ "name" .Values.transmission.configName) }}"
+  namespace: "{{ .Release.Namespace }}"
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 32Mi
+---

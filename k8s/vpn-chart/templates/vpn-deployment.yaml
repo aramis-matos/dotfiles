@@ -1,0 +1,60 @@
+# https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ include "vpn-chart.deployment" (dict "root" $ "name" "vpn") }}"
+  namespace: "{{ .Release.Namespace }}"
+spec:
+  selector:
+    matchLabels:
+      {{- include "vpn-chart.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "vpn-chart.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: "{{ .Values.gluetun.containerName }}"
+        image: "{{ .Values.gluetun.image.repository }}:{{ .Values.gluetun.image.tag }}"
+        env:
+          {{- include "vpn-chart.load.env" .Values.gluetun.env | indent 10 }}
+          - name: WIREGUARD_PRIVATE_KEY
+            valueFrom:
+              secretKeyRef:
+                name: "{{ include "vpn-chart.secret" (dict "root" $ "name" .Values.gluetun.secrets.name) }}"
+                key: "{{ .Values.gluetun.secrets.privateKey.name }}"
+          - name: WIREGUARD_ADDRESSES
+            valueFrom:
+              secretKeyRef:
+                name: "{{ include "vpn-chart.secret" (dict "root" $ "name" .Values.gluetun.secrets.name) }}"
+                key: "{{ .Values.gluetun.secrets.addresses.name }}"
+        ports:
+          {{- include "vpn-chart.load.ports" .Values.gluetun.ports | indent 10 }}
+        volumeMounts:
+          {{- include "vpn-chart.load.volumeMounts" (dict "root" $ "name" "gluetun") | indent 10 }}
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+              - NET_ADMIN
+      - name: "{{ .Values.transmission.containerName }}"
+        image: "{{ .Values.transmission.image.repository }}:{{ .Values.transmission.image.tag }}"
+        env:
+          {{- include "vpn-chart.load.env" .Values.transmission.env | indent 10 }}
+        ports:
+          {{- include "vpn-chart.load.ports" .Values.transmission.ports | indent 10 }}
+        volumeMounts:
+          {{- include "vpn-chart.load.volumeMounts" (dict "root" $ "name" "transmission") | indent 10 }}
+          - name: "{{ include "vpn-chart.pvc" (dict "root" $ "name" .Values.transmission.configName) }}" 
+            mountPath: /config
+      volumes:
+      {{- range $key, $_ := .Values.volumes }}
+        - name: "{{ $key }}"
+          {{- .source | toYaml | nindent 10 }}
+      {{- end }}
+        - name: "{{ include "vpn-chart.pvc" (dict "root" $ "name" .Values.transmission.configName) }}"
+          persistentVolumeClaim:
+            claimName: "{{ include "vpn-chart.pvc" (dict "root" $ "name" .Values.transmission.configName) }}"
+      restartPolicy: Always
+---
+

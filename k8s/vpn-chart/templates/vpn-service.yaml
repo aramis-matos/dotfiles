@@ -1,0 +1,11 @@
+# https://kubernetes.io/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ include "vpn-chart.service" (dict "root" $ "name" "transmission") }}"
+  namespace: "{{ .Release.Namespace }}"
+spec:
+  selector:
+   {{- include "vpn-chart.selectorLabels" . | nindent 4 }} 
+  ports:
+    {{- include "vpn-chart.load.ports.service" (dict "root" $ "name" "transmission") | indent 4 }}

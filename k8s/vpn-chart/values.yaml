@@ -1,0 +1,74 @@
+gluetun:
+  containerName: gluetun-app
+  image:
+    repository: qmcgaw/gluetun
+    tag: "latest"
+  env:
+    VPN_SERVICE_PROVIDER: "mullvad"
+    VPN_TYPE: "wireguard"
+    TZ: "America/New_York"
+    SERVER_CITIES: "Oslo"
+  secrets:
+    name: vpn
+    privateKey:
+      name: wireguard-private-key
+      value: ""
+
+    addresses:
+      name: wireguard-addresses
+      value: ""
+  ports:
+    http-proxy:
+      port: 8888
+      protocol: TCP
+    shadowsock-tcp:
+      port: 8388
+      protocol: TCP
+    shadowsock-udp:
+      port: 8388
+      protocol: UDP
+
+transmission:
+  containerName: transmission-app
+  image:
+    repository: lscr.io/linuxserver/transmission
+    tag: "latest"
+  env:
+    TZ: "America/New_York"
+    PUID: "1000"
+    PGID: "1000"
+  ports:
+    web-frontend:
+      port: 9091
+      protocol: TCP
+    torrent-tcp:
+      port: 51413
+      protocol: TCP
+    torrent-udp:
+      port: 51413
+      protocol: UDP
+  configName: "transmission-config"
+
+volumes:
+  gluetun-tunnel-device:
+    mountPath: "/dev/net/tun"
+    source:
+      hostPath:
+        path: "/dev/net/tun"
+  transmission-downloads:
+    mountPath: "/downloads"
+    source:
+      nfs:
+        server: "weeb.home.lab"
+        path: "/export/Mass_Storage/Downloads"
+
+ingress:
+  mtlsCaName: home-ca-key-pair
+  ingressClassName: nginx
+  domains:
+    "minikube.home.lab": lab-certificate
+    "aramismatos1.com": cf-certificate
+  subdomains:
+    "transmission":
+      service: 
+        portNumber: 9091
