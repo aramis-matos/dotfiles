@@ -25,6 +25,7 @@ namespaces:
   - "vpn"
   - "longhorn-system"
   - "ttyd"
+  - "jellyfin"
 
 ingress:
   mtlsCaName: "home-ca-key-pair"

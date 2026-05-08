@@ -1,0 +1,42 @@
+image:
+  repository: "ghcr.io/linuxserver/jellyfin"
+  tag: "latest"
+
+ports:
+  http:
+    port: 8096
+    protocol: "TCP"
+
+volumes:
+  gpu:
+    mountPath: "/dev/dri/renderD128"
+    source:
+      hostPath:
+        path: /dev/dri/renderD128
+  media:
+    mountPath: "/media"
+    source:
+      nfs:
+        server: weeb.home.lab
+        path: /export/Mass_Storage/
+  config:
+    mountPath: "/config"
+    source:
+      persistentVolumeClaim:
+        claimName: 'jellyfin-config'
+  cache:
+    mountPath: "/cache"
+    source:
+      persistentVolumeClaim:
+        claimName: "jellyfin-cache"
+
+ingress:
+  mtlsCaName: home-ca-key-pair
+  ingressClassName: nginx
+  domains:
+    "minikube.home.lab": lab-certificate
+    "aramismatos1.com": cf-certificate
+  subdomains:
+    "jellyfin":
+      service: 
+        portNumber: 8096

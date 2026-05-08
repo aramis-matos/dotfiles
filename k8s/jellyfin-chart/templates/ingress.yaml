@@ -1,0 +1,31 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "{{ include "jellyfin-chart.fullname" . }}"
+  namespace: "{{ .Release.Namespace }}"
+spec:
+  ingressClassName: {{ .Values.ingress.ingressClassName }}
+  tls:
+  {{- range $key, $_ := .Values.ingress.domains }}
+  - hosts:
+      {{- range $sub, $_ := $.Values.ingress.subdomains }}
+    - "{{ $sub }}.{{ $key }}"
+      {{- end }}
+    secretName: "{{ . }}"
+  {{- end }}
+  - secretName: "{{ .Values.ingress.mtlsCaName }}"
+  rules:
+  {{- range $key, $_ := .Values.ingress.domains }}
+      {{- range $sub, $_ := $.Values.ingress.subdomains }}
+  - host: "{{ $sub }}.{{ $key }}"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: "{{ include "jellyfin-chart.fullname" $ }}"
+            port:
+              number: {{ .service.portNumber }}
+      {{- end }}
+  {{- end }}
