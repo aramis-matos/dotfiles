@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "{{ include "jellyfin-chart.fullname" . }}"
+  name: "{{ include "jellyfin.fullname" . }}"
 spec:
   selector:
     matchLabels:
-      {{- include "jellyfin-chart.selectorLabels" . | nindent 6 }}
+      {{- include "jellyfin.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "jellyfin-chart.selectorLabels" . | nindent 8 }}
+        {{- include "jellyfin.selectorLabels" . | nindent 8 }}
     spec:
       hostnameOverride: jellyfin
       containers:
