@@ -1,0 +1,80 @@
+apiVersion: v1
+entries:
+  certs:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2026-05-08T22:10:25.033945662Z"
+    description: A Helm chart for Kubernetes
+    digest: 2e80cdd3bfa59a447dd99503814c270f5776daa07d7090daf924b8c49d6121d5
+    name: certs
+    type: application
+    urls:
+    - https://github.com/aramis-matos/dotfiles/releases/download/certs-0.1.0/certs-0.1.0.tgz
+    version: 0.1.0
+  ddclient:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2026-05-08T22:10:25.214131283Z"
+    description: A Helm chart for Kubernetes
+    digest: 239cfa3cdc367c9b1aebfe67c83eedb20b7b8cd6be7d3b92e2ae043eb2c3b317
+    name: ddclient
+    type: application
+    urls:
+    - https://github.com/aramis-matos/dotfiles/releases/download/ddclient-0.1.0/ddclient-0.1.0.tgz
+    version: 0.1.0
+  dns:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2026-05-08T22:10:25.415887873Z"
+    description: A Helm chart for Kubernetes
+    digest: c4bca4ac92bb1bad43c1c6d13a642ecb07698285107e203a93fe97313afb4308
+    name: dns
+    type: application
+    urls:
+    - https://github.com/aramis-matos/dotfiles/releases/download/dns-0.1.0/dns-0.1.0.tgz
+    version: 0.1.0
+  jellyfin:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2026-05-08T22:10:25.606450978Z"
+    description: A Helm chart for Kubernetes
+    digest: a182f7789e267898860f9d8c617b7124907ed44139d4cd4389875032bc6f83c1
+    name: jellyfin
+    type: application
+    urls:
+    - https://github.com/aramis-matos/dotfiles/releases/download/jellyfin-0.1.0/jellyfin-0.1.0.tgz
+    version: 0.1.0
+  longhorn-ingress:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2026-05-08T22:10:25.811567233Z"
+    description: A Helm chart for Kubernetes
+    digest: a1d2c770cbd540c7b4aad2dcc793746c9554559d45394898ceace331073cca23
+    name: longhorn-ingress
+    type: application
+    urls:
+    - https://github.com/aramis-matos/dotfiles/releases/download/longhorn-ingress-0.1.0/longhorn-ingress-0.1.0.tgz
+    version: 0.1.0
+  ttyd:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2026-05-08T22:10:25.980577175Z"
+    description: A Helm chart for Kubernetes
+    digest: 24989ca56a109c319f3f587f6194ef153d125dd20203a278d0bc2a9f94f1cd4c
+    name: ttyd
+    type: application
+    urls:
+    - https://github.com/aramis-matos/dotfiles/releases/download/ttyd-0.1.0/ttyd-0.1.0.tgz
+    version: 0.1.0
+  vpn:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2026-05-08T22:10:26.159790304Z"
+    description: A Helm chart for Kubernetes
+    digest: fa21d11b90ff77a8afe622efd38c7c8a24e0f46fb94fd0acf900748b603c5ec3
+    name: vpn
+    type: application
+    urls:
+    - https://github.com/aramis-matos/dotfiles/releases/download/vpn-0.1.0/vpn-0.1.0.tgz
+    version: 0.1.0
+generated: "2026-05-08T22:10:26.15979863Z"
