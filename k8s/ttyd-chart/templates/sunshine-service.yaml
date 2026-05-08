@@ -1,0 +1,16 @@
+# https://kubernetes.io/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ include "ttyd-chart.frontend" (dict "root" $ "name" "sunshine") }}" 
+  namespace: "{{ .Release.Namespace }}"
+spec:
+  ports:
+  {{- range $key, $_ := .Values.sunshine.ports }}
+    - port: {{ .port }}
+      targetPort: {{ .port }}
+      protocol: "{{ .protocol }}"
+      name: "{{ $key }}"
+  {{- end }}
+---
+

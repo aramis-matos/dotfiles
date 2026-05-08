@@ -1,0 +1,38 @@
+# https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ include "ttyd-chart.names.fullname" (dict "root" $ "name" "startup") }}"
+  namespace: "{{ .Release.Namespace }}"
+spec:
+  selector:
+    matchLabels:
+      {{- include "ttyd-chart.selectorLabels" . | nindent 6 }} 
+      {{- .Values.startup.selectorLabels | toYaml | nindent 6 }} 
+  template:
+    metadata:
+      labels:
+        {{- include "ttyd-chart.selectorLabels" . | nindent 8 }} 
+        {{- .Values.startup.selectorLabels | toYaml | nindent 8 }} 
+    spec:
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      containers:
+      - name: startup
+        image: "{{ printf "%s:%s" .Values.startup.image.repository .Values.startup.image.tag }}"
+        securityContext:
+          privileged: true
+          runAsNonRoot: false
+          runAsUser: 0
+          runAsGroup: 0
+        envFrom:
+          - configMapRef:
+              name: "{{ include "ttyd-chart.names.fullname" (dict "root" $ "name" "startup") }}"
+        ports:
+        {{- range $key, $_ := .Values.startup.ports }}
+          - containerPort: {{ .port }}
+            name: "{{ $key }}"
+        {{- end }}
+      restartPolicy: Always
+---
+

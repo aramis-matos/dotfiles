@@ -1,0 +1,30 @@
+# https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ include "ttyd-chart.fullname" . }}"
+  namespace: "{{ .Release.Namespace }}"
+spec:
+  selector:
+    matchLabels:
+      {{- include "ttyd-chart.selectorLabels" . | nindent 6 -}}
+      {{- .Values.ttyd.selectorLabels | toYaml | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "ttyd-chart.selectorLabels" . | nindent 8 -}}
+        {{- .Values.ttyd.selectorLabels | toYaml | nindent 8 }}
+    spec:
+      containers:
+      - name: ttyd
+        image: "{{ printf "%s:%s" .Values.ttyd.image.repository .Values.ttyd.image.tag }}"
+        command: ["ttyd","-W","bash"]
+        ports:
+        {{- range $key, $_ := .Values.ttyd.ports }}
+          - name: "{{ $key }}"
+            containerPort: {{ .port }} 
+            protocol: "{{ .protocol }}"
+        {{- end }}
+      restartPolicy: Always
+---
+

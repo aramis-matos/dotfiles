@@ -1,0 +1,20 @@
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: "{{ include "ttyd-chart.frontend" (dict "root" $ "name" "sunshine") }}" 
+  namespace: "{{ .Release.Namespace }}"
+  labels:
+    kubernetes.io/service-name: "{{ include "ttyd-chart.frontend" (dict "root" $ "name" "sunshine") }}" 
+    endpointslice.kubernetes.io/managed-by: manual-mapping
+addressType: "IPv4"
+endpoints:
+  - addresses:
+    - "{{ .Values.sunshine.endpointSliceAddress }}"
+    conditions:
+      ready: true
+ports:
+{{- range $key, $_ := .Values.sunshine.ports }}
+  - port: {{ .port }}
+    protocol: "{{ .protocol }}"
+    name: "{{ $key }}"
+{{- end }}

@@ -1,0 +1,41 @@
+ttyd:
+  image:
+    repository: "tsl0922/ttyd"
+    tag: "alpine"
+  ports:
+    ttyd:
+      port: 7681
+      protocol: "TCP"
+  selectorLabels:
+    app: "ttyd"
+
+startup:
+  image:
+    repository: "aramismatos/wake-on-lan"
+    tag: "wol-test"
+  ports:
+    startup:
+      port: 3001
+      protocol: "TCP"
+  selectorLabels:
+    app: "startup"
+  config: ""
+
+sunshine:
+  ports:
+    sunshine-web-ui:
+      port: 47990
+      protocol: "TCP"
+  endpointSliceAddress: "192.168.1.117"
+
+ingress:
+  mtlsCaName: home-ca-key-pair
+  ingressClassName: nginx
+  domains:
+    "minikube.home.lab": lab-certificate
+    "aramismatos1.com": cf-certificate
+  subdomains:
+    ttyd: 7681
+    startup: 3001
+    sunshine: 47990
+

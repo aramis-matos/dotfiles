@@ -1,0 +1,19 @@
+# https://kubernetes.io/docs/concepts/services-networking/service/
+apiVersion: v1
+kind: Service
+metadata:
+  name: "{{ include "ttyd-chart.frontend" (dict "root" $ "name" "ttyd") }}"
+  namespace: "{{ .Release.Namespace }}"
+spec:
+  selector:
+    {{- include "ttyd-chart.selectorLabels" . | nindent 4 }}
+    {{- .Values.ttyd.selectorLabels | toYaml | nindent 4 }}
+  type: ClusterIP
+  ports:
+  {{- range $key, $_ := .Values.ttyd.ports }}
+    - name: "{{ $key }}"
+      port: {{ .port }}
+      targetPort: {{ .port }}
+      protocol: "{{ .protocol }}"
+  {{- end }}
+---

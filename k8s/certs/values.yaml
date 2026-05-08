@@ -24,6 +24,7 @@ namespaces:
   - "dns"
   - "vpn"
   - "longhorn-system"
+  - "ttyd"
 
 ingress:
   mtlsCaName: "home-ca-key-pair"
