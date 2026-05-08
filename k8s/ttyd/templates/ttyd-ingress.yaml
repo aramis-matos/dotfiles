@@ -1,11 +1,11 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: "{{ include "ttyd-chart.fullname" . }}"
+  name: "{{ include "ttyd.fullname" . }}"
   namespace: "{{ .Release.Namespace }}"
   annotations:
-    nginx.org/websocket-services: "{{ include "ttyd-chart.frontend" (dict "root" $ "name" "ttyd") }}"
-    nginx.org/ssl-services: "{{ include "ttyd-chart.frontend" (dict "root" $ "name" "sunshine") }}"
+    nginx.org/websocket-services: "{{ include "ttyd.frontend" (dict "root" $ "name" "ttyd") }}"
+    nginx.org/ssl-services: "{{ include "ttyd.frontend" (dict "root" $ "name" "sunshine") }}"
     nginx.org/server-snippets: |
       ssl_verify_client on;
       ssl_client_certificate /etc/nginx/secrets/{{ .Release.Namespace }}-{{ .Values.ingress.mtlsCaName }};
@@ -31,7 +31,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: "{{ include "ttyd-chart.frontend" (dict "root" $ "name" $sub)}}"
+            name: "{{ include "ttyd.frontend" (dict "root" $ "name" $sub)}}"
             port:
               number: {{ . }}
       {{- end }}

@@ -2,17 +2,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: "{{ include "ttyd-chart.names.fullname" (dict "root" $ "name" "startup") }}"
+  name: "{{ include "ttyd.names.fullname" (dict "root" $ "name" "startup") }}"
   namespace: "{{ .Release.Namespace }}"
 spec:
   selector:
     matchLabels:
-      {{- include "ttyd-chart.selectorLabels" . | nindent 6 }} 
+      {{- include "ttyd.selectorLabels" . | nindent 6 }} 
       {{- .Values.startup.selectorLabels | toYaml | nindent 6 }} 
   template:
     metadata:
       labels:
-        {{- include "ttyd-chart.selectorLabels" . | nindent 8 }} 
+        {{- include "ttyd.selectorLabels" . | nindent 8 }} 
         {{- .Values.startup.selectorLabels | toYaml | nindent 8 }} 
     spec:
       hostNetwork: true
@@ -27,7 +27,7 @@ spec:
           runAsGroup: 0
         envFrom:
           - configMapRef:
-              name: "{{ include "ttyd-chart.names.fullname" (dict "root" $ "name" "startup") }}"
+              name: "{{ include "ttyd.names.fullname" (dict "root" $ "name" "startup") }}"
         ports:
         {{- range $key, $_ := .Values.startup.ports }}
           - containerPort: {{ .port }}
