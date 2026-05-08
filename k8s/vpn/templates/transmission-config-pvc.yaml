@@ -2,13 +2,12 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: transmission-pvc
-  namespace: vpn
+  name: "{{ include "vpn.pvc" (dict "root" $ "name" .Values.transmission.configName) }}"
+  namespace: "{{ .Release.Namespace }}"
 spec:
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
-      storage: 500Gi
+      storage: 32Mi
 ---
-

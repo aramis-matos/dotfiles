@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "vpn-chart.name" -}}
+{{- define "vpn.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "vpn-chart.fullname" -}}
+{{- define "vpn.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "vpn-chart.chart" -}}
+{{- define "vpn.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "vpn-chart.labels" -}}
-helm.sh/chart: {{ include "vpn-chart.chart" . }}
-{{ include "vpn-chart.selectorLabels" . }}
+{{- define "vpn.labels" -}}
+helm.sh/chart: {{ include "vpn.chart" . }}
+{{ include "vpn.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,50 +45,50 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "vpn-chart.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "vpn-chart.name" . }}
+{{- define "vpn.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "vpn.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 
 {{- /* The context is a dict of the following shape: {"root": $, "name": str, "type": str} */ -}};
-{{- define "vpn-chart.generic.fullname" -}}
-{{- printf "%v-%v-%v" (include "vpn-chart.fullname" .root) .name .type  }}
+{{- define "vpn.generic.fullname" -}}
+{{- printf "%v-%v-%v" (include "vpn.fullname" .root) .name .type  }}
 {{- end }}
 
 {{- /* The context is a dict of the following shape: {"root": $, "name": str} */ -}};
-{{- define "vpn-chart.service" -}}
-{{-  set . "type" "service"  | include "vpn-chart.generic.fullname"  }}
+{{- define "vpn.service" -}}
+{{-  set . "type" "service"  | include "vpn.generic.fullname"  }}
 {{- end }}
 
 {{- /* The context is a dict of the following shape: {"root": $, "name": str} */ -}};
-{{- define "vpn-chart.deployment" -}}
-{{-  set . "type" "deployment"  | include "vpn-chart.generic.fullname"  }}
+{{- define "vpn.deployment" -}}
+{{-  set . "type" "deployment"  | include "vpn.generic.fullname"  }}
 {{- end }}
 
 {{- /* The context is a dict of the following shape: {"root": $, "name": str} */ -}};
-{{- define "vpn-chart.secret" -}}
-{{-  set . "type" "secret"  | include "vpn-chart.generic.fullname"  }}
+{{- define "vpn.secret" -}}
+{{-  set . "type" "secret"  | include "vpn.generic.fullname"  }}
 {{- end }}
 
 {{- /* The context is a dict of the following shape: {"root": $, "name": str} */ -}};
-{{- define "vpn-chart.pvc" -}}
-{{-  set . "type" "pvc"  | include "vpn-chart.generic.fullname"  }}
+{{- define "vpn.pvc" -}}
+{{-  set . "type" "pvc"  | include "vpn.generic.fullname"  }}
 {{- end }}
 
 {{- /* The context is a dict of the following shape: {"root": $, "name": str} */ -}};
-{{- define "vpn-chart.ingress" -}}
-{{-  set . "type" "ingress"  | include "vpn-chart.generic.fullname"  }}
+{{- define "vpn.ingress" -}}
+{{-  set . "type" "ingress"  | include "vpn.generic.fullname"  }}
 {{- end }}
 
-{{- define "vpn-chart.load.env" -}}
+{{- define "vpn.load.env" -}}
 {{- range $key, $_ := . }}
 - name: "{{ $key }}"
   value: "{{ . }}"
 {{- end }}
 {{- end -}}
 
-{{- define "vpn-chart.load.ports" -}}
+{{- define "vpn.load.ports" -}}
 {{- range $key, $_ := . }}
 - name: "{{ $key }}"
   containerPort: {{ .port }}
@@ -97,7 +97,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}
 
 {{- /* The context is a dict of the following shape: {"root": $, "name": str} */ -}};
-{{- define "vpn-chart.load.volumeMounts" -}}
+{{- define "vpn.load.volumeMounts" -}}
 {{- $pattern := printf "^%v.*" .name -}}
 {{- range $key, $_ := (.root.Values.volumes) }}
 {{- if regexMatch $pattern $key }}
@@ -108,7 +108,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{- /* The context is a dict of the following shape: {"ports": $, "name": str} */ -}};
-{{- define "vpn-chart.load.ports.service" -}}
+{{- define "vpn.load.ports.service" -}}
 {{- range $key, $_ := (get .root.Values .name).ports }}
 {{- if regexMatch "^.+-frontend" $key }}
 - name: "{{ $key }}"
