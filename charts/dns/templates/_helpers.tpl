@@ -44,7 +44,7 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 
 {{- define "dns.pihole.pvc" -}}
-{{- include "dns.bind9.fullname" . | printf "%v-pvc" | trunc 63 | trimSuffix "-" }}
+{{- include "dns.pihole.fullname" . | printf "%v-pvc" | trunc 63 | trimSuffix "-" }}
 {{- end -}}
 
 {{/*
