@@ -25,6 +25,16 @@ entries:
   dns:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2026-05-09T14:13:49.318234053Z"
+    description: A Helm chart for Kubernetes
+    digest: a8d4c240cd0c7e932efaa7d285a6f67bb7674c0a440a5d8251e81722c99096bc
+    name: dns
+    type: application
+    urls:
+    - https://github.com/aramis-matos/dotfiles/releases/download/dns-0.2.0/dns-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2026-05-09T14:02:05.597647424Z"
     description: A Helm chart for Kubernetes
     digest: dbc9e100c0eab74de9b77dd4f3a4ac7b63533208ace125bf9e6320fac78469d6
@@ -117,4 +127,4 @@ entries:
     urls:
     - https://github.com/aramis-matos/dotfiles/releases/download/vpn-0.1.0/vpn-0.1.0.tgz
     version: 0.1.0
-generated: "2026-05-09T14:02:05.597664229Z"
+generated: "2026-05-09T14:13:49.318255263Z"
