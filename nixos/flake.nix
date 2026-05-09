@@ -31,15 +31,10 @@
       };
     };
 
-    # firefox-addons = {
-    #   url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
-
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
 
     waytrogen = {
-      url = "github:nikolaizombie1/waytrogen?ref=main";
+      url = "github:nikolaizombie1/waytrogen?ref=dev";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

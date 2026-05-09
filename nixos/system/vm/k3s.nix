@@ -1,6 +1,8 @@
 { config, ... }:
 let
   username = import ../users/name.nix;
+  personalRepo = "https://aramis-matos.github.io/dotfiles";
+  secretsLoc = "../../../secrets";
 in
 {
   services.k3s = {
@@ -60,13 +62,46 @@ in
           persistence = {
             defaultClassReplicaCount = 1;
           };
-
         };
       };
       reflector = {
         repo = "oci://ghcr.io/emberstack/helm-charts/reflector";
         version = "10.0.24";
         hash = "sha256-Aq2/DLyHzEy3Sqp9bYhOgAqYXehRzKSHxQf9mkZaJDw=";
+      };
+      jellyfin = {
+        repo = personalRepo;
+        name = "jellyfin";
+        version = "0.1.0";
+        hash = "sha256-oYL3eJ4meJiGD52MYXtxJJB+1EE51M1DiYdQMrxvg8E=";
+        targetNamespace = "jellyfin";
+        createNamespace = true;
+      };
+      ttyd = {
+        repo = personalRepo;
+        name = "ttyd";
+        version = "0.1.0";
+        hash = "sha256-JJicpWoQnDGfP1h/YZTvFT0SXdICA6J40Lwqn5TxzUw=";
+        targetNamespace = "ttyd";
+        createNamespace = true;
+        values = {
+          startup = {
+            config = (builtins.readFile ./${secretsLoc}/startup-config.conf);
+          };
+        };
+      };
+      ddclient = {
+        repo = personalRepo;
+        name = "ddclient";
+        version = "0.1.0";
+        hash = "";
+        targetNamespace = "ddclient";
+        createNamespace = true;
+        values = {
+          secrets = {
+            secret = (builtins.readFile ./${secretsLoc}/ddclient.conf);
+          };
+        };
       };
     };
   };
