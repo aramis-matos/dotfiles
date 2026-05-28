@@ -1,7 +1,11 @@
 #!/bin/bash
 OUTPUT="$HOME/.config/waybar/colors.css"
+OLD_WALL_PATH="$HOME/.config/waybar/wallpapers.json"
 rm -f "$OUTPUT"
 WALLPAPERS="$(waytrogen -l | jq -r -c '.[] | select(.monitor != "")')"
+if [ "$(cat "$OLD_WALL_PATH")" = "$WALLPAPERS" ]; then
+  exit 0
+fi
 echo "$WALLPAPERS" | while IFS=$'\n' read -r wallpaper; do
   MONITOR="$(jq -r '.monitor' <<< "$wallpaper")"
   WALL_PATH="$(jq -r '.path' <<< "$wallpaper")"
@@ -11,4 +15,5 @@ echo "$WALLPAPERS" | while IFS=$'\n' read -r wallpaper; do
   echo "@define-color color${MONITOR} $FG_COLOR;" >> "$OUTPUT"
   echo "@define-color bgcolor${MONITOR} $BG_COLOR;" >> "$OUTPUT"
 done
-
+echo "Dumping wallpapers"
+echo "$WALLPAPERS" > "$OLD_WALL_PATH"
