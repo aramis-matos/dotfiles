@@ -20,6 +20,9 @@
       protontricks
       # bottles
       protonplus
+      yad
+      xdotool
+      xwininfo
     ];
   };
 }

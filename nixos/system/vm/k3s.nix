@@ -3,10 +3,11 @@ let
   username = import ../users/name.nix;
   personalRepo = "https://aramis-matos.github.io/dotfiles";
   secretsLoc = "../../../secrets";
+  caDirectory = "../../home-ca";
 in
 {
   services.k3s = {
-    enable = true;
+    enable = false;
     role = "server";
     extraFlags = toString [
       "--debug"
@@ -94,12 +95,77 @@ in
         repo = personalRepo;
         name = "ddclient";
         version = "0.1.0";
-        hash = "";
+        hash = "sha256-I5z6PNw2fJsa6/5nyD7tsgt7jNa+fTuS4q4EPrLDsxc=";
         targetNamespace = "ddclient";
         createNamespace = true;
         values = {
           secrets = {
             secret = (builtins.readFile ./${secretsLoc}/ddclient.conf);
+          };
+        };
+      };
+      dns = {
+        repo = personalRepo;
+        name = "dns";
+        version = "2.0.0";
+        hash = "sha256-ti8LctLGF5YKQiZtsiSwn1P6ODERSL3UCgxUrDc7BSU=";
+        targetNamespace = "dns";
+        createNamespace = true;
+        values = {
+          bind9 = {
+            secrets = {
+              zoneValue = (builtins.readFile ./${secretsLoc}/home.lab.zone);
+              namedConfValue = (builtins.readFile ./${secretsLoc}/named.conf);
+            };
+          };
+          pihole = {
+            secrets = {
+              value = (import ./${secretsLoc}/pihole-password.nix);
+            };
+          };
+        };
+      };
+      certs = {
+        repo = personalRepo;
+        name = "certs";
+        version = "0.1.0";
+        hash = "sha256-LoDN07+lmkR92ZUDgUwnD1d22qB9cJDa+SS4xJ1hIdU=";
+        targetNamespace = "cert-manager";
+        createNamespace = true;
+        values = {
+          cf = {
+            secrets = {
+              apiToken = (builtins.readFile ./${secretsLoc}/cf-password);
+              email = (builtins.readFile ./${secretsLoc}/cf-email);
+            };
+          };
+          lab = {
+            secrets = {
+              ca = {
+                cert = (builtins.readFile ./${caDirectory}/home-ca.crt);
+                key = (builtins.readFile ./${caDirectory}/home-ca.key);
+              };
+            };
+          };
+        };
+      };
+      vpn = {
+        repo = personalRepo;
+        name = "vpn";
+        version = "0.1.2";
+        hash = "sha256-2ygWkZOD5er5FqL+x7oi0jsw8BCsh3CJP/taGwz/iK8=";
+        targetNamespace = "vpn";
+        createNamespace = true;
+        values = {
+          gluetun = {
+            secrets = {
+              addresses = {
+                value = (builtins.readFile ./${secretsLoc}/gluetun-addresses);
+              };
+              privateKey = {
+                value = (builtins.readFile ./${secretsLoc}/gluetun-private-key);
+              };
+            };
           };
         };
       };
