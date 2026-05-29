@@ -121,7 +121,7 @@ layout {
     // preset-window-heights { }
 
     // You can change the default width of the new windows.
-    default-column-width { proportion 1.0; }
+    default-column-width { proportion 0.5; }
     // If you leave the brackets empty, the windows themselves will decide their initial width.
     // default-column-width {}
 
@@ -254,6 +254,8 @@ layout {
 // spawn-sh-at-startup "gen-color-scheme"
 // spawn-sh-at-startup "waybar"
 spawn-sh-at-startup "waytrogen --restore"
+spawn-sh-at-startup "fcitx5 -d"
+
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"

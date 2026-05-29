@@ -1,8 +1,13 @@
 set -U fish_greeting
 fish_vi_key_bindings
-set -g fish_add_path $HOME/bin
+fish_add_path -g ~/bin
 alias vi="nvim"
 alias vim="nvim"
+
+set -g GTK_IM_MODULE "fcitx"
+set -g QT_IM_MODULE "fcitx"
+set -g XMODIFIERS "@im=fcitx"
+
 
 
 # Must be last
