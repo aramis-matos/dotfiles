@@ -5,10 +5,19 @@ WALLPAPERS="$(waytrogen -l | jq -r -c '.[] | select(.monitor != "")')"
 echo "$WALLPAPERS" | while IFS=$'\n' read -r wallpaper; do
   MONITOR="$(jq -r '.monitor' <<< "$wallpaper")"
   WALL_PATH="$(jq -r '.path' <<< "$wallpaper")"
+  TMP_THUMBNAIL="/tmp/thumbnail.jpg"
+  IS_MPVPAPER="$(jq -r '.changer.MpvPaper' <<< "$wallpaper")"
+  if [ "$IS_MPVPAPER" != "null" ]; then
+    ffmpeg -nostdin -i "$WALL_PATH" -vf "select=eq(n\,0)" -q:v 3 "$TMP_THUMBNAIL" -y -hide_banner -loglevel error
+    WALL_PATH="$TMP_THUMBNAIL"
+  fi
   COLOR_SCHEME="$(matugen image "$WALL_PATH" --prefer=darkness --json rgba)"
   FG_COLOR="$(jq -r '.colors.on_primary.default.color' <<< "$COLOR_SCHEME")"
   BG_COLOR="$(jq -r '.colors.primary.default.color' <<< "$COLOR_SCHEME" | sed -E 's/1\)$/0.7\)/g')"
   echo "@define-color color${MONITOR} $FG_COLOR;" >> "$OUTPUT"
   echo "@define-color bgcolor${MONITOR} $BG_COLOR;" >> "$OUTPUT"
+  if [ -e "$TMP_THUMBNAIL" ]; then
+    rm -f "$TMP_THUMBNAIL"
+  fi
 done
 systemctl --user restart waybar.service
