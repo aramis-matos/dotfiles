@@ -34,7 +34,7 @@ echo "$WALLPAPERS" | while IFS=$'\n' read -r wallpaper; do
     TEMPLATE="$HOME/.config/fuzzel/fuzzel.tmpl.ini"
     COLOR_SCHEME="$(matugen image "$WALL_PATH" --prefer=darkness --json hex)"
     FG_COLOR="$(jq -r "$BG_COLOR_QUERY" <<<"$COLOR_SCHEME" | tr -d '#' | sed -E 's/$/ff/g')"
-    BG_COLOR="$(jq -r "$FG_COLOR_QUERY" <<<"$COLOR_SCHEME" | tr -d '#' | sed -E 's/$/ff/g')"
+    BG_COLOR="$(jq -r "$FG_COLOR_QUERY" <<<"$COLOR_SCHEME" | tr -d '#' | sed -E 's/$/80/g')"
     sed -E "s/@BG_COLOR@/${BG_COLOR}/g" "$TEMPLATE" | sed -E "s/@FG_COLOR@/${FG_COLOR}/g" >"$FUZZEL_OUTPUT"
   fi
   COLOR_SCHEME="$(matugen image "$WALL_PATH" --prefer=darkness --json rgba)"
