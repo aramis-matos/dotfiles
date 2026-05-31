@@ -3,6 +3,7 @@ fish_vi_key_bindings
 fish_add_path -g ~/bin
 alias vi="nvim"
 alias vim="nvim"
+alias lg="lazygit"
 
 set -g GTK_IM_MODULE "fcitx"
 set -g QT_IM_MODULE "fcitx"

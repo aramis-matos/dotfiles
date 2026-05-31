@@ -13,7 +13,8 @@ vim.o.signcolumn = "yes"
 vim.diagnostic.config({ virtual_text = true })
 
 vim.pack.add({
-  { src = "https://github.com/savq/melange-nvim" },
+  { src = "https://github.com/tanvirtin/monokai.nvim" },
+  { src = "https://github.com/xiyaowong/transparent.nvim" },
   { src = "https://github.com/neovim/nvim-lspconfig" },
   { src = "https://github.com/m4xshen/autoclose.nvim" },
   { src = "https://github.com/L3MON4D3/LuaSnip" },
@@ -31,7 +32,7 @@ vim.pack.add({
 })
 
 -- Theme
-vim.cmd("colorscheme melange")
+vim.cmd("colorscheme monokai_ristretto")
 
 vim.filetype.add({
   filename = {
@@ -96,6 +97,8 @@ cmp.setup({
   },
 })
 require("lualine").setup({})
+local transparent = require("transparent")
+transparent.setup()
 
 -- Which-Key (List shortcut mappings)
 local wk = require("which-key")
@@ -175,4 +178,3 @@ wk.add({
     desc = 'Open LazyGit'
   }
 })
-
