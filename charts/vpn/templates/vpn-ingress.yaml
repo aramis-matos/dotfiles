@@ -4,6 +4,7 @@ metadata:
   name: "{{ include "vpn.ingress" (dict "root" $ "name" "vpn") }}"
   namespace: "{{ .Release.Namespace }}"
   annotations:
+    nginx.org/websocket-services: "{{ include "vpn.service" (dict "root" $ "name" "slskd") }}"
     nginx.org/server-snippets: |
       ssl_verify_client on;
       ssl_client_certificate /etc/nginx/secrets/{{ .Release.Namespace }}-{{ .Values.ingress.mtlsCaName }};
