@@ -13,7 +13,6 @@ gluetun:
     privateKey:
       name: wireguard-private-key
       value: ""
-
     addresses:
       name: wireguard-addresses
       value: ""
@@ -49,6 +48,30 @@ transmission:
       protocol: UDP
   configName: "transmission-config"
 
+slskd:
+  containerName: slskd-app
+  image:
+    repository: "slskd/slskd"
+    tag: "latest"
+  env:
+    PUID: "1000"
+    PGID: "1000"
+    SLSKD_REMOTE_CONFIGURATION: "false"
+  ports:
+    http-frontend:
+      port: 5030
+      protocol: TCP
+    https:
+      port: 5031
+      protocol: TCP
+    downloads:
+      port: 50300
+      protocol: TCP
+  config:
+    name: "slskd-config"
+    key: "slskd.yml"
+    value: ""
+
 volumes:
   gluetun-tunnel-device:
     mountPath: "/dev/net/tun"
@@ -61,6 +84,12 @@ volumes:
       nfs:
         server: "weeb.home.lab"
         path: "/export/Mass_Storage/Downloads"
+  slskd-downloads:
+    mountPath: "/app"
+    source:
+      nfs:
+        server: "weeb.home.lab"
+        path: "/export/Mass_Storage/Slskd"
 
 ingress:
   mtlsCaName: home-ca-key-pair
@@ -72,3 +101,6 @@ ingress:
     "transmission":
       service: 
         portNumber: 9091
+    "slskd":
+      service: 
+        portNumber: 5030

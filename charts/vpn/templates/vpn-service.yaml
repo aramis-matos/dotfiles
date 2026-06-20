@@ -9,3 +9,4 @@ spec:
    {{- include "vpn.selectorLabels" . | nindent 4 }} 
   ports:
     {{- include "vpn.load.ports.service" (dict "root" $ "name" "transmission") | indent 4 }}
+    {{- include "vpn.load.ports.service" (dict "root" $ "name" "slskd") | indent 4 }}
