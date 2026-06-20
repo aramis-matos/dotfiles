@@ -85,7 +85,7 @@ volumes:
         server: "weeb.home.lab"
         path: "/export/Mass_Storage/Downloads"
   slskd-downloads:
-    mountPath: "/app"
+    mountPath: "/app/downloads"
     source:
       nfs:
         server: "weeb.home.lab"
