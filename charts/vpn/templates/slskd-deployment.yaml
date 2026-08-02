@@ -1,0 +1,49 @@
+# https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ include "vpn.deployment" (dict "root" $ "name" "slskd") }}"
+  namespace: "{{ .Release.Namespace }}"
+spec:
+  selector:
+    matchLabels:
+      {{- include "vpn.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "vpn.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: "{{ .Values.soulsync.containerName }}"
+        image: "{{ .Values.soulsync.image.repository }}:{{ .Values.soulsync.image.tag }}"
+        env:
+          {{- include "vpn.load.env" .Values.soulsync.env | indent 10 }}
+        ports:
+          {{- include "vpn.load.ports" .Values.soulsync.ports | indent 10 }}
+        volumeMounts:
+          {{- include "vpn.load.volumeMounts" (dict "root" $ "name" "slskd") | indent 10 }}
+          {{- include "vpn.load.volumeMounts" (dict "root" $ "name" "soulsync") | indent 10 }}
+          {{- range $key, $_ := .Values.soulsync.pvcs }}
+          - name: "{{ include "vpn.pvc" (dict "root" $ "name" $key) }}"
+            mountPath: "{{ .mountPath }}"
+          {{- end }}
+          - name: "{{ include "vpn.secret" (dict "root" $ "name" .Values.soulsync.config.name) }}"
+            mountPath: "{{ .Values.soulsync.env.SOULSYNC_CONFIG_PATH }}"
+            subPath: "{{ .Values.soulsync.config.key }}"
+      volumes:
+      {{- range $key, $_ := .Values.volumes }}
+        {{- if (regexMatch "(soulsync|slskd)" $key) }}
+        - name: "{{ $key }}"
+          {{- .source | toYaml | nindent 10 }}
+        {{- end }}
+      {{- end }}
+      {{- range $key, $_ := .Values.soulsync.pvcs }}
+        - name: "{{ include "vpn.pvc" (dict "root" $ "name" $key) }}"
+          persistentVolumeClaim:
+            claimName: "{{ include "vpn.pvc" (dict "root" $ "name" $key) }}"
+      {{- end }}
+        - name: "{{ include "vpn.secret" (dict "root" $ "name" .Values.soulsync.config.name) }}"
+          secret:
+            secretName: "{{ include "vpn.secret" (dict "root" $ "name" .Values.soulsync.config.name) }}"
+      restartPolicy: Always
+---

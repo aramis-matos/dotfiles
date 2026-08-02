@@ -60,20 +60,12 @@ spec:
           - name: "{{ include "vpn.secret" (dict "root" $ "name" .Values.slskd.config.name ) }}"
             mountPath: "/app/slskd.yml"
             subPath: "{{ .Values.slskd.config.key }}"
-      - name: "{{ .Values.soulsync.containerName }}"
-        image: "{{ .Values.soulsync.image.repository }}:{{ .Values.soulsync.image.tag }}"
-        env:
-          {{- include "vpn.load.env" .Values.soulsync.env | indent 10 }}
-        ports:
-          {{- include "vpn.load.ports" .Values.soulsync.ports | indent 10 }}
-        volumeMounts:
-          {{- include "vpn.load.volumeMounts" (dict "root" $ "name" "slskd") | indent 10 }}
-          {{- include "vpn.load.volumeMounts" (dict "root" $ "name" "soulsync") | indent 10 }}
-          - name: "{{ include "vpn.secret" (dict "root" $ "name" .Values.soulsync.config.name) }}"
-            mountPath: "{{ .Values.soulsync.env.SOULSYNC_CONFIG_PATH }}"
-            subPath: "{{ .Values.soulsync.config.key }}"
-          - name: "{{ include "vpn.pvc" (dict "root" $ "name" .Values.soulsync.logsPvc.name) }}"
-            mountPath: "/app/logs"
+        {{- range $key, $_ := .Values.volumes }}
+          {{- if (regexMatch "soulsync-downloads" $key) }}
+          - name: "{{ $key }}"
+            mountPath: "{{ .mountPath }}"
+          {{- end }}
+        {{- end }}
       volumes:
       {{- range $key, $_ := .Values.volumes }}
         - name: "{{ $key }}"
@@ -85,12 +77,6 @@ spec:
         - name: "{{ include "vpn.secret" (dict "root" $ "name" .Values.slskd.config.name) }}"
           secret:
             secretName: "{{ include "vpn.secret" (dict "root" $ "name" .Values.slskd.config.name) }}"
-        - name: "{{ include "vpn.secret" (dict "root" $ "name" .Values.soulsync.config.name) }}"
-          secret:
-            secretName: "{{ include "vpn.secret" (dict "root" $ "name" .Values.soulsync.config.name) }}"
-        - name: "{{ include "vpn.pvc" (dict "root" $ "name" .Values.soulsync.logsPvc.name) }}"
-          persistentVolumeClaim:
-            claimName: "{{ include "vpn.pvc" (dict "root" $ "name" .Values.soulsync.logsPvc.name) }}"
       restartPolicy: Always
 ---
 

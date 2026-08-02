@@ -95,9 +95,14 @@ soulsync:
     web-frontend:
       port: 8008
       protocol: TCP
-  logsPvc:
-    name: "logs"
-    storage: "128Mi"
+  pvcs:
+    logs:
+      storage: "128Mi"
+      mountPath: "/app/logs"
+    db:
+      storage: "512Mi"
+      mountPath: "/app/data"
+
   config:
     name: "soulsync"
     key: "config.json"
