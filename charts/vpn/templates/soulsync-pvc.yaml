@@ -1,0 +1,12 @@
+# https://kubernetes.io/docs/concepts/storage/persistent-volumes/
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "{{ include "vpn.pvc" (dict "root" $ "name" .Values.soulsync.logsPvc.name) }}"
+  namespace: "{{ .Release.Namespace }}"
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: "{{ .Values.soulsync.logsPvc.storage }}"

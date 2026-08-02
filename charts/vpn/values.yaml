@@ -57,6 +57,9 @@ slskd:
     PUID: "1000"
     PGID: "1000"
     SLSKD_REMOTE_CONFIGURATION: "false"
+  apiKey:
+    key: "SLSKD_API_KEY"
+    value: ""
   ports:
     http-frontend:
       port: 5030
@@ -71,6 +74,35 @@ slskd:
     name: "slskd-config"
     key: "slskd.yml"
     value: ""
+    apiKeyName: "api-key"
+    apiKeyValue: ""
+
+soulsync:
+  containerName: soulsync-app
+  image:
+    repository: "boulderbadgedad/soulsync"
+    tag: "latest"
+  env:
+    PUID: "1000"
+    PGID: "1000"
+    UMASK: "022"
+    PYTHONPATH: "/app"
+    SOULSYNC_CONFIG_PATH: "/app/config/config.json"
+    TZ: "America/New_York"
+    SOULSYNC_SPOTIFY_CALLBACK_PORT: "8888"
+    SOULSYNC_TIDAL_CALLBACK_PORT: "8889"
+  ports:
+    web-frontend:
+      port: 8008
+      protocol: TCP
+  logsPvc:
+    name: "logs"
+    storage: "128Mi"
+  config:
+    name: "soulsync"
+    key: "config.json"
+    value: ""
+
 
 volumes:
   gluetun-tunnel-device:
@@ -90,6 +122,18 @@ volumes:
       nfs:
         server: "weeb.home.lab"
         path: "/export/Mass_Storage/Slskd"
+  soulsync-downloads:
+    mountPath: "/app/Transfer"
+    source:
+      nfs:
+        server: "weeb.home.lab"
+        path: "/export/Mass_Storage/Soulsync/Transfer"
+  soulsync-staging:
+    mountPath: "/app/Staging"
+    source:
+      nfs:
+        server: "weeb.home.lab"
+        path: "/export/Mass_Storage/Soulsync/Staging"
 
 ingress:
   mtlsCaName: home-ca-key-pair
@@ -104,3 +148,6 @@ ingress:
     "slskd":
       service: 
         portNumber: 5030
+    "soulsync":
+      service: 
+        portNumber: 8008

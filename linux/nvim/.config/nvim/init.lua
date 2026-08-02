@@ -38,6 +38,7 @@ vim.filetype.add({
   filename = {
     ["Chart.yaml"] = "helm",
     ["values.yaml"] = "yaml.helm-values",
+    ["compose.yaml"] = "yaml.docker-compose"
   },
   pattern = {
     [".*/templates/.*%.yaml"] = "helm",
@@ -46,7 +47,8 @@ vim.filetype.add({
 })
 
 -- LSP
-vim.lsp.enable({ "lua_ls", "nil_ls", "ts_ls", "rust_analyzer", "gopls", "typos_lsp", "helm_ls", "bashls" })
+vim.lsp.enable({ "lua_ls", "nil_ls", "ts_ls", "rust_analyzer", "gopls", "typos_lsp", "helm_ls", "bashls",
+  "docker_language_server" })
 
 vim.lsp.config['lua_ls'] = {
   settings = {

@@ -13,8 +13,7 @@ spec:
   ingressClassName: {{ .Values.ingress.ingressClassName }}
   tls:
   {{- range $key, $_ := .Values.ingress.domains }}
-  - hosts:
-      {{- range $sub, $_ := $.Values.ingress.subdomains }}
+  - hosts: {{- range $sub, $_ := $.Values.ingress.subdomains }}
     - "{{ $sub }}.{{ $key }}"
       {{- end }}
     secretName: "{{ . }}"
