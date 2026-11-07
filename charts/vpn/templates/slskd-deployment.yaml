@@ -30,6 +30,25 @@ spec:
           - name: "{{ include "vpn.secret" (dict "root" $ "name" .Values.soulsync.config.name) }}"
             mountPath: "{{ .Values.soulsync.env.SOULSYNC_CONFIG_PATH }}"
             subPath: "{{ .Values.soulsync.config.key }}"
+      - name: "{{ .Values.slskd.containerName }}"
+        image: "{{ .Values.slskd.image.repository }}:{{ .Values.slskd.image.tag }}"
+        env:
+          {{- include "vpn.load.env" .Values.slskd.env | indent 10 }}
+          - name: "SLSKD_API_KEY"
+            value: "{{ required "slskd API key value not set. Please set .Values.slskd.config.apiKeyValue" .Values.slskd.config.apiKeyValue | trim }}"
+        ports:
+          {{- include "vpn.load.ports" .Values.slskd.ports | indent 10 }}
+        volumeMounts:
+          {{- include "vpn.load.volumeMounts" (dict "root" $ "name" "slskd") | indent 10 }}
+          - name: "{{ include "vpn.secret" (dict "root" $ "name" .Values.slskd.config.name ) }}"
+            mountPath: "/app/slskd.yml"
+            subPath: "{{ .Values.slskd.config.key }}"
+        {{- range $key, $_ := .Values.volumes }}
+          {{- if (regexMatch "(soulsync)-downloads" $key) }}
+          - name: "{{ $key }}"
+            mountPath: "{{ .mountPath }}"
+          {{- end }}
+        {{- end }}
       volumes:
       {{- range $key, $_ := .Values.volumes }}
         {{- if (regexMatch "(soulsync|slskd)" $key) }}
@@ -45,5 +64,8 @@ spec:
         - name: "{{ include "vpn.secret" (dict "root" $ "name" .Values.soulsync.config.name) }}"
           secret:
             secretName: "{{ include "vpn.secret" (dict "root" $ "name" .Values.soulsync.config.name) }}"
+        - name: "{{ include "vpn.secret" (dict "root" $ "name" .Values.slskd.config.name) }}"
+          secret:
+            secretName: "{{ include "vpn.secret" (dict "root" $ "name" .Values.slskd.config.name) }}"
       restartPolicy: Always
 ---

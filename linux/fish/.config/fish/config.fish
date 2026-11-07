@@ -5,10 +5,11 @@ alias vi="nvim"
 alias vim="nvim"
 alias lg="lazygit"
 
-set -g GTK_IM_MODULE "fcitx"
-set -g QT_IM_MODULE "fcitx"
-set -g XMODIFIERS "@im=fcitx"
-set -g EDITOR "nvim"
+set -gx GTK_IM_MODULE "fcitx"
+set -gx QT_IM_MODULE "fcitx"
+set -gx XMODIFIERS "@im=fcitx"
+set -gx EDITOR "nvim"
+set -gx KUBECONFIG "$HOME/k3s.yaml"
 
 # fish completion for helm                                 -*- shell-script -*-
 

@@ -67,7 +67,7 @@ slskd:
     https:
       port: 5031
       protocol: TCP
-    downloads:
+    upload-frontend:
       port: 50300
       protocol: TCP
   config:
@@ -100,7 +100,7 @@ soulsync:
       storage: "128Mi"
       mountPath: "/app/logs"
     db:
-      storage: "512Mi"
+      storage: "1Gi"
       mountPath: "/app/data"
 
   config:
@@ -127,6 +127,12 @@ volumes:
       nfs:
         server: "weeb.home.lab"
         path: "/export/Mass_Storage/Slskd"
+  slskd-media:
+    mountPath: "/server-music"
+    source:
+      nfs:
+        server: "weeb.home.lab"
+        path: "/export/Mass_Storage/Music"
   soulsync-downloads:
     mountPath: "/app/Transfer"
     source:

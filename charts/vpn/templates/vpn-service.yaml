@@ -19,6 +19,7 @@ metadata:
 spec:
   selector:
    {{- include "vpn.selectorLabels" . | nindent 4 }} 
+  type: LoadBalancer
   ports:
     {{- include "vpn.load.ports.service" (dict "root" $ "name" "slskd") | indent 4 }}
 ---
