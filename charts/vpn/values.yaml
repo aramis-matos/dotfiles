@@ -100,7 +100,7 @@ soulsync:
       storage: "128Mi"
       mountPath: "/app/logs"
     db:
-      storage: "1Gi"
+      storage: "5Gi"
       mountPath: "/app/data"
 
   config:
