@@ -129,6 +129,16 @@ entries:
   vpn:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2026-11-07T11:03:30.392020432Z"
+    description: A chart for gluetun/transmission
+    digest: 70f9427bde2bbbe24921bad8f78d7ad5a3e0070921bd8488a33775176956556f
+    name: vpn
+    type: application
+    urls:
+    - https://github.com/aramis-matos/dotfiles/releases/download/vpn-0.9.0/vpn-0.9.0.tgz
+    version: 0.9.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2026-08-02T14:31:46.903001366Z"
     description: A chart for gluetun/transmission
     digest: 0d6952805e1ab96c96d4997daa9af4d00a5e1c9d6dbff0b3b0c35aaaaac3f9db
@@ -227,4 +237,4 @@ entries:
     urls:
     - https://github.com/aramis-matos/dotfiles/releases/download/vpn-0.1.0/vpn-0.1.0.tgz
     version: 0.1.0
-generated: "2026-08-02T14:31:46.903069102Z"
+generated: "2026-11-07T11:03:30.392087217Z"
