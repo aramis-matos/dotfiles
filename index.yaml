@@ -118,6 +118,16 @@ entries:
   ttyd:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2026-11-15T18:50:42.846169881Z"
+    description: A Helm chart for Kubernetes
+    digest: a665f43a71ce0d0e1f160e1b9948febcd39838424142be4df07654620ebc2f52
+    name: ttyd
+    type: application
+    urls:
+    - https://github.com/aramis-matos/dotfiles/releases/download/ttyd-0.2.0/ttyd-0.2.0.tgz
+    version: 0.2.0
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2026-05-08T22:10:25.980577175Z"
     description: A Helm chart for Kubernetes
     digest: 24989ca56a109c319f3f587f6194ef153d125dd20203a278d0bc2a9f94f1cd4c
@@ -247,4 +257,4 @@ entries:
     urls:
     - https://github.com/aramis-matos/dotfiles/releases/download/vpn-0.1.0/vpn-0.1.0.tgz
     version: 0.1.0
-generated: "2026-11-07T11:52:49.16077025Z"
+generated: "2026-11-15T18:50:42.846228175Z"
