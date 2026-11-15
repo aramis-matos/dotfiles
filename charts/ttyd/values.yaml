@@ -26,16 +26,16 @@ sunshine:
     sunshine-web-ui:
       port: 47990
       protocol: "TCP"
-  endpointSliceAddress: "192.168.1.117"
+  endpointSliceAddress: "10.0.48.244"
 
 ingress:
   mtlsCaName: home-ca-key-pair
   ingressClassName: nginx
   domains:
     "minikube.home.lab": lab-certificate
-    "aramismatos1.com": cf-certificate
+    # "aramismatos1.com": cf-certificate
   subdomains:
-    ttyd: 7681
+    # ttyd: 7681
     startup: 3001
-    sunshine: 47990
+    # sunshine: 47990
 
